@@ -1,5 +1,5 @@
-@import "test.scss";
+@import "variables.scss";
+@import "base.scss";
 
-body {
-    background: #E11010;
-}
+@import "./components/nav";
+@import "./components/menu";

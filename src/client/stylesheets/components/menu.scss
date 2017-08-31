@@ -1,0 +1,13 @@
+.playlists-menu {
+    position: fixed;
+    top: $nav-height;
+    background-color: $gray-light;
+    .menu {
+        .menu-list {
+            li a {
+                height: 30px;
+                overflow: hidden;
+            }
+        }
+    }
+}

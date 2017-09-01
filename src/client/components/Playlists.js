@@ -5,12 +5,17 @@ class Playlists extends Component {
         return (
             this.props.playlists.map((playlist) => {
                 return(
-                    <li key={playlist.id}><a>{playlist.name}</a></li>
+                    <li className="tooltip" key={playlist.id}>
+                        <a onClick={() => this.props.onClickPlaylist(playlist.owner.id, playlist.id)}>
+                            {playlist.name}
+                            <span className="tooltiptext">{playlist.owner.display_name || playlist.owner.id}</span>
+                        </a>
+                    </li>
                 );
             })
         );
-        
     }
+
     render() {
         return (
             <aside className="menu ">
@@ -20,6 +25,9 @@ class Playlists extends Component {
                 <ul className="menu-list">
                     {this.props.playlists ? this.renderPlaylists() : null}
                 </ul>
+                <p className="menu-label new-playlist">
+                    <a><i className="fa fa-chevron-up" aria-hidden="true"></i>Ny spellista</a>
+                </p>
             </aside>
         );
     }

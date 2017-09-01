@@ -7,6 +7,11 @@
     top: 0;
     z-index: 10;
     box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.83);
+    .navbar-brand a.navbar-item {
+        font-weight: bold;
+        letter-spacing: 4px;
+        font-size: 19px;
+    }
     a.navbar-item {
         color: $nav-font-color;
         font-weight: 500;

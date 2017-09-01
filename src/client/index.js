@@ -5,9 +5,9 @@ import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-ro
 import App from './components/App';
 import Home from './components/Home';
 import Login from './components/Login';
+import Stream from './components/Stream';
 
 import "./stylesheets/main.scss";
-
 
 
 const Root = () => {
@@ -15,8 +15,10 @@ const Root = () => {
         <Router history={browserHistory}>
             <Route>
                 <Route path="/" component={Login}/>
-                <Route path="/hem"component={App}>
-                    <IndexRoute component={Home} />
+                <Route path="/app"component={App}>
+                    <Route path="stream"component={Home}>
+                        <Route path="/stream" component={Stream}/>
+                    </Route> 
                 </Route>
             </Route>
         </Router>

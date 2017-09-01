@@ -3,8 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path')
 
 module.exports = {
-    entry: './src/client/index.js',
+    entry: ["babel-polyfill", './src/client/index.js'],
     output: {
+        publicPath: '/',
         path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js'
     },
@@ -50,7 +51,9 @@ module.exports = {
     devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/client/index.html'
+            template: './src/client/index.html',
+            
         })
-    ]
+    ],
+    
 };

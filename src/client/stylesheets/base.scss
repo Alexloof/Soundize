@@ -4,6 +4,10 @@ body {
     font-family: $body-default-font-familty;
 }
 
+html {
+    font-size: 14px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -30,6 +34,10 @@ strong {
 
 .hidden {
     display: none;
+}
+
+#root {
+    margin-top: $nav-height;
 }
 
 //nedan är en klass för att göra scrollbar invisible i webkit-browsers som chrome

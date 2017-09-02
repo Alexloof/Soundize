@@ -4,7 +4,8 @@
     background-color: $gray-light;
     box-shadow: 2px 2px 4px 0px rgba(78, 78, 78, 0.32);
     padding-right: 0;
-    width: 250px !important;
+    width: 300px !important;
+    padding-top: 1.5%;
     .menu {
         p.menu-label {
             font-size: .9em;
@@ -13,18 +14,21 @@
             padding-left: 1rem;
         }
         .menu-list {
+            max-height: 500px;
+            overflow-y: scroll;
+            overflow-x: hidden;
             li {
                 height: 36px;
                 border-left: 3px solid transparent;
                 transition: all 0.2s ease-in-out;
                 position: relative;
+                cursor: pointer;
                 .tooltiptext {
                     visibility: hidden;
                     position: absolute;
-                    top: 4px;
-                    left: 245px;
-                    right: -130px;
-                    background-color: rgba($gray-dark, 0.50);
+                    top: 5px;
+                    right: 0px;
+                    background-color: rgba(40, 40, 40, 0.7);
                     border-radius: 5px;
                     color: white;
                     padding: 5px;
@@ -39,7 +43,7 @@
                     margin-top: -5px;
                     border-width: 5px;
                     border-style: solid;
-                    border-color: transparent rgba($gray-dark, 0.50) transparent transparent;
+                    border-color: transparent rgba($gray-dark, 0.7) transparent transparent;
                 }
                 &:hover {
                     border-left: 3px solid #494949;
@@ -66,10 +70,7 @@
             margin-top: 0;
             padding-top: 1rem;
             a {
-                color: $brand-third;
-                &:hover {
-                    color: $gray-dark;
-                }
+                color: $gray-dark;
                 i {
                     margin-right: 0.5rem;
                 }

@@ -5,8 +5,8 @@ class Playlists extends Component {
         return (
             this.props.playlists.map((playlist) => {
                 return(
-                    <li className="tooltip" key={playlist.id}>
-                        <a onClick={() => this.props.onClickPlaylist(playlist.owner.id, playlist.id)}>
+                    <li className="tooltip" key={playlist.id} onClick={() => this.props.onClickPlaylist(playlist.owner.id, playlist.id)}>
+                        <a>
                             {playlist.name}
                             <span className="tooltiptext">{playlist.owner.display_name || playlist.owner.id}</span>
                         </a>

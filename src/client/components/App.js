@@ -6,11 +6,12 @@ var spotifyApi = new SpotifyWebApi();
 import { browserHistory } from 'react-router';
 
 import Nav from "./Nav";
+import MusicBar from "./MusicBar";
 
 class App extends Component {
     state = {
         token: "",
-        username: "",
+        user: "",
         playlists: "",
         tracklist: ""
     }
@@ -20,14 +21,16 @@ class App extends Component {
             console.log("hej");
             let newHash = this.props.location.hash.slice(14, -44);
             localStorage.setItem('token', newHash);
-        } 
+        }
+        spotifyApi.setAccessToken(localStorage.getItem('token')); 
         this.getMe()
     }
     getPlaylists() {
-        spotifyApi.getUserPlaylists(this.state.username)
+        spotifyApi.getUserPlaylists(this.state.user.id)
             .then((data) => {
+                this.onClickPlaylist(data.body.items[0].owner.id, data.body.items[0].id);
                 this.setState(
-                    { playlists: data.body.items },
+                    { playlists: data.body.items },   
                     () => browserHistory.replace('/app/stream')
                 );
             }, function (err) {
@@ -35,11 +38,10 @@ class App extends Component {
             });
     }
     getMe() {
-        spotifyApi.setAccessToken(localStorage.getItem('token'));
         spotifyApi.getMe()
             .then((data) => {
                 this.setState(
-                    { username: data.body.id },
+                    { user: data.body },
                     () => this.getPlaylists()
                 );
             }, function (err) {
@@ -63,8 +65,9 @@ class App extends Component {
             })});
             return (
                 <div>
-                    <Nav />
+                    <Nav user={this.state.user} />
                     {childrenWithExtraProp}
+                    <MusicBar />
                 </div>
             );
         }

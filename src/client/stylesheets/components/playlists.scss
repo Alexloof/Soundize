@@ -4,8 +4,9 @@
     background-color: $gray-light;
     box-shadow: 2px 2px 4px 0px rgba(78, 78, 78, 0.32);
     padding-right: 0;
-    width: 300px !important;
+    width: 20% !important;
     padding-top: 1.5%;
+    padding-bottom: 0;
     .menu {
         p.menu-label {
             font-size: .9em;
@@ -59,6 +60,8 @@
                 padding: 0.6em .75em;
                 border-radius: 0px;
                 border-top: 1px solid rgb(228, 228, 228);
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 &:hover {
                     background:transparent;
                 }
@@ -66,9 +69,9 @@
             }
         }
         .new-playlist {
-            border-top: 1px solid #a0a0a0;
+            border-top: 1px solid #BABABA;
             margin-top: 0;
-            padding-top: 1rem;
+            padding: 1.2rem 1rem;
             a {
                 color: $gray-dark;
                 i {

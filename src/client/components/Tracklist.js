@@ -11,13 +11,12 @@ class Tracklist extends Component {
         return (
             this.props.tracklist.tracks.items.map((track, index) => {
                 if (track.track !== null) {
-                    return <Track key={index} track={track} />
+                    return <Track key={index} track={track} activeTrack={this.props.activeTrack} />
                 }
             })
         );
     }
     render() {
-        console.log(this.props.tracklist);
         return (
             <div className="menu ">
                 <div className="tracklist-banner">

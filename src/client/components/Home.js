@@ -12,7 +12,7 @@ class Home extends Component {
                         <Playlists onClickPlaylist={this.props.onClickPlaylist} playlists={this.props.playlists} />
                     </div>
                     <div className="column is-6 tracklist">
-                        {this.props.tracklist ? <Tracklist tracklist={this.props.tracklist} /> : null }
+                        {this.props.tracklist ? <Tracklist tracklist={this.props.tracklist} activeTrack={this.props.activeTrack} /> : null }
                     </div>
                 </div>
             </div>

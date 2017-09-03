@@ -13,16 +13,18 @@ class App extends Component {
         token: "",
         user: "",
         playlists: "",
-        tracklist: ""
+        tracklist: "",
+        activeTrack: "",
     }
 
     componentDidMount() {
-        if (!localStorage.getItem('token')) {
-            console.log("hej");
+        console.log(localStorage.getItem('token'));
+        if (!localStorage.getItem('token') || localStorage.getItem('token') !== this.props.location.hash.slice(14, -44) && this.props.location.hash) {
+            console.log("Ny token");
             let newHash = this.props.location.hash.slice(14, -44);
             localStorage.setItem('token', newHash);
         }
-        spotifyApi.setAccessToken(localStorage.getItem('token')); 
+        spotifyApi.setAccessToken(localStorage.getItem('token'));
         this.getMe()
     }
     getPlaylists() {
@@ -30,7 +32,7 @@ class App extends Component {
             .then((data) => {
                 this.onClickPlaylist(data.body.items[0].owner.id, data.body.items[0].id);
                 this.setState(
-                    { playlists: data.body.items },   
+                    { playlists: data.body.items },
                     () => browserHistory.replace('/app/stream')
                 );
             }, function (err) {
@@ -54,23 +56,37 @@ class App extends Component {
                 this.setState({ tracklist: data.body });
             }, function (err) {
                 console.log('Something went wrong getting clickedtracklist!', err);
-        });
+            });
+    }
+    getTrackAnalysis = (id) => {
+        spotifyApi.getAudioAnalysisForTrack(id)
+            .then(function (data) {
+                console.log(data.body);
+            }, function (err) {
+                done(err);
+            });
+    }
+    activeTrack = (track) => {
+        this.setState({activeTrack: track});
     }
     render() {
         const childrenWithExtraProp = React.Children.map(this.props.children, child => {
             return React.cloneElement(child, {
                 playlists: this.state.playlists,
                 tracklist: this.state.tracklist,
-                onClickPlaylist: this.onClickPlaylist
-            })});
-            return (
-                <div>
-                    <Nav user={this.state.user} />
-                    {childrenWithExtraProp}
-                    <MusicBar />
-                </div>
-            );
-        }
+                onClickPlaylist: this.onClickPlaylist,
+                getTrackAnalysis: this.getTrackAnalysis,
+                activeTrack: this.activeTrack
+            })
+        });
+        return (
+            <div>
+                <Nav user={this.state.user} />
+                {childrenWithExtraProp}
+                <MusicBar activeTrack={this.state.activeTrack} />
+            </div>
+        );
+    }
 }
 
-    export default App;
+export default App;

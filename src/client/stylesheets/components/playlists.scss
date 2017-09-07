@@ -1,83 +1,83 @@
 .playlists-menu {
-    position: fixed;
-    top: $nav-height;
-    background-color: $gray-light;
-    box-shadow: 2px 2px 4px 0px rgba(78, 78, 78, 0.32);
-    padding-right: 0;
-    width: 20% !important;
-    padding-top: 1.5%;
-    padding-bottom: 0;
-    .menu {
-        p.menu-label {
-            font-size: .9em;
-            color: $gray-dark;
-            letter-spacing: .2em;
-            padding-left: 1rem;
-        }
-        .menu-list {
-            max-height: 500px;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            li {
-                height: 36px;
-                border-left: 3px solid transparent;
-                transition: all 0.2s ease-in-out;
-                position: relative;
-                cursor: pointer;
-                .tooltiptext {
-                    visibility: hidden;
-                    position: absolute;
-                    top: 5px;
-                    right: 0px;
-                    background-color: rgba(40, 40, 40, 0.7);
-                    border-radius: 5px;
-                    color: white;
-                    padding: 5px;
-                    box-shadow: 1px 1px 2px 2px rgba(4, 4, 4, 0.1);
-                    z-index: 10;
-                }
-                .tooltiptext::after {
-                    content: " ";
-                    position: absolute;
-                    top: 50%;
-                    right: 100%; /* To the left of the tooltip */
-                    margin-top: -5px;
-                    border-width: 5px;
-                    border-style: solid;
-                    border-color: transparent rgba($gray-dark, 0.7) transparent transparent;
-                }
-                &:hover {
-                    border-left: 3px solid #494949;
-                    background: #E9E9E9;
-                }
-                &:hover .tooltiptext {
-                    visibility: visible;
-                }             
-            }
-            li a {
-                height: 28px;
-                overflow: hidden;
-                padding: 0.6em .75em;
-                border-radius: 0px;
-                border-top: 1px solid rgb(228, 228, 228);
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                &:hover {
-                    background:transparent;
-                }
-                
-            }
-        }
-        .new-playlist {
-            border-top: 1px solid #BABABA;
-            margin-top: 0;
-            padding: 1.2rem 1rem;
-            a {
-                color: $gray-dark;
-                i {
-                    margin-right: 0.5rem;
-                }
-            }
-        }
+  position: fixed;
+  top: $nav-height;
+  background-color: $gray-light;
+  box-shadow: 2px 2px 4px 0px rgba(78, 78, 78, 0.1);
+  padding-right: 0;
+  width: 20% !important;
+  padding-top: 1.5%;
+  padding-bottom: 0;
+  .menu {
+    p.menu-label {
+      font-size: 0.9em;
+      color: $gray-dark;
+      letter-spacing: 0.2em;
+      padding-left: 1rem;
     }
+    .menu-list {
+      height: calc(100vh - 207px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      li {
+        height: 36px;
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        cursor: pointer;
+        .tooltiptext {
+          visibility: hidden;
+          position: absolute;
+          top: 5px;
+          right: 0px;
+          background-color: rgba(40, 40, 40, 0.7);
+          border-radius: 5px;
+          color: white;
+          padding: 5px;
+          box-shadow: 1px 1px 2px 2px rgba(4, 4, 4, 0.1);
+          z-index: 10;
+        }
+        .tooltiptext::after {
+          content: " ";
+          position: absolute;
+          top: 50%;
+          right: 100%; /* To the left of the tooltip */
+          margin-top: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: transparent rgba($gray-dark, 0.7) transparent
+            transparent;
+        }
+        &:hover {
+          border-left: 3px solid #494949;
+          background: #e9e9e9;
+        }
+        &:hover .tooltiptext {
+          visibility: visible;
+        }
+      }
+      li a {
+        height: 28px;
+        overflow: hidden;
+        padding: 0.6em 0.75em;
+        border-radius: 0px;
+        border-top: 1px solid rgb(228, 228, 228);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+          background: transparent;
+        }
+      }
+    }
+    .new-playlist {
+      border-top: 1px solid #bababa;
+      margin-top: 0;
+      padding: 1.2rem 1rem;
+      a {
+        color: $gray-dark;
+        i {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
 }

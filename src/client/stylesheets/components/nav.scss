@@ -1,91 +1,91 @@
 .navbar {
-    background-color: $nav-background-color;
-    height: $nav-height;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.83);
-    .navbar-start {
-        margin-left: 15%;
+  background-color: $nav-background-color;
+  height: $nav-height;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.83);
+  .navbar-start {
+    margin-left: 15%;
+  }
+  .navbar-brand a.navbar-item {
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-size: 19px;
+    &:hover {
+      border-color: transparent;
     }
-    .navbar-brand a.navbar-item {
-        font-weight: bold;
-        letter-spacing: 4px;
-        font-size: 19px;
+  }
+  a.navbar-item {
+    color: $nav-font-color;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1px;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 3px;
+    transition: 0.3s all ease-in-out;
+    &:hover {
+      border-color: white;
+      background-color: transparent;
+      color: $nav-font-color;
+    }
+  }
+  input[type="text"] {
+    align-self: center;
+    width: 200px;
+    border-radius: 0px;
+    transition: 0.3s all ease-in-out;
+    height: 2rem;
+    &:focus {
+      width: 300px;
+      border-color: transparent;
+    }
+  }
+  .navbar-end {
+    img {
+      max-height: 30px;
+      border-radius: 50%;
+    }
+    .user-nav-link {
+      color: $nav-font-color;
+      transition: 0.3s all ease-in-out;
+      letter-spacing: 1px;
+      font-size: 13px;
+      background-color: transparent !important;
+      &:hover {
+        background-color: transparent !important;
+      }
+      &:after {
+        border-color: white;
+        margin-top: -.55em;
+        height: 0.7em;
+        width: 0.7em;
+        right: 0.725em;
+      }
+    }
+    .user-nav-dropdown {
+      padding-bottom: 10px;
+      padding-top: 10px;
+    }
+    .navbar-dropdown {
+      background-color: rgba(64, 64, 64, 0.87);
+      font-size: 0.8rem;
+      border: none;
+      border-radius: 0px;
+      margin-top: 0px;
+      box-shadow: 1px 1px 3px 0px rgba(88, 88, 88, 0.54);
+      &:hover {
+        background-color: rgba(64, 64, 64, 0.67);
+        display: block;
+      }
+      .navbar-item {
+        border-bottom: none;
         &:hover {
-            border-color: transparent;
+          border-bottom: none;
         }
+      }
     }
-    a.navbar-item {
-        color: $nav-font-color;
-        font-weight: 500;
-        font-size: 13px;
-        letter-spacing: 1px;
-        border-bottom: 2px solid transparent;
-        padding-bottom: 3px;
-        transition: 0.3s all ease-in-out;
-        &:hover {
-            border-color: white;
-            background-color: transparent;
-            color: $nav-font-color;
-        }
-    }
-    input[type=text] {
-        align-self: center;
-        width: 200px;
-        border-radius: 0px;
-        transition: 0.3s all ease-in-out;
-        height: 2rem;
-        &:focus {
-            width: 300px;
-            border-color: transparent;
-        }
-    }
-    .navbar-end {
-        img {
-            max-height: 30px;
-            border-radius: 50%;
-        }
-        .user-nav-link {
-            color: $nav-font-color;
-            transition: 0.3s all ease-in-out;
-            letter-spacing: 1px;
-            font-size: 13px;
-            background-color: transparent !important;
-            &:hover {
-                background-color: transparent!important;
-            }
-            &:after {
-                border-color: white;
-                margin-top: -.550em;
-                height: 0.7em;
-                width: 0.7em;
-                right: .725em;
-            }
-        }
-        .user-nav-dropdown {
-            padding-bottom: 10px;
-            padding-top: 10px;
-        }
-        .navbar-dropdown {
-            background-color: rgba(64, 64, 64, 0.87);
-            font-size: 0.8rem; 
-            border: none;
-            border-radius: 0px;
-            margin-top: 0px;
-            box-shadow: 1px 1px 3px 0px rgba(88, 88, 88, 0.54);
-            &:hover {
-                background-color: rgba(64, 64, 64, 0.67);
-                display: block;
-            }
-            .navbar-item {
-                border-bottom: none;
-                &:hover {
-                    border-bottom: none;
-                }
-            }
-        }
-    } 
+  }
 }

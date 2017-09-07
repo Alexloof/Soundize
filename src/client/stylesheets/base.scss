@@ -1,55 +1,55 @@
 body {
-    background-color: $body-background-color;
-    color: $body-default-color;
-    font-family: $body-default-font-familty;
+  background-color: $body-background-color;
+  color: $body-default-color;
+  font-family: $body-default-font-familty;
 }
 
 html {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 a {
-    text-decoration: none;
-    cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 button {
-    transition: 0.3s all cubic-bezier(0.09, 0.97, 0.34, 0.63) !important;
-    cursor: pointer;
+  transition: 0.3s all cubic-bezier(0.09, 0.97, 0.34, 0.63) !important;
+  cursor: pointer;
 }
 
-main, li {
-    display: block;
+main,
+li {
+  display: block;
 }
 
 strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .hidden {
-    opacity: 0 !important;
+  opacity: 0 !important;
 }
 
 #root {
-    margin-top: $nav-height;
+  margin-top: $nav-height;
 }
 
 //nedan är en klass för att göra scrollbar invisible i webkit-browsers som chrome
 .invisible-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
-
 
 // Remove google chromes yellow autofll
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-transition-delay: 9999s!important;
-  -webkit-transition: color 9999s ease-out, background-color 9999s ease-out!important;
+  -webkit-transition-delay: 9999s !important;
+  -webkit-transition: color 9999s ease-out, background-color 9999s ease-out !important;
 }

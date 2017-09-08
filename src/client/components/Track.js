@@ -2,31 +2,18 @@ import React, { Component } from "react"
 import ReactPlayer from "react-player"
 
 class Track extends Component {
-  state = {
-    seeking: false
-  }
   onSeekMouseDown = e => {
     this.setState({ seeking: true })
-
     this.props.onSeekMouseDown()
   }
   onSeekChange = e => {
     this.setState({ played: parseFloat(e.target.value) })
-
     this.props.onSeekChange(parseFloat(e.target.value))
   }
   onSeekMouseUp = e => {
     this.setState({ seeking: false })
-    //this.player.seekTo(parseFloat(e.target.value))
-
     this.props.onSeekMouseUp(parseFloat(e.target.value))
   }
-  // onProgress = state => {
-  //   // We only want to update time slider if we are not currently seeking
-  //   if (!this.state.seeking) {
-  //     this.setState(state)
-  //   }
-  // }
   renderArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {

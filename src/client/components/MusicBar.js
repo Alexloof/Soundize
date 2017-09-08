@@ -19,14 +19,8 @@ class MusicBar extends Component {
     if (props.activeTrack.id !== this.props.activeTrack.id) {
       if (props.activeTrack) {
         this.setState({ activeTrack: props.activeTrack })
-        //this.setState({ playing: true })
       }
     }
-    // if (props.playing === false) {
-    //   this.setState({ playing: false })
-    // } else if (props.playing === true) {
-    //   this.setState({ playing: true })
-    // }
   }
   renderArtists(artists) {
     return artists.map((artist, index) => {
@@ -85,9 +79,28 @@ class MusicBar extends Component {
       </button>
     )
   }
+  trackEnded = () => {
+    setTimeout(() => {
+      this.props.zeroTrack()
+      if (this.state.loop) {
+        this.props.startTrack()
+      }
+    }, 100)
+  }
+  playedTimeColor = () => {
+    let procent = 1.11 * this.props.playedTime
+    let time = this.props.playedTime * 100 * 0.4 - procent
+    return time + "%"
+  }
   render() {
+    let className
+    if (this.props.displayMusicBar) {
+      className = "music-bar display-music-bar"
+    } else {
+      className = "music-bar"
+    }
     return (
-      <div className="music-bar">
+      <div className={className}>
         <div className="container">
           {this.state.activeTrack.album ? (
             <img src={this.state.activeTrack.album.images[0].url} />
@@ -135,17 +148,25 @@ class MusicBar extends Component {
             {(Math.round(this.state.duration * this.props.playedTime) /
               100).toFixed(2)}
           </div>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step="any"
-            //ref={input => (this.props.playedTime = input)}
-            value={this.props.playedTime}
-            onMouseDown={this.onSeekMouseDown}
-            onChange={this.onSeekChange}
-            onMouseUp={this.onSeekMouseUp}
-          />
+          <div className="running-track">
+            <div
+              style={{ width: this.playedTimeColor() }}
+              className="played-color"
+            />
+            <div className="track-color" />
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step="any"
+              //ref={input => (this.props.playedTime = input)}
+              value={this.props.playedTime}
+              onMouseDown={this.onSeekMouseDown}
+              onChange={this.onSeekChange}
+              onMouseUp={this.onSeekMouseUp}
+            />
+          </div>
+
           <div className="time-duration">
             {(Math.round(this.state.duration) / 100).toFixed(2)}
           </div>
@@ -182,15 +203,14 @@ class MusicBar extends Component {
           }
           onError={e => console.log("error", e)}
           onDuration={duration => this.setState({ duration })}
-          //onEnded={() => this.setState({ playing: false })}
+          onEnded={() => this.trackEnded()}
           onProgress={this.onProgress}
           //onPlay={() => this.setState({ playing: true })}
           //onPause={() => this.setState({ playing: false })}
-          //onEnded={() => this.setState({ playing: false })}
           progressFrequency={100}
           volume={this.state.volume}
           muted={this.state.muted}
-          loop={this.state.loop}
+          //loop={this.state.loop}
         />
       </div>
     )

@@ -55,6 +55,13 @@
           visibility: visible;
         }
       }
+      .tooltip.active {
+        border-left: 3px solid $brand-secondary;
+        background-color: #e6e6e6;
+        a {
+          color: $brand-secondary;
+        }
+      }
       li a {
         height: 28px;
         overflow: hidden;

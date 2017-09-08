@@ -1,14 +1,23 @@
 import React, { Component } from "react"
 
 class Playlists extends Component {
+  setActivePlaylist = (owner, id) => {
+    this.props.setActivePlaylist(id)
+    this.props.onClickPlaylist(owner, id)
+  }
   renderPlaylists() {
     return this.props.playlists.map(playlist => {
+      let className
+      if (playlist.id === this.props.activePlaylist) {
+        className = "tooltip active"
+      } else {
+        className = "tooltip"
+      }
       return (
         <li
-          className="tooltip"
+          className={className}
           key={playlist.id}
-          onClick={() =>
-            this.props.onClickPlaylist(playlist.owner.id, playlist.id)}
+          onClick={() => this.setActivePlaylist(playlist.owner.id, playlist.id)}
         >
           <a>
             {playlist.name}

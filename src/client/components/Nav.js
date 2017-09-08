@@ -44,16 +44,32 @@ class Nav extends Component {
 
         <div id="navMenubd-example" className="navbar-menu">
           <div className="navbar-start">
-            <Link className="navbar-item " to="/app/stream">
+            <Link
+              className="navbar-item "
+              to="/app/stream"
+              activeStyle={{ color: "#ff6b42" }}
+            >
               Min Musik
             </Link>
-            <Link className="navbar-item " to="/">
+            <Link
+              className="navbar-item "
+              to="/"
+              activeStyle={{ color: "#ff6b42" }}
+            >
               Utforska
             </Link>
-            <Link className="navbar-item " to="/">
+            <Link
+              className="navbar-item "
+              to="/"
+              activeStyle={{ color: "#ff6b42" }}
+            >
               Nytt
             </Link>
-            <Link className="navbar-item " to="/">
+            <Link
+              className="navbar-item "
+              to="/"
+              activeStyle={{ color: "#ff6b42" }}
+            >
               Topplistor
             </Link>
             <Link onClick={() => this.onLogout()} className="navbar-item">

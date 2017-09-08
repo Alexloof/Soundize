@@ -12,9 +12,10 @@
     color: $gray-light;
     padding: 1rem;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
-    width: 105%;
     position: relative;
-    right: 2.5%;
+    width: 52vw;
+    right: 1vw;
+    transition: 0.3s all;
     .tracklist-banner-info {
       display: flex;
       flex-direction: column;
@@ -69,5 +70,62 @@
   .tracklist-tracks {
     margin-top: 3%;
     margin-right: 3%;
+  }
+  .tracklist-banner.scroll-state {
+    position: fixed;
+    left: 24.5%;
+    bottom: 95vh;
+    transition: 0.3s all ease;
+    width: 50.3vw;
+    z-index: 9;
+    padding: 5px;
+    align-items: center;
+    background-color: rgba(74, 74, 74, 1);
+    .tracklist-img {
+      height: 60px;
+      width: 60px;
+      min-width: 0px !important;
+      img {
+        height: 60px;
+        width: 60px;
+      }
+    }
+
+    .tracklist-banner-info-lower {
+      .small-info {
+        display: none;
+      }
+    }
+    .tracklist-banner-info {
+      flex-direction: row;
+      width: 90%;
+      .large-info {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .menu-label {
+        display: none;
+      }
+      .tracklist-name {
+        font-size: 1.5rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+    .tracklist-banner-btn-group {
+      width: 100px !important;
+      margin-left: 5%;
+      .button {
+        width: 40px !important;
+        overflow: hidden;
+        border-radius: 50px !important;
+        .fa {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .tracklist-banner.scroll-state.scroll-position {
+    bottom: calc(100vh - 122px);
   }
 }

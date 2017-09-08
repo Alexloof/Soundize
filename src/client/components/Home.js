@@ -12,6 +12,8 @@ class Home extends Component {
             <Playlists
               onClickPlaylist={this.props.onClickPlaylist}
               playlists={this.props.playlists}
+              activePlaylist={this.props.activePlaylist}
+              setActivePlaylist={this.props.setActivePlaylist}
             />
           </div>
           <div className="column is-6 tracklist">

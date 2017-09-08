@@ -17,7 +17,9 @@ class App extends Component {
     activeTrack: "",
     playing: false,
     playedTime: 0,
-    seeking: false
+    seeking: false,
+    displayMusicBar: false,
+    activePlaylist: ""
   }
 
   componentDidMount() {
@@ -38,6 +40,7 @@ class App extends Component {
   getPlaylists() {
     spotifyApi.getUserPlaylists(this.state.user.id).then(data => {
       this.onClickPlaylist(data.body.items[0].owner.id, data.body.items[0].id)
+      this.setActivePlaylist(data.body.items[0].id)
       this.setState({ playlists: data.body.items }, () =>
         browserHistory.replace("/app/stream")
       )
@@ -69,6 +72,9 @@ class App extends Component {
       }
     )
   }
+  setActivePlaylist = id => {
+    this.setState({ activePlaylist: id })
+  }
   setActiveTrack = track => {
     this.setState({ activeTrack: track })
   }
@@ -76,7 +82,7 @@ class App extends Component {
     this.setState({ playing: false })
   }
   startActiveTrack = track => {
-    this.setState({ playing: true })
+    this.setState({ playing: true, displayMusicBar: true })
   }
   setPlayedTime = playedTime => {
     this.setState({ playedTime: playedTime.played })
@@ -89,6 +95,9 @@ class App extends Component {
   }
   onSeekMouseUp = e => {
     this.setState({ seeking: false, playedTime: e })
+  }
+  zeroTrack = () => {
+    this.setState({ playedTime: 0, playing: false })
   }
   render() {
     const childrenWithExtraProp = React.Children.map(
@@ -107,7 +116,9 @@ class App extends Component {
           playedTime: this.state.playedTime,
           onSeekMouseDown: this.onSeekMouseDown,
           onSeekChange: this.onSeekChange,
-          onSeekMouseUp: this.onSeekMouseUp
+          onSeekMouseUp: this.onSeekMouseUp,
+          activePlaylist: this.state.activePlaylist,
+          setActivePlaylist: this.setActivePlaylist
         })
       }
     )
@@ -126,6 +137,8 @@ class App extends Component {
           onSeekMouseDown={this.onSeekMouseDown}
           onSeekChange={this.onSeekChange}
           onSeekMouseUp={this.onSeekMouseUp}
+          zeroTrack={this.zeroTrack}
+          displayMusicBar={this.state.displayMusicBar}
         />
       </div>
     )

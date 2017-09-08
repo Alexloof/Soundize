@@ -4,7 +4,29 @@ import Track from "./Track"
 
 class Tracklist extends Component {
   state = {
-    isPlaying: false
+    isPlaying: false,
+    className: "tracklist-banner",
+    scrolled: false
+  }
+  componentDidMount = () => {
+    let scrolled = false
+
+    setInterval(() => {
+      if (window.pageYOffset > 180) {
+        if (scrolled === false) {
+          scrolled = true
+          this.setState({ className: "tracklist-banner scroll-state" })
+          setTimeout(() => {
+            this.setState({
+              className: "tracklist-banner scroll-state scroll-position"
+            })
+          }, 100)
+        }
+      } else {
+        this.setState({ className: "tracklist-banner" })
+        scrolled = false
+      }
+    }, 1000)
   }
 
   renderTracklist() {
@@ -43,9 +65,9 @@ class Tracklist extends Component {
   render() {
     return (
       <div className="menu ">
-        <div className="tracklist-banner">
+        <div className={this.state.className}>
           <div className="tracklist-banner-info">
-            <div>
+            <div className="large-info">
               <p className="menu-label">Spellista</p>
               <p className="tracklist-name title">
                 {this.props.tracklist.name ? (
@@ -56,7 +78,7 @@ class Tracklist extends Component {
               </p>
             </div>
             <div className="tracklist-banner-info-lower">
-              <div>
+              <div className="small-info">
                 <p>
                   Följare:{" "}
                   {this.props.tracklist.followers ? (
@@ -77,9 +99,25 @@ class Tracklist extends Component {
               </div>
               <div className="tracklist-banner-btn-group">
                 <button className="button is-outlined">
-                  {!this.state.isPlaying ? "Spela upp" : "Pausa"}
+                  {this.state.className ===
+                    "tracklist-banner scroll-state scroll-position" ||
+                  this.state.className === "tracklist-banner scroll-state" ? (
+                    <i className="fa fa-play" />
+                  ) : (
+                    "Spela Upp"
+                  )}
                 </button>
-                <button className="button">Följer</button>
+                <button className="button">
+                  {this.state.className ===
+                    "tracklist-banner scroll-state scroll-position" ||
+                  this.state.className === "tracklist-banner scroll-state" ? (
+                    <span className="icon">
+                      <i className="fa fa-navicon" />
+                    </span>
+                  ) : (
+                    "Följer"
+                  )}
+                </button>
               </div>
             </div>
           </div>

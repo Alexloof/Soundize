@@ -71,11 +71,35 @@ class Track extends Component {
   render() {
     return (
       <li className={this.setClassName()}>
-        {this.props.track.track.album.images.length !== 0 ? (
-          <img src={this.props.track.track.album.images[0].url} />
-        ) : (
-          <img />
-        )}
+        <div className="img-wrapper">
+          <div className="img-click-play">
+            {this.props.playing && this.props.activeTrack ? (
+              <button
+                onClick={() => this.stopTrack(this.props.track.track)}
+                className="button play-btn"
+              >
+                <span className="icon">
+                  <i className="fa fa-pause" />
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={() => this.startTrack(this.props.track.track)}
+                className="button play-btn"
+              >
+                <span className="icon">
+                  <i className="fa fa-play" />
+                </span>
+              </button>
+            )}
+          </div>
+          {this.props.track.track.album.images.length !== 0 ? (
+            <img src={this.props.track.track.album.images[0].url} />
+          ) : (
+            <img />
+          )}
+        </div>
+
         <div className="track-info">
           <div className="track-section-higher">
             <div className="artist-label">

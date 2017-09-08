@@ -4,7 +4,7 @@ import Track from "./Track"
 
 class Tracklist extends Component {
   state = {
-    isPlaying: false,
+    //isPlaying: false,
     className: "tracklist-banner",
     scrolled: false
   }
@@ -98,15 +98,28 @@ class Tracklist extends Component {
                 </p>
               </div>
               <div className="tracklist-banner-btn-group">
-                <button className="button is-outlined">
-                  {this.state.className ===
-                    "tracklist-banner scroll-state scroll-position" ||
-                  this.state.className === "tracklist-banner scroll-state" ? (
-                    <i className="fa fa-play" />
-                  ) : (
-                    "Spela Upp"
-                  )}
-                </button>
+                {!this.props.playing ? (
+                  <button className="button is-outlined">
+                    {this.state.className ===
+                      "tracklist-banner scroll-state scroll-position" ||
+                    this.state.className === "tracklist-banner scroll-state" ? (
+                      <i className="fa fa-play" />
+                    ) : (
+                      "Spela Upp"
+                    )}
+                  </button>
+                ) : (
+                  <button className="button is-outlined">
+                    {this.state.className ===
+                      "tracklist-banner scroll-state scroll-position" ||
+                    this.state.className === "tracklist-banner scroll-state" ? (
+                      <i className="fa fa-pause" />
+                    ) : (
+                      "Pausa"
+                    )}
+                  </button>
+                )}
+
                 <button className="button">
                   {this.state.className ===
                     "tracklist-banner scroll-state scroll-position" ||

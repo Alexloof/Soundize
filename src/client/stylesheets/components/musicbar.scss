@@ -9,91 +9,143 @@
   box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.43);
   color: $gray-light;
   transition: 0.5s all ease;
-  .container {
+  .my-container {
+    padding: 0 5%;
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 100%;
-    img {
-      width: $nav-height - 10px;
-      margin-right: 1%;
+    .img-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-right: 3%;
+      width: 21%;
+      img {
+        width: $nav-height - 10px;
+        height: $nav-height - 10px;
+        margin-right: 3%;
+      }
+      .track-info {
+        overflow-x: hidden;
+        white-space: nowrap;
+        .artist-label {
+          font-size: 11px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .track-title {
+          font-size: 12px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
-    .track-info {
-      width: 180px;
-      margin-right: 1%;
-      overflow-x: hidden;
-      white-space: nowrap;
-      .artist-label {
-        font-size: 11px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .track-title {
-        font-size: 12px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-    .step-change-btn {
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      background-color: transparent;
-      border: none;
-      color: $gray-light;
-      .icon {
-        height: 1.4em;
-        width: 1.4em;
-      }
-      &:focus,
-      &:active {
+    .track-controls {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-right: 3%;
+      .step-change-btn {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background-color: transparent;
         border: none;
+        color: $gray-light;
+        .icon {
+          height: 1.4em;
+          width: 1.4em;
+        }
+        &:focus,
+        &:active {
+          border: none;
+        }
+        .fa {
+          font-size: 15px;
+        }
+        .fa.active {
+          color: #52de72;
+        }
       }
-      .fa {
-        font-size: 15px;
-      }
-      .fa.active {
-        color: #52de72;
+      .play-btn {
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        margin: 0 0.5%;
+        .icon {
+          height: 1.2em;
+          width: 1.2em;
+        }
+        &:focus {
+          border-color: #dbdbdb;
+        }
+        .fa {
+          font-size: 14px;
+        }
       }
     }
-    .play-btn {
-      height: 35px;
-      width: 35px;
-      border-radius: 50%;
-      margin: 0 0.5%;
-      .icon {
-        height: 1.2em;
-        width: 1.2em;
-      }
-      &:focus {
-        border-color: #dbdbdb;
-      }
-      .fa {
-        font-size: 14px;
-      }
-    }
-    .time-counter {
-      font-size: 11px;
-      margin-right: 5px;
-      margin-left: 2%;
-    }
-    .time-duration {
-      font-size: 11px;
-      margin-left: 5px;
-    }
-    .running-track {
+    .track-running-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       width: 40%;
+      margin-right: 3%;
+      .time-counter {
+        font-size: 11px;
+        margin-right: 5px;
+      }
+      .time-duration {
+        font-size: 11px;
+        margin-left: 5px;
+      }
+      .running-track {
+        width: 100%;
+        position: relative;
+      }
+      .played-color {
+        height: 3px;
+        background: $brand-secondary;
+        position: absolute;
+        z-index: 10;
+      }
+      .track-color {
+        height: 3px;
+        background: $gray-medium;
+        position: absolute;
+        width: 100%;
+      }
     }
     .sound-options {
-      margin-left: 6%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       .fa {
         font-size: 18px;
         cursor: pointer;
+        margin-right: 10px;
+      }
+      .volume-wrapper {
+        width: 40%;
+        position: relative;
+        .volume-amount-color {
+          height: 2px;
+          background-color: $brand-secondary;
+          position: absolute;
+          z-index: 10;
+        }
+        .volume-color {
+          height: 2px;
+          background-color: $gray-medium;
+          position: absolute;
+          width: 100%;
+        }
       }
       input[type="range"] {
-        width: 50%;
-        padding-bottom: 5px;
-        padding-left: 5px;
+        width: 100%;
+        background-color: transparent;
+        position: relative;
+        z-index: 10;
       }
       input[type="range"]::-webkit-slider-thumb {
         //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
@@ -110,7 +162,7 @@
         width: 100%;
         height: 2px;
         cursor: pointer; //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-        background: $gray-medium;
+        background: transparent;
         border-radius: 50px;
         border: 0px solid #000101;
       }
@@ -225,16 +277,4 @@
 }
 .music-bar.display-music-bar {
   bottom: 0;
-}
-.played-color {
-  height: 3px;
-  background: $brand-secondary;
-  position: absolute;
-  z-index: 10;
-}
-.track-color {
-  height: 3px;
-  background: $gray-medium;
-  position: absolute;
-  width: 40%;
 }

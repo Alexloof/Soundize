@@ -5,9 +5,35 @@
   width: 100%;
   border-left: 2px solid rgba(255, 107, 66, 0);
   padding-left: 3%;
-
-  img {
-    height: 100px;
+  .img-wrapper {
+    min-width: 100px;
+    img {
+      height: 100px;
+    }
+    .img-click-play {
+      height: 100px;
+      width: 100px;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.61);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: 0.3s all ease;
+      .button {
+        border-radius: 50px;
+        height: 40px;
+        width: 40px;
+        border: 1px solid white;
+        background-color: rgba(0, 0, 0, 0.23);
+        .fa {
+          color: white;
+        }
+      }
+    }
+    &:hover .img-click-play {
+      opacity: 1;
+    }
   }
   .track-info {
     padding-left: 10px;

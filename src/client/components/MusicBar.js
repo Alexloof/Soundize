@@ -89,8 +89,12 @@ class MusicBar extends Component {
   }
   playedTimeColor = () => {
     let procent = 1.11 * this.props.playedTime
-    let time = this.props.playedTime * 100 * 0.4 - procent
+    let time = this.props.playedTime * 100 * 1 - procent
     return time + "%"
+  }
+  volumeAmount = () => {
+    let amount = this.state.volume * 100
+    return amount + "%"
   }
   render() {
     let className
@@ -101,75 +105,82 @@ class MusicBar extends Component {
     }
     return (
       <div className={className}>
-        <div className="container">
-          {this.state.activeTrack.album ? (
-            <img src={this.state.activeTrack.album.images[0].url} />
-          ) : (
-            <img />
-          )}
-          <div className="track-info">
-            <p className="artist-label">
-              {this.renderArtists(this.state.activeTrack.artists)}
-            </p>
-            <p className="track-title">{this.state.activeTrack.name}</p>
+        <div className="my-container">
+          <div className="img-info">
+            {this.state.activeTrack.album ? (
+              <img src={this.state.activeTrack.album.images[0].url} />
+            ) : (
+              <img />
+            )}
+            <div className="track-info">
+              <p className="artist-label">
+                {this.renderArtists(this.state.activeTrack.artists)}
+              </p>
+              <p className="track-title">{this.state.activeTrack.name}</p>
+            </div>
           </div>
-          <button
-            onClick={() => console.log("stepBack track")}
-            className="button step-change-btn"
-          >
-            <span className="icon">
-              <i className="fa fa-step-backward" />
-            </span>
-          </button>
+          <div className="track-controls">
+            <button
+              onClick={() => console.log("stepBack track")}
+              className="button step-change-btn"
+            >
+              <span className="icon">
+                <i className="fa fa-step-backward" />
+              </span>
+            </button>
 
-          {this.renderPlayPauseButton()}
+            {this.renderPlayPauseButton()}
 
-          <button
-            onClick={() => console.log("stepForward track")}
-            className="button step-change-btn"
-          >
-            <span className="icon">
-              <i className="fa fa-step-forward" />
-            </span>
-          </button>
-          <button
-            onClick={() => this.setState({ loop: !this.state.loop })}
-            className="button step-change-btn"
-          >
-            <span className="icon">
-              {this.state.loop ? (
-                <i className="fa fa-retweet active" />
-              ) : (
-                <i className="fa fa-retweet" />
-              )}
-            </span>
-          </button>
-          <div className="time-counter">
-            {(Math.round(this.state.duration * this.props.playedTime) /
-              100).toFixed(2)}
+            <button
+              onClick={() => console.log("stepForward track")}
+              className="button step-change-btn"
+            >
+              <span className="icon">
+                <i className="fa fa-step-forward" />
+              </span>
+            </button>
+            <button
+              onClick={() => this.setState({ loop: !this.state.loop })}
+              className="button step-change-btn"
+            >
+              <span className="icon">
+                {this.state.loop ? (
+                  <i className="fa fa-retweet active" />
+                ) : (
+                  <i className="fa fa-retweet" />
+                )}
+              </span>
+            </button>
           </div>
-          <div className="running-track">
-            <div
-              style={{ width: this.playedTimeColor() }}
-              className="played-color"
-            />
-            <div className="track-color" />
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step="any"
-              //ref={input => (this.props.playedTime = input)}
-              value={this.props.playedTime}
-              onMouseDown={this.onSeekMouseDown}
-              onChange={this.onSeekChange}
-              onMouseUp={this.onSeekMouseUp}
-            />
+          <div className="track-running-wrapper">
+            <div className="time-counter">
+              {(Math.round(this.state.duration * this.props.playedTime) /
+                100).toFixed(2)}
+            </div>
+            <div className="running-track">
+              <div
+                style={{ width: this.playedTimeColor() }}
+                className="played-color"
+              />
+              <div className="track-color" />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                //ref={input => (this.props.playedTime = input)}
+                value={this.props.playedTime}
+                onMouseDown={this.onSeekMouseDown}
+                onChange={this.onSeekChange}
+                onMouseUp={this.onSeekMouseUp}
+              />
+            </div>
+
+            <div className="time-duration">
+              {(Math.round(this.state.duration) / 100).toFixed(2)}
+            </div>
           </div>
 
-          <div className="time-duration">
-            {(Math.round(this.state.duration) / 100).toFixed(2)}
-          </div>
           <div className="sound-options">
             <span className="icon" onClick={() => this.toggleMuted()}>
               {!this.state.muted ? (
@@ -178,14 +189,21 @@ class MusicBar extends Component {
                 <i className="fa fa-volume-off" />
               )}
             </span>
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step="any"
-              value={this.state.volume}
-              onChange={this.setVolume}
-            />
+            <div className="volume-wrapper">
+              <div
+                style={{ width: this.volumeAmount() }}
+                className="volume-amount-color"
+              />
+              <div className="volume-color" />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                value={this.state.volume}
+                onChange={this.setVolume}
+              />
+            </div>
           </div>
         </div>
         <ReactPlayer

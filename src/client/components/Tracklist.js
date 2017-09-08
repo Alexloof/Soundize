@@ -19,6 +19,11 @@ class Tracklist extends Component {
               stopActiveTrack={this.props.stopActiveTrack}
               startActiveTrack={this.props.startActiveTrack}
               activeTrack={this.props.activeTrack}
+              playing={this.props.playing}
+              playedTime={this.props.playedTime}
+              onSeekMouseDown={this.props.onSeekMouseDown}
+              onSeekChange={this.props.onSeekChange}
+              onSeekMouseUp={this.props.onSeekMouseUp}
             />
           )
         } else {

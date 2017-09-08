@@ -15,7 +15,9 @@ class App extends Component {
     playlists: "",
     tracklist: "",
     activeTrack: "",
-    playing: ""
+    playing: false,
+    playedTime: 0,
+    seeking: false
   }
 
   componentDidMount() {
@@ -76,6 +78,18 @@ class App extends Component {
   startActiveTrack = track => {
     this.setState({ playing: true })
   }
+  setPlayedTime = playedTime => {
+    this.setState({ playedTime: playedTime.played })
+  }
+  onSeekMouseDown = () => {
+    this.setState({ seeking: true })
+  }
+  onSeekChange = e => {
+    this.setState({ playedTime: e })
+  }
+  onSeekMouseUp = e => {
+    this.setState({ seeking: false, playedTime: e })
+  }
   render() {
     const childrenWithExtraProp = React.Children.map(
       this.props.children,
@@ -88,7 +102,12 @@ class App extends Component {
           setActiveTrack: this.setActiveTrack,
           stopActiveTrack: this.stopActiveTrack,
           startActiveTrack: this.startActiveTrack,
-          activeTrack: this.state.activeTrack
+          activeTrack: this.state.activeTrack,
+          playing: this.state.playing,
+          playedTime: this.state.playedTime,
+          onSeekMouseDown: this.onSeekMouseDown,
+          onSeekChange: this.onSeekChange,
+          onSeekMouseUp: this.onSeekMouseUp
         })
       }
     )
@@ -99,8 +118,14 @@ class App extends Component {
         <MusicBar
           activeTrack={this.state.activeTrack}
           playing={this.state.playing}
-          startTrack={this.startTrack}
-          stopTrack={this.stopTrack}
+          startTrack={this.startActiveTrack}
+          stopTrack={this.stopActiveTrack}
+          setPlayedTime={this.setPlayedTime}
+          playedTime={this.state.playedTime}
+          seeking={this.state.seeking}
+          onSeekMouseDown={this.onSeekMouseDown}
+          onSeekChange={this.onSeekChange}
+          onSeekMouseUp={this.onSeekMouseUp}
         />
       </div>
     )

@@ -22,6 +22,11 @@ class Home extends Component {
                 activeTrack={this.props.activeTrack}
                 stopActiveTrack={this.props.stopActiveTrack}
                 startActiveTrack={this.props.startActiveTrack}
+                playing={this.props.playing}
+                playedTime={this.props.playedTime}
+                onSeekMouseDown={this.props.onSeekMouseDown}
+                onSeekChange={this.props.onSeekChange}
+                onSeekMouseUp={this.props.onSeekMouseUp}
               />
             ) : null}
           </div>

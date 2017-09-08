@@ -3,27 +3,30 @@ import ReactPlayer from "react-player"
 
 class Track extends Component {
   state = {
-    playing: false,
-    duration: 0,
-    played: 0,
-    loaded: 0
+    seeking: false
   }
   onSeekMouseDown = e => {
     this.setState({ seeking: true })
+
+    this.props.onSeekMouseDown()
   }
   onSeekChange = e => {
     this.setState({ played: parseFloat(e.target.value) })
+
+    this.props.onSeekChange(parseFloat(e.target.value))
   }
   onSeekMouseUp = e => {
     this.setState({ seeking: false })
-    this.player.seekTo(parseFloat(e.target.value))
+    //this.player.seekTo(parseFloat(e.target.value))
+
+    this.props.onSeekMouseUp(parseFloat(e.target.value))
   }
-  onProgress = state => {
-    // We only want to update time slider if we are not currently seeking
-    if (!this.state.seeking) {
-      this.setState(state)
-    }
-  }
+  // onProgress = state => {
+  //   // We only want to update time slider if we are not currently seeking
+  //   if (!this.state.seeking) {
+  //     this.setState(state)
+  //   }
+  // }
   renderArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
@@ -34,12 +37,10 @@ class Track extends Component {
     })
   }
   startTrack = track => {
-    this.setState({ playing: true })
     this.props.setActiveTrack(track)
     this.props.startActiveTrack(track)
   }
   stopTrack = track => {
-    this.setState({ playing: false })
     this.props.stopActiveTrack(track)
   }
   setClassName = () => {
@@ -47,6 +48,37 @@ class Track extends Component {
       return "track active-track"
     } else {
       return "track"
+    }
+  }
+  renderStartStopButton = () => {
+    if (this.props.track.track.preview_url !== null) {
+      return this.props.playing && this.props.activeTrack ? (
+        <button
+          onClick={() => this.stopTrack(this.props.track.track)}
+          className="button play-btn"
+        >
+          <span className="icon">
+            <i className="fa fa-pause" />
+          </span>
+        </button>
+      ) : (
+        <button
+          onClick={() => this.startTrack(this.props.track.track)}
+          className="button play-btn"
+        >
+          <span className="icon">
+            <i className="fa fa-play" />
+          </span>
+        </button>
+      )
+    } else {
+      return (
+        <button className="button play-btn">
+          <span className="icon">
+            <i className="fa fa-stop" />
+          </span>
+        </button>
+      )
     }
   }
   render() {
@@ -63,47 +95,30 @@ class Track extends Component {
               {this.renderArtists(this.props.track.track.artists)}
             </div>
             <div className="title-label">{this.props.track.track.name}</div>
-            {Math.round(this.state.duration * this.state.played) === 0 ? (
+            {!this.props.activeTrack ? (
               <div className="time-counter hidden">
-                {(Math.round(this.state.duration * this.state.played) /
-                  100).toFixed(2)}
+                {(Math.round(30 * this.props.playedTime) / 100).toFixed(2)}
               </div>
             ) : (
               <div className="time-counter">
-                {(Math.round(this.state.duration * this.state.played) /
-                  100).toFixed(2)}
+                {(Math.round(30 * (this.props.playedTime || 0)) / 100).toFixed(
+                  2
+                )}
               </div>
             )}
             <div className="time-duration">
-              {(Math.round(this.state.duration) / 100).toFixed(2)}
+              {(Math.round(30) / 100).toFixed(2)}
             </div>
           </div>
           <div className="track-section-lower">
-            {this.state.playing && this.props.activeTrack ? (
-              <button
-                onClick={() => this.stopTrack(this.props.track.track)}
-                className="button play-btn"
-              >
-                <span className="icon">
-                  <i className="fa fa-pause" />
-                </span>
-              </button>
-            ) : (
-              <button
-                onClick={() => this.startTrack(this.props.track.track)}
-                className="button play-btn"
-              >
-                <span className="icon">
-                  <i className="fa fa-play" />
-                </span>
-              </button>
-            )}
+            {this.renderStartStopButton()}
+
             <input
               type="range"
               min={0}
               max={1}
               step="any"
-              value={this.state.played}
+              value={this.props.playedTime || 0}
               onMouseDown={this.onSeekMouseDown}
               onChange={this.onSeekChange}
               onMouseUp={this.onSeekMouseUp}

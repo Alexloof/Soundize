@@ -236,7 +236,7 @@ class MusicBar extends Component {
           onProgress={this.onProgress}
           //onPlay={() => this.setState({ playing: true })}
           //onPause={() => this.setState({ playing: false })}
-          progressFrequency={100}
+          progressFrequency={500}
           volume={this.state.volume}
           muted={this.state.muted}
           //loop={this.state.loop}

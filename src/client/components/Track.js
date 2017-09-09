@@ -69,7 +69,11 @@ class Track extends Component {
     }
   }
   playedTimeColor = () => {
-    return this.props.playedTime * 100 + "%"
+    if (this.props.activeTrack) {
+      return this.props.playedTime * 100 + "%"
+    } else {
+      return 0
+    }
   }
   renderPopularity = () => {
     let pop = Math.round(this.props.track.track.popularity / 10)

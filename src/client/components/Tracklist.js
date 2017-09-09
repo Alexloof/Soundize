@@ -4,29 +4,27 @@ import Track from "./Track"
 
 class Tracklist extends Component {
   state = {
-    //isPlaying: false,
     className: "tracklist-banner",
     scrolled: false
   }
   componentDidMount = () => {
-    let scrolled = false
-
-    setInterval(() => {
-      if (window.pageYOffset > 180) {
-        if (scrolled === false) {
-          scrolled = true
-          this.setState({ className: "tracklist-banner scroll-state" })
-          setTimeout(() => {
-            this.setState({
-              className: "tracklist-banner scroll-state scroll-position"
-            })
-          }, 100)
-        }
-      } else {
-        this.setState({ className: "tracklist-banner" })
-        scrolled = false
-      }
-    }, 1000)
+    // let scrolled = false
+    // setInterval(() => {
+    //   if (window.pageYOffset > 180) {
+    //     if (scrolled === false) {
+    //       scrolled = true
+    //       this.setState({ className: "tracklist-banner scroll-state" })
+    //       setTimeout(() => {
+    //         this.setState({
+    //           className: "tracklist-banner scroll-state scroll-position"
+    //         })
+    //       }, 100)
+    //     }
+    //   } else {
+    //     this.setState({ className: "tracklist-banner" })
+    //     scrolled = false
+    //   }
+    // }, 1000)
   }
 
   renderTracklist() {
@@ -66,6 +64,39 @@ class Tracklist extends Component {
     return (
       <div className="menu ">
         <div className={this.state.className}>
+          <div className="tracklist-scroll-banner">
+            <p className="tracklist-name title">
+              {this.props.tracklist.name ? this.props.tracklist.name : "Låtar"}
+            </p>
+            <div className="tracklist-scroll-banner-right-grp">
+              <div className="tracklist-scroll-btn-grp">
+                {!this.props.playing ? (
+                  <button className="button is-outlined">
+                    <i className="fa fa-play" />
+                  </button>
+                ) : (
+                  <button className="button is-outlined">
+                    <i className="fa fa-pause" />
+                  </button>
+                )}
+                <button className="button">
+                  <span className="icon">
+                    <i className="fa fa-navicon" />
+                  </span>
+                </button>
+              </div>
+              <div className="tracklist-scroll-img">
+                {this.props.tracklist.images ? (
+                  <img
+                    src={
+                      this.props.tracklist.images[0].url ||
+                      this.props.tracklist.images[0].url
+                    }
+                  />
+                ) : null}
+              </div>
+            </div>
+          </div>
           <div className="tracklist-banner-info">
             <div className="large-info">
               <p className="menu-label">Spellista</p>

@@ -58,6 +58,7 @@ class App extends Component {
   onClickPlaylist = (user, id) => {
     spotifyApi.getPlaylist(user, id).then(data => {
       this.setState({ tracklist: data.body })
+      window.scrollTo(0, 0)
     }, function(err) {
       console.log("Something went wrong getting clickedtracklist!", err)
     })

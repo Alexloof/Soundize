@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import ReactPlayer from "react-player"
+import screenfull from "screenfull"
 
 class MusicBar extends Component {
   state = {
@@ -95,6 +96,11 @@ class MusicBar extends Component {
   volumeAmount = () => {
     let amount = this.state.volume * 100
     return amount + "%"
+  }
+  requestFullScreen = e => {
+    if (screenfull.enabled) {
+      screenfull.request()
+    }
   }
   render() {
     let className
@@ -204,6 +210,11 @@ class MusicBar extends Component {
                 onChange={this.setVolume}
               />
             </div>
+          </div>
+          <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
+            <span className="icon">
+              <i className="fa fa-expand" aria-hidden="true" />
+            </span>
           </div>
         </div>
         <ReactPlayer

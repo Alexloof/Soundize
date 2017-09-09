@@ -68,6 +68,19 @@ class Track extends Component {
       )
     }
   }
+  playedTimeColor = () => {
+    return this.props.playedTime * 100 + "%"
+  }
+  renderPopularity = () => {
+    let pop = Math.round(this.props.track.track.popularity / 10)
+    var foo = []
+    for (var i = 1; i <= pop; i++) {
+      foo.push(i)
+    }
+    return foo.map((div, index) => {
+      return <div key={index} className="color-pop" />
+    })
+  }
   render() {
     return (
       <li className={this.setClassName()}>
@@ -102,10 +115,30 @@ class Track extends Component {
 
         <div className="track-info">
           <div className="track-section-higher">
-            <div className="artist-label">
-              {this.renderArtists(this.props.track.track.artists)}
+            <div className="track-details">
+              <div className="artist-label">
+                {this.renderArtists(this.props.track.track.artists)}
+              </div>
+              <div className="title-label">{this.props.track.track.name}</div>
             </div>
-            <div className="title-label">{this.props.track.track.name}</div>
+            <div className="popularity">
+              <div className="bg-pop-wrapper">{this.renderPopularity()}</div>
+              <div className="bg-pop-wrapper">
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+                <div className="bg-pop" />
+              </div>
+            </div>
+          </div>
+          <div className="track-section-lower">
+            {this.renderStartStopButton()}
             {!this.props.activeTrack ? (
               <div className="time-counter hidden">
                 {(Math.round(30 * this.props.playedTime) / 100).toFixed(2)}
@@ -120,20 +153,23 @@ class Track extends Component {
             <div className="time-duration">
               {(Math.round(30) / 100).toFixed(2)}
             </div>
-          </div>
-          <div className="track-section-lower">
-            {this.renderStartStopButton()}
-
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step="any"
-              value={this.props.playedTime || 0}
-              onMouseDown={this.onSeekMouseDown}
-              onChange={this.onSeekChange}
-              onMouseUp={this.onSeekMouseUp}
-            />
+            <div className="running-track">
+              <div
+                style={{ width: this.playedTimeColor() }}
+                className="played-color"
+              />
+              <div className="track-color" />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                value={this.props.playedTime || 0}
+                onMouseDown={this.onSeekMouseDown}
+                onChange={this.onSeekChange}
+                onMouseUp={this.onSeekMouseUp}
+              />
+            </div>
           </div>
         </div>
       </li>

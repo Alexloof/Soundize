@@ -21,6 +21,7 @@
     "react-player": "^0.21.0",
     "react-router": "^2.8.1",
     "react-scripts": "1.0.12",
+    "screenfull": "^3.3.1",
     "spotify-web-api-node": "^2.4.0",
     "style-loader": "^0.13.1"
   },

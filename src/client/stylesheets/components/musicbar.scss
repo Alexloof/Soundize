@@ -9,6 +9,7 @@
   box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.43);
   color: $gray-light;
   transition: 0.5s all ease;
+  z-index: 9;
   .my-container {
     padding: 0 5%;
     display: flex;
@@ -184,6 +185,11 @@
         background: $gray-light;
         cursor: pointer;
         height: 3px;
+      }
+    }
+    .fullscreen {
+      .fa {
+        font-size: 18px;
       }
     }
     video {

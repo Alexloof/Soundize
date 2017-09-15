@@ -2,6 +2,7 @@ import React, { Component } from "react"
 
 import Tracklist from "./Tracklist"
 import Playlists from "./Playlists"
+import ExtraInfolist from "./ExtraInfolist"
 
 class Home extends Component {
   render() {
@@ -12,6 +13,7 @@ class Home extends Component {
             <Playlists
               onClickPlaylist={this.props.onClickPlaylist}
               playlists={this.props.playlists}
+              featuredPlaylists={this.props.featuredPlaylists}
               activePlaylist={this.props.activePlaylist}
               setActivePlaylist={this.props.setActivePlaylist}
             />
@@ -31,6 +33,9 @@ class Home extends Component {
                 onSeekMouseUp={this.props.onSeekMouseUp}
               />
             ) : null}
+          </div>
+          <div className="column extra-infolist">
+            <ExtraInfolist latestPlayed={this.props.latestPlayed} />
           </div>
         </div>
       </div>

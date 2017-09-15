@@ -13,13 +13,15 @@ class App extends Component {
     token: "",
     user: "",
     playlists: "",
+    featuredPlaylists: "",
     tracklist: "",
     activeTrack: "",
     playing: false,
     playedTime: 0,
     seeking: false,
     displayMusicBar: false,
-    activePlaylist: ""
+    activePlaylist: "",
+    latestPlayed: []
   }
 
   componentDidMount() {
@@ -27,11 +29,11 @@ class App extends Component {
     if (
       !localStorage.getItem("token") ||
       (localStorage.getItem("token") !==
-        this.props.location.hash.slice(14, -44) &&
+        this.props.location.hash.slice(14, -34) &&
         this.props.location.hash)
     ) {
       console.log("Ny token")
-      let newHash = this.props.location.hash.slice(14, -44)
+      let newHash = this.props.location.hash.slice(14, -34)
       localStorage.setItem("token", newHash)
     }
     spotifyApi.setAccessToken(localStorage.getItem("token"))
@@ -47,6 +49,7 @@ class App extends Component {
     }, function(err) {
       console.log("Something went wrong getting playlists!", err)
     })
+    this.getFeaturedPlaylists(new Date().toISOString())
   }
   getMe() {
     spotifyApi.getMe().then(data => {
@@ -63,6 +66,48 @@ class App extends Component {
       console.log("Something went wrong getting clickedtracklist!", err)
     })
   }
+  createPlaylist = () => {
+    spotifyApi
+      .createPlaylist(this.state.user.id, "My Cool Playlist", { public: true })
+      .then(
+        function(data) {
+          console.log("Created playlist!")
+        },
+        function(err) {
+          console.log("Something went wrong!", err)
+        }
+      )
+  }
+  addTrackToPlaylist = (playlistId, spotifyTrackId) => {
+    spotifyApi
+      .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyTrackId])
+      .then(
+        function(data) {
+          console.log("Added tracks to playlist!")
+        },
+        function(err) {
+          console.log("Something went wrong!", err)
+        }
+      )
+  }
+  getFeaturedPlaylists = time => {
+    spotifyApi
+      .getFeaturedPlaylists({
+        limit: 5,
+        offset: 0,
+        country: "SE",
+        locale: "sv_SE",
+        timestamp: time
+      })
+      .then(
+        data => {
+          this.setState({ featuredPlaylists: data.body.playlists.items })
+        },
+        function(err) {
+          console.log("Something went wrong!", err)
+        }
+      )
+  }
   getTrackAnalysis = id => {
     spotifyApi.getAudioAnalysisForTrack(id).then(
       function(data) {
@@ -77,13 +122,26 @@ class App extends Component {
     this.setState({ activePlaylist: id })
   }
   setActiveTrack = track => {
-    this.setState({ activeTrack: track })
+    if (this.state.activeTrack.id !== track.id) {
+      this.setState({ playedTime: 0 })
+      this.setState({ activeTrack: track })
+    }
   }
   stopActiveTrack = track => {
     this.setState({ playing: false })
   }
   startActiveTrack = track => {
-    this.setState({ playing: true, displayMusicBar: true })
+    this.setState({
+      playing: true,
+      displayMusicBar: true
+    })
+    if (this.state.latestPlayed.length > 0) {
+      if (this.state.latestPlayed[0].id !== track.id) {
+        this.setState({ latestPlayed: [track, ...this.state.latestPlayed] })
+      }
+    } else {
+      this.setState({ latestPlayed: [track] })
+    }
   }
   setPlayedTime = playedTime => {
     this.setState({ playedTime: playedTime.played })
@@ -106,6 +164,7 @@ class App extends Component {
       child => {
         return React.cloneElement(child, {
           playlists: this.state.playlists,
+          featuredPlaylists: this.state.featuredPlaylists,
           tracklist: this.state.tracklist,
           onClickPlaylist: this.onClickPlaylist,
           getTrackAnalysis: this.getTrackAnalysis,
@@ -119,7 +178,8 @@ class App extends Component {
           onSeekChange: this.onSeekChange,
           onSeekMouseUp: this.onSeekMouseUp,
           activePlaylist: this.state.activePlaylist,
-          setActivePlaylist: this.setActivePlaylist
+          setActivePlaylist: this.setActivePlaylist,
+          latestPlayed: this.state.latestPlayed
         })
       }
     )

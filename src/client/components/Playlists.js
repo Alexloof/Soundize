@@ -5,8 +5,8 @@ class Playlists extends Component {
     this.props.setActivePlaylist(id)
     this.props.onClickPlaylist(owner, id)
   }
-  renderPlaylists() {
-    return this.props.playlists.map(playlist => {
+  renderPlaylists(playlists) {
+    return playlists.map(playlist => {
       let className
       if (playlist.id === this.props.activePlaylist) {
         className = "tooltip active"
@@ -32,16 +32,27 @@ class Playlists extends Component {
 
   render() {
     return (
-      <aside className="menu ">
-        <p className="menu-label">Spellistor</p>
-        <ul className="menu-list">
-          {this.props.playlists ? this.renderPlaylists() : null}
-        </ul>
-        <p className="menu-label new-playlist">
-          <a>
-            <i className="fa fa-chevron-up" aria-hidden="true" />Ny spellista
-          </a>
+      <aside className="menu">
+        <p className="menu-label top-label">
+          <span>Mina Spellistor</span>
+          <i className="fa fa-plus" aria-hidden="true" />
         </p>
+        <ul className="menu-list my-playlists invisible-scrollbar">
+          {this.props.playlists ? (
+            this.renderPlaylists(this.props.playlists)
+          ) : null}
+        </ul>
+        <p
+          className="menu-label"
+          style={{ marginTop: "30px", marginBottom: "10px" }}
+        >
+          Spellistor för dig
+        </p>
+        <ul className="menu-list featured-playlists">
+          {this.props.featuredPlaylists ? (
+            this.renderPlaylists(this.props.featuredPlaylists)
+          ) : null}
+        </ul>
       </aside>
     )
   }

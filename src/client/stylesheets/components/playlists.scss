@@ -7,15 +7,34 @@
   width: 20% !important;
   padding-top: 1.5%;
   padding-bottom: 0;
+  height: 100%;
   .menu {
+    .top-label {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      margin-bottom: 10px;
+      i {
+        margin-right: 1.5rem;
+        color: #484848;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+    }
     p.menu-label {
       font-size: 0.9em;
-      color: $gray-dark;
+      color: #484848;
       letter-spacing: 0.2em;
       padding-left: 1rem;
+      font-weight: bold;
+    }
+    .my-playlists {
+      max-height: 52%;
+    }
+    .featured-playlists {
+      height: 200px;
     }
     .menu-list {
-      height: calc(100vh - 207px);
       overflow-y: auto;
       overflow-x: hidden;
       li {
@@ -70,19 +89,9 @@
         border-top: 1px solid rgb(228, 228, 228);
         text-overflow: ellipsis;
         white-space: nowrap;
+        letter-spacing: 0.5;
         &:hover {
           background: transparent;
-        }
-      }
-    }
-    .new-playlist {
-      border-top: 1px solid #bababa;
-      margin-top: 0;
-      padding: 1.2rem 1rem;
-      a {
-        color: $gray-dark;
-        i {
-          margin-right: 0.5rem;
         }
       }
     }

@@ -7,15 +7,26 @@
   .tracklist-scroll-banner {
     height: 60px;
     position: fixed;
-    width: 51%;
+    width: 50.2vw;
     background-color: rgba(74, 74, 74, 1);
     z-index: 9;
-    top: 52px;
+    top: -52px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding: 5px;
+    white-space: nowrap;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.36);
+    transition: 0.3s all ease;
+    .tracklist-name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      max-width: 69%;
+      padding-left: 1%;
+    }
     .tracklist-scroll-banner-right-grp {
       display: flex;
       flex-direction: row;
@@ -26,7 +37,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 50%;
+        width: 60%;
         .button {
           border: 1px solid $gray-light;
           background-color: $gray-lightdark;
@@ -50,6 +61,9 @@
         }
       }
     }
+  }
+  .tracklist-scroll-banner.banner-show {
+    top: 52px;
   }
   .tracklist-banner {
     display: flex;
@@ -117,61 +131,61 @@
   .tracklist-tracks {
     margin-top: 1.5%;
   }
-  .tracklist-banner.scroll-state {
-    position: fixed;
-    left: 24.5%;
-    bottom: 95vh;
-    transition: 0.3s all ease;
-    width: 50.3vw;
-    z-index: 9;
-    padding: 5px;
-    align-items: center;
-    background-color: rgba(74, 74, 74, 1);
-    .tracklist-img {
-      height: 50px;
-      width: 50px;
-      min-width: 0px !important;
-      img {
-        height: 50px;
-        width: 50px;
-      }
-    }
+  // .tracklist-banner.scroll-state {
+  //   position: fixed;
+  //   left: 24.5%;
+  //   bottom: 95vh;
+  //   transition: 0.3s all ease;
+  //   width: 50.3vw;
+  //   z-index: 9;
+  //   padding: 5px;
+  //   align-items: center;
+  //   background-color: rgba(74, 74, 74, 1);
+  //   .tracklist-img {
+  //     height: 50px;
+  //     width: 50px;
+  //     min-width: 0px !important;
+  //     img {
+  //       height: 50px;
+  //       width: 50px;
+  //     }
+  //   }
 
-    .tracklist-banner-info-lower {
-      .small-info {
-        display: none;
-      }
-    }
-    .tracklist-banner-info {
-      flex-direction: row;
-      width: 90%;
-      .large-info {
-        overflow: hidden;
-        white-space: nowrap;
-      }
-      .menu-label {
-        display: none;
-      }
-      .tracklist-name {
-        font-size: 1.5rem;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-    }
-    .tracklist-banner-btn-group {
-      width: 100px !important;
-      margin-left: 5%;
-      .button {
-        width: 40px !important;
-        overflow: hidden;
-        border-radius: 50px !important;
-        .fa {
-          font-size: 14px;
-        }
-      }
-    }
-  }
-  .tracklist-banner.scroll-state.scroll-position {
-    bottom: calc(100vh - 112px);
-  }
+  //   .tracklist-banner-info-lower {
+  //     .small-info {
+  //       display: none;
+  //     }
+  //   }
+  //   .tracklist-banner-info {
+  //     flex-direction: row;
+  //     width: 90%;
+  //     .large-info {
+  //       overflow: hidden;
+  //       white-space: nowrap;
+  //     }
+  //     .menu-label {
+  //       display: none;
+  //     }
+  //     .tracklist-name {
+  //       font-size: 1.5rem;
+  //       text-overflow: ellipsis;
+  //       overflow: hidden;
+  //     }
+  //   }
+  //   .tracklist-banner-btn-group {
+  //     width: 100px !important;
+  //     margin-left: 5%;
+  //     .button {
+  //       width: 40px !important;
+  //       overflow: hidden;
+  //       border-radius: 50px !important;
+  //       .fa {
+  //         font-size: 14px;
+  //       }
+  //     }
+  //   }
+  // }
+  // .tracklist-banner.scroll-state.scroll-position {
+  //   bottom: calc(100vh - 112px);
+  // }
 }

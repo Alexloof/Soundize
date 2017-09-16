@@ -2,11 +2,46 @@ import React, { Component } from "react"
 import FlipMove from "react-flip-move"
 
 class ExtraInfolist extends Component {
+  startTrack = track => {
+    this.props.setActiveTrack(track)
+    this.props.startActiveTrack(track)
+  }
+  renderArtists(artists) {
+    return artists.map((artist, index) => {
+      if (index + 1 === artists.length) {
+        return artist.name
+      } else {
+        return artist.name + ", "
+      }
+    })
+  }
   renderLatestPlayed = tracks => {
     return tracks.map((track, index) => {
       return (
         <li key={index}>
-          <a>{track.name}</a>
+          <div className="left-grp">
+            {track.album.images.length !== 0 ? (
+              <img src={track.album.images[0].url} />
+            ) : (
+              <img />
+            )}
+            <div className="track-info">
+              <div className="artist-label">
+                {this.renderArtists(track.artists)}
+              </div>
+              <div className="title-label">{track.name}</div>
+            </div>
+          </div>
+          <div className="right-grp">
+            <button
+              onClick={() => this.startTrack(track)}
+              className="button play-btn"
+            >
+              <span className="icon">
+                <i className="fa fa-play" />
+              </span>
+            </button>
+          </div>
         </li>
       )
     })

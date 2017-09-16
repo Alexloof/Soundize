@@ -5,6 +5,15 @@ import Playlists from "./Playlists"
 import ExtraInfolist from "./ExtraInfolist"
 
 class Home extends Component {
+  state = {
+    modalClassName: "modal create-playlist-modal"
+  }
+  closeModal = () => {
+    this.setState({ modalClassName: "modal create-playlist-modal" })
+  }
+  openModal = () => {
+    this.setState({ modalClassName: "modal create-playlist-modal is-active" })
+  }
   render() {
     return (
       <div>
@@ -16,6 +25,7 @@ class Home extends Component {
               featuredPlaylists={this.props.featuredPlaylists}
               activePlaylist={this.props.activePlaylist}
               setActivePlaylist={this.props.setActivePlaylist}
+              onOpenCreatePlaylistModal={this.openModal}
             />
           </div>
           <div className="column is-6 tracklist">
@@ -35,8 +45,21 @@ class Home extends Component {
             ) : null}
           </div>
           <div className="column extra-infolist">
-            <ExtraInfolist latestPlayed={this.props.latestPlayed} />
+            <ExtraInfolist
+              latestPlayed={this.props.latestPlayed}
+              startActiveTrack={this.props.startActiveTrack}
+              setActiveTrack={this.props.setActiveTrack}
+            />
           </div>
+        </div>
+        <div className={this.state.modalClassName}>
+          <div onClick={() => this.closeModal()} className="modal-background" />
+          <div className="modal-content">Hej</div>
+          <button
+            onClick={() => this.closeModal()}
+            className="modal-close is-large"
+            aria-label="close"
+          />
         </div>
       </div>
     )

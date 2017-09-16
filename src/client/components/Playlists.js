@@ -35,7 +35,11 @@ class Playlists extends Component {
       <aside className="menu">
         <p className="menu-label top-label">
           <span>Mina Spellistor</span>
-          <i className="fa fa-plus" aria-hidden="true" />
+          <i
+            onClick={() => this.props.onOpenCreatePlaylistModal()}
+            className="fa fa-plus"
+            aria-hidden="true"
+          />
         </p>
         <ul className="menu-list my-playlists invisible-scrollbar">
           {this.props.playlists ? (

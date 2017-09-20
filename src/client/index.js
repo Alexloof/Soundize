@@ -1,19 +1,19 @@
-import React from "react"
-import ReactDOM from "react-dom"
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {
   Router,
   Route,
   hashHistory,
   IndexRoute,
   browserHistory
-} from "react-router"
+} from 'react-router'
 
-import App from "./components/App"
-import Home from "./components/Home"
-import Login from "./components/Login"
-import Stream from "./components/Stream"
+import App from './components/App'
+import Home from './components/Home'
+import Login from './components/Login'
+import Stream from './components/Stream'
 
-import "./stylesheets/main.scss"
+import './stylesheets/main.scss'
 
 const Root = () => {
   return (
@@ -30,4 +30,4 @@ const Root = () => {
   )
 }
 
-ReactDOM.render(<Root />, document.querySelector("#root"))
+ReactDOM.render(<Root />, document.querySelector('#root'))

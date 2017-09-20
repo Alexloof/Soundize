@@ -1,8 +1,60 @@
 .modal {
   .modal-background {
-    background-color: rgba(10, 10, 10, 0.63);
+    background-color: rgba(10, 10, 10, 0.73);
   }
   .modal-content {
-    background-color: white;
+    background-color: $gray-light;
+    padding: 10px 30px;
+    width: 440px;
+    box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.17);
+    .title {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .field {
+      margin-bottom: 10px;
+      input {
+        border-radius: 0px;
+        box-shadow: none;
+        height: 2.7em;
+        background-color: #fbfbfb;
+        &:active {
+          border-color: $brand-secondary;
+        }
+        &:focus {
+          border-color: $brand-secondary;
+        }
+      }
+      textarea {
+        border-radius: 0px;
+        box-shadow: none;
+        background-color: #fbfbfb;
+        &:active {
+          border-color: $brand-secondary;
+        }
+        &:focus {
+          border-color: $brand-secondary;
+        }
+      }
+      .button {
+        border: 1px solid $gray-lightdark;
+        background-color: white;
+        color: $gray-lightdark;
+        text-transform: uppercase;
+        font-size: 11px;
+        width: 100px;
+        letter-spacing: 2px;
+        height: 30px;
+        border-radius: 0px;
+      }
+      .button.is-primary {
+        background-color: $brand-secondary;
+        color: $gray-light;
+        border: 1px solid transparent;
+        &:hover {
+          border: 1px solid $gray-lightdark;
+        }
+      }
+    }
   }
 }

@@ -1,42 +1,42 @@
-import React, { Component } from "react"
-import { Link } from "react-router"
-var SpotifyWebApi = require("spotify-web-api-node")
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi()
 
-import { browserHistory } from "react-router"
+import { browserHistory } from 'react-router'
 
-import Nav from "./Nav"
-import MusicBar from "./MusicBar"
+import Nav from './Nav'
+import MusicBar from './MusicBar'
 
 class App extends Component {
   state = {
-    token: "",
-    user: "",
-    playlists: "",
-    featuredPlaylists: "",
-    tracklist: "",
-    activeTrack: "",
+    token: '',
+    user: '',
+    playlists: '',
+    featuredPlaylists: '',
+    tracklist: '',
+    activeTrack: '',
     playing: false,
     playedTime: 0,
     seeking: false,
     displayMusicBar: false,
-    activePlaylist: "",
+    activePlaylist: '',
     latestPlayed: []
   }
 
   componentDidMount() {
-    console.log(localStorage.getItem("token"))
+    console.log(localStorage.getItem('token'))
     if (
-      !localStorage.getItem("token") ||
-      (localStorage.getItem("token") !==
+      !localStorage.getItem('token') ||
+      (localStorage.getItem('token') !==
         this.props.location.hash.slice(14, -34) &&
         this.props.location.hash)
     ) {
-      console.log("Ny token")
+      console.log('Ny token')
       let newHash = this.props.location.hash.slice(14, -34)
-      localStorage.setItem("token", newHash)
+      localStorage.setItem('token', newHash)
     }
-    spotifyApi.setAccessToken(localStorage.getItem("token"))
+    spotifyApi.setAccessToken(localStorage.getItem('token'))
     this.getMe()
   }
   getPlaylists() {
@@ -44,10 +44,10 @@ class App extends Component {
       this.onClickPlaylist(data.body.items[0].owner.id, data.body.items[0].id)
       this.setActivePlaylist(data.body.items[0].id)
       this.setState({ playlists: data.body.items }, () =>
-        browserHistory.replace("/app/stream")
+        browserHistory.replace('/app/stream')
       )
     }, function(err) {
-      console.log("Something went wrong getting playlists!", err)
+      console.log('Something went wrong getting playlists!', err)
     })
     this.getFeaturedPlaylists(new Date().toISOString())
   }
@@ -55,7 +55,7 @@ class App extends Component {
     spotifyApi.getMe().then(data => {
       this.setState({ user: data.body }, () => this.getPlaylists())
     }, function(err) {
-      console.log("Something went wrong getting user details!", err)
+      console.log('Something went wrong getting user details!', err)
     })
   }
   onClickPlaylist = (user, id) => {
@@ -63,18 +63,18 @@ class App extends Component {
       this.setState({ tracklist: data.body })
       window.scrollTo(0, 0)
     }, function(err) {
-      console.log("Something went wrong getting clickedtracklist!", err)
+      console.log('Something went wrong getting clickedtracklist!', err)
     })
   }
-  createPlaylist = () => {
+  createPlaylist = (name, desc) => {
     spotifyApi
-      .createPlaylist(this.state.user.id, "My Cool Playlist", { public: true })
+      .createPlaylist(this.state.user.id, name, { public: true })
       .then(
-        function(data) {
-          console.log("Created playlist!")
+        data => {
+          this.getPlaylists()
         },
         function(err) {
-          console.log("Something went wrong!", err)
+          console.log('Something went wrong!', err)
         }
       )
   }
@@ -83,10 +83,10 @@ class App extends Component {
       .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyTrackId])
       .then(
         function(data) {
-          console.log("Added tracks to playlist!")
+          console.log('Added tracks to playlist!')
         },
         function(err) {
-          console.log("Something went wrong!", err)
+          console.log('Something went wrong!', err)
         }
       )
   }
@@ -95,8 +95,8 @@ class App extends Component {
       .getFeaturedPlaylists({
         limit: 5,
         offset: 0,
-        country: "SE",
-        locale: "sv_SE",
+        country: 'SE',
+        locale: 'sv_SE',
         timestamp: time
       })
       .then(
@@ -104,7 +104,7 @@ class App extends Component {
           this.setState({ featuredPlaylists: data.body.playlists.items })
         },
         function(err) {
-          console.log("Something went wrong!", err)
+          console.log('Something went wrong!', err)
         }
       )
   }
@@ -179,7 +179,8 @@ class App extends Component {
           onSeekMouseUp: this.onSeekMouseUp,
           activePlaylist: this.state.activePlaylist,
           setActivePlaylist: this.setActivePlaylist,
-          latestPlayed: this.state.latestPlayed
+          latestPlayed: this.state.latestPlayed,
+          createPlaylist: this.createPlaylist
         })
       }
     )

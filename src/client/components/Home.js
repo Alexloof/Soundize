@@ -1,18 +1,23 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 
-import Tracklist from "./Tracklist"
-import Playlists from "./Playlists"
-import ExtraInfolist from "./ExtraInfolist"
+import Tracklist from './Tracklist'
+import Playlists from './Playlists'
+import ExtraInfolist from './ExtraInfolist'
+import CreateNewPlaylistModal from './modals/CreateNewPlaylistModal'
 
 class Home extends Component {
   state = {
-    modalClassName: "modal create-playlist-modal"
+    modalClassName: 'modal create-playlist-modal'
   }
   closeModal = () => {
-    this.setState({ modalClassName: "modal create-playlist-modal" })
+    this.setState({ modalClassName: 'modal create-playlist-modal' })
   }
   openModal = () => {
-    this.setState({ modalClassName: "modal create-playlist-modal is-active" })
+    this.setState({ modalClassName: 'modal create-playlist-modal is-active' })
+  }
+  createPlaylist = (name, desc) => {
+    this.props.createPlaylist(name, desc)
+    this.closeModal()
   }
   render() {
     return (
@@ -53,12 +58,9 @@ class Home extends Component {
           </div>
         </div>
         <div className={this.state.modalClassName}>
-          <div onClick={() => this.closeModal()} className="modal-background" />
-          <div className="modal-content">Hej</div>
-          <button
-            onClick={() => this.closeModal()}
-            className="modal-close is-large"
-            aria-label="close"
+          <CreateNewPlaylistModal
+            createPlaylist={(name, desc) => this.createPlaylist(name, desc)}
+            closeModal={this.closeModal}
           />
         </div>
       </div>

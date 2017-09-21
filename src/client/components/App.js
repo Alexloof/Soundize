@@ -78,6 +78,20 @@ class App extends Component {
         }
       )
   }
+  unfollowActivePlaylist = (user, playlistId) => {
+    spotifyApi.unfollowPlaylist(user, playlistId).then(data => {
+      this.getPlaylists()
+    }, function(err) {
+      console.log('Something went wrong!', err)
+    })
+  }
+  deleteActivePlaylist = id => {
+    spotifyApi.unfollowPlaylist(this.state.user.id, id).then(data => {
+      this.getPlaylists()
+    }, function(err) {
+      console.log('Something went wrong!', err)
+    })
+  }
   addTrackToPlaylist = (playlistId, spotifyTrackId) => {
     spotifyApi
       .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyTrackId])
@@ -180,7 +194,10 @@ class App extends Component {
           activePlaylist: this.state.activePlaylist,
           setActivePlaylist: this.setActivePlaylist,
           latestPlayed: this.state.latestPlayed,
-          createPlaylist: this.createPlaylist
+          createPlaylist: this.createPlaylist,
+          me: this.state.user,
+          unfollowActivePlaylist: this.unfollowActivePlaylist,
+          deleteActivePlaylist: this.deleteActivePlaylist
         })
       }
     )

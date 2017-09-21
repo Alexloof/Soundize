@@ -1,12 +1,12 @@
-import React, { Component } from "react"
-import ReactPlayer from "react-player"
-import screenfull from "screenfull"
+import React, { Component } from 'react'
+import ReactPlayer from 'react-player'
+import screenfull from 'screenfull'
 
 class MusicBar extends Component {
   state = {
     activeTrack: {
       artists: [],
-      album: ""
+      album: ''
     },
     playing: false,
     duration: 0,
@@ -28,7 +28,7 @@ class MusicBar extends Component {
       if (index + 1 === artists.length) {
         return artist.name
       } else {
-        return artist.name + ", "
+        return artist.name + ', '
       }
     })
   }
@@ -91,11 +91,11 @@ class MusicBar extends Component {
   playedTimeColor = () => {
     let procent = 1.11 * this.props.playedTime
     let time = this.props.playedTime * 100 * 1 - procent
-    return time + "%"
+    return time + '%'
   }
   volumeAmount = () => {
     let amount = this.state.volume * 100
-    return amount + "%"
+    return amount + '%'
   }
   requestFullScreen = e => {
     if (screenfull.enabled) {
@@ -105,9 +105,9 @@ class MusicBar extends Component {
   render() {
     let className
     if (this.props.displayMusicBar) {
-      className = "music-bar display-music-bar"
+      className = 'music-bar display-music-bar'
     } else {
-      className = "music-bar"
+      className = 'music-bar'
     }
     return (
       <div className={className}>
@@ -127,7 +127,7 @@ class MusicBar extends Component {
           </div>
           <div className="track-controls">
             <button
-              onClick={() => console.log("stepBack track")}
+              onClick={() => console.log('stepBack track')}
               className="button step-change-btn"
             >
               <span className="icon">
@@ -138,7 +138,7 @@ class MusicBar extends Component {
             {this.renderPlayPauseButton()}
 
             <button
-              onClick={() => console.log("stepForward track")}
+              onClick={() => console.log('stepForward track')}
               className="button step-change-btn"
             >
               <span className="icon">
@@ -230,16 +230,13 @@ class MusicBar extends Component {
               this.state.activeTrack.preview_url
             ) : null
           }
-          onError={e => console.log("error", e)}
+          onError={e => console.log('error', e)}
           onDuration={duration => this.setState({ duration })}
           onEnded={() => this.trackEnded()}
           onProgress={this.onProgress}
-          //onPlay={() => this.setState({ playing: true })}
-          //onPause={() => this.setState({ playing: false })}
           progressFrequency={500}
           volume={this.state.volume}
           muted={this.state.muted}
-          //loop={this.state.loop}
         />
       </div>
     )

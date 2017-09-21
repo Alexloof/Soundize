@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import ReactPlayer from "react-player"
+import React, { Component } from 'react'
+import ReactPlayer from 'react-player'
 
 class Track extends Component {
   onSeekMouseDown = e => {
@@ -19,7 +19,7 @@ class Track extends Component {
       if (index + 1 === artists.length) {
         return artist.name
       } else {
-        return artist.name + ", "
+        return artist.name + ', '
       }
     })
   }
@@ -32,9 +32,9 @@ class Track extends Component {
   }
   setClassName = () => {
     if (this.props.activeTrack) {
-      return "track active-track"
+      return 'track active-track'
     } else {
-      return "track"
+      return 'track'
     }
   }
   renderStartStopButton = () => {
@@ -70,7 +70,7 @@ class Track extends Component {
   }
   playedTimeColor = () => {
     if (this.props.activeTrack) {
-      return this.props.playedTime * 100 + "%"
+      return this.props.playedTime * 100 + '%'
     } else {
       return 0
     }
@@ -125,19 +125,26 @@ class Track extends Component {
               </div>
               <div className="title-label">{this.props.track.track.name}</div>
             </div>
-            <div className="popularity">
-              <div className="bg-pop-wrapper">{this.renderPopularity()}</div>
-              <div className="bg-pop-wrapper">
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
-                <div className="bg-pop" />
+            <div className="track-section-higher-right-grp">
+              <div className="popularity">
+                <div className="bg-pop-wrapper">{this.renderPopularity()}</div>
+                <div className="bg-pop-wrapper">
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                  <div className="bg-pop" />
+                </div>
+              </div>
+              <div className="track-mini-meny">
+                <i className="fa fa-circle" aria-hidden="true" />
+                <i className="fa fa-circle" aria-hidden="true" />
+                <i className="fa fa-circle" aria-hidden="true" />
               </div>
             </div>
           </div>

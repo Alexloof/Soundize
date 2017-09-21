@@ -49,7 +49,6 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
       .track-details {
         display: flex;
         flex-direction: column;
@@ -61,24 +60,41 @@
           font-size: 13px;
         }
       }
-      .popularity {
-        position: relative;
-        .bg-pop-wrapper {
-          display: flex;
-          .bg-pop {
-            width: 2px;
-            height: 10px;
-            background-color: #888888;
-            margin-right: 1px;
+      .track-section-higher-right-grp {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        .popularity {
+          position: relative;
+          .bg-pop-wrapper {
+            display: flex;
+            .bg-pop {
+              width: 2px;
+              height: 10px;
+              background-color: #888888;
+              margin-right: 1px;
+            }
+            .color-pop {
+              width: 2px;
+              height: 10px;
+              background-color: #424242;
+              margin-right: 1px;
+              position: relative;
+              top: 10px;
+              z-index: 7;
+            }
           }
-          .color-pop {
-            width: 2px;
-            height: 10px;
-            background-color: #424242;
-            margin-right: 1px;
-            position: relative;
-            top: 10px;
-            z-index: 7;
+        }
+        .track-mini-meny {
+          margin-top: 9px;
+          margin-right: 0.4rem;
+          margin-left: 15px;
+          display: flex;
+          cursor: pointer;
+          padding: 3px;
+          i {
+            font-size: 5px;
+            padding: 0.5px;
           }
         }
       }
@@ -137,17 +153,17 @@
   video {
     display: none !important;
   }
-  input[type="range"] {
+  input[type='range'] {
     -webkit-appearance: none;
     width: 100%;
     margin-bottom: 15px;
     background-color: transparent;
     z-index: 8;
   }
-  input[type="range"]:focus {
+  input[type='range']:focus {
     outline: none;
   }
-  input[type="range"]::-webkit-slider-runnable-track {
+  input[type='range']::-webkit-slider-runnable-track {
     width: 100%;
     height: 3px;
     cursor: pointer;
@@ -156,7 +172,7 @@
     border-radius: 50px;
     border: 0px solid #000101;
   }
-  input[type="range"]::-webkit-slider-thumb {
+  input[type='range']::-webkit-slider-thumb {
     //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
     border: 0px solid #00001e;
     height: 15px;
@@ -167,10 +183,10 @@
     -webkit-appearance: none;
     margin-top: -5.85px;
   }
-  input[type="range"]:focus::-webkit-slider-runnable-track {
+  input[type='range']:focus::-webkit-slider-runnable-track {
     background: transparent;
   }
-  input[type="range"]::-moz-range-track {
+  input[type='range']::-moz-range-track {
     width: 100%;
     height: 3px;
     cursor: pointer;
@@ -179,7 +195,7 @@
     border-radius: 50px;
     border: 0px solid #000101;
   }
-  input[type="range"]::-moz-range-thumb {
+  input[type='range']::-moz-range-thumb {
     //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
     border: 0px solid #00001e;
     height: 15px;
@@ -188,7 +204,7 @@
     background: $gray-lightdark;
     cursor: pointer;
   }
-  input[type="range"]::-ms-track {
+  input[type='range']::-ms-track {
     width: 100%;
     height: 3px;
     cursor: pointer;
@@ -196,19 +212,19 @@
     border-color: transparent;
     color: transparent;
   }
-  input[type="range"]::-ms-fill-lower {
+  input[type='range']::-ms-fill-lower {
     background: transparent;
     border: 0px solid #000101;
     border-radius: 50px;
     //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
   }
-  input[type="range"]::-ms-fill-upper {
+  input[type='range']::-ms-fill-upper {
     background: transparent;
     border: 0px solid #000101;
     border-radius: 50px;
     //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
   }
-  input[type="range"]::-ms-thumb {
+  input[type='range']::-ms-thumb {
     //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
     border: 0px solid #00001e;
     height: 15px;
@@ -218,10 +234,10 @@
     cursor: pointer;
     height: 3px;
   }
-  input[type="range"]:focus::-ms-fill-lower {
+  input[type='range']:focus::-ms-fill-lower {
     background: transparent;
   }
-  input[type="range"]:focus::-ms-fill-upper {
+  input[type='range']:focus::-ms-fill-upper {
     background: transparent;
   }
 }

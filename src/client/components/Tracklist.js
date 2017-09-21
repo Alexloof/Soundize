@@ -1,28 +1,55 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 
-import Track from "./Track"
+import Track from './Track'
+import UnfollowPlaylistModal from './modals/UnfollowPlaylistModal'
+import DeletePlaylistModal from './modals/DeletePlaylistModal'
 
 class Tracklist extends Component {
   state = {
-    scrolled: false
+    scrolled: false,
+    unfollowModalClassName: 'modal are-you-sure',
+    deleteModalClassName: 'modal are-you-sure'
   }
   componentDidMount = () => {
     let scrolled = false
-    const el = document.getElementsByClassName("tracklist-scroll-banner")
+    const el = document.getElementsByClassName('tracklist-scroll-banner')
     this.interval = setInterval(() => {
       if (window.pageYOffset > 240) {
         if (scrolled === false) {
           scrolled = true
-          el[0].classList = [el[0].classList[0] + " banner-show"]
+          el[0].classList = [el[0].classList[0] + ' banner-show']
         }
       } else {
         scrolled = false
-        el[0].classList = ["tracklist-scroll-banner"]
+        el[0].classList = ['tracklist-scroll-banner']
       }
     }, 700)
   }
   componentWillUnmount() {
     clearInterval(this.interval)
+  }
+  showUnfollowModal = () => {
+    this.setState({ unfollowModalClassName: 'modal are-you-sure is-active' })
+  }
+  showDeleteModal = () => {
+    this.setState({ deleteModalClassName: 'modal are-you-sure is-active' })
+  }
+  closeUnfollowPlaylistModal = () => {
+    this.setState({ unfollowModalClassName: 'modal are-you-sure' })
+  }
+  closeDeletePlaylistModal = () => {
+    this.setState({ deleteModalClassName: 'modal are-you-sure' })
+  }
+  unfollowActivePlaylist = () => {
+    this.props.unfollowActivePlaylist(
+      this.props.tracklist.owner.id,
+      this.props.tracklist.id
+    )
+    this.setState({ unfollowModalClassName: 'modal are-you-sure' })
+  }
+  deleteActivePlaylist = () => {
+    this.props.deleteActivePlaylist(this.props.tracklist.id)
+    this.setState({ deleteModalClassName: 'modal are-you-sure' })
   }
   renderTracklist() {
     return this.props.tracklist.tracks.items.map((track, index) => {
@@ -62,7 +89,7 @@ class Tracklist extends Component {
       <div className="menu ">
         <div className="tracklist-scroll-banner">
           <p className="tracklist-name title">
-            {this.props.tracklist.name ? this.props.tracklist.name : "Låtar"}
+            {this.props.tracklist.name ? this.props.tracklist.name : 'Låtar'}
           </p>
           <div className="tracklist-scroll-banner-right-grp">
             <div className="tracklist-scroll-btn-grp">
@@ -94,7 +121,7 @@ class Tracklist extends Component {
             </div>
           </div>
         </div>
-        <div className={"tracklist-banner"}>
+        <div className={'tracklist-banner'}>
           <div className="tracklist-banner-info">
             <div className="large-info">
               <p className="menu-label">Spellista</p>
@@ -102,64 +129,83 @@ class Tracklist extends Component {
                 {this.props.tracklist.name ? (
                   this.props.tracklist.name
                 ) : (
-                  "Låtar"
+                  'Låtar'
                 )}
               </p>
             </div>
             <div className="tracklist-banner-info-lower">
               <div className="small-info">
                 <p>
-                  Följare:{" "}
+                  Följare:{' '}
                   {this.props.tracklist.followers ? (
                     this.props.tracklist.followers.total
                   ) : (
-                    "0"
+                    '0'
                   )}
                 </p>
                 <p>
-                  Skapad av:{" "}
+                  Skapad av:{' '}
                   {this.props.tracklist.owner ? (
                     this.props.tracklist.owner.display_name ||
                     this.props.tracklist.owner.id
                   ) : (
-                    "Okänd"
-                  )}{" "}
+                    'Okänd'
+                  )}{' '}
                 </p>
               </div>
               <div className="tracklist-banner-btn-group">
                 {!this.props.playing ? (
                   <button className="button is-outlined">
                     {this.state.className ===
-                      "tracklist-banner scroll-state scroll-position" ||
-                    this.state.className === "tracklist-banner scroll-state" ? (
+                      'tracklist-banner scroll-state scroll-position' ||
+                    this.state.className === 'tracklist-banner scroll-state' ? (
                       <i className="fa fa-play" />
                     ) : (
-                      "Spela Upp"
+                      'Spela Upp'
                     )}
                   </button>
                 ) : (
                   <button className="button is-outlined">
                     {this.state.className ===
-                      "tracklist-banner scroll-state scroll-position" ||
-                    this.state.className === "tracklist-banner scroll-state" ? (
+                      'tracklist-banner scroll-state scroll-position' ||
+                    this.state.className === 'tracklist-banner scroll-state' ? (
                       <i className="fa fa-pause" />
                     ) : (
-                      "Pausa"
+                      'Pausa'
                     )}
                   </button>
                 )}
-
-                <button className="button">
-                  {this.state.className ===
-                    "tracklist-banner scroll-state scroll-position" ||
-                  this.state.className === "tracklist-banner scroll-state" ? (
-                    <span className="icon">
-                      <i className="fa fa-navicon" />
-                    </span>
-                  ) : (
-                    "Följer"
-                  )}
-                </button>
+                {this.props.tracklist.owner.id === this.props.me.id ? (
+                  <button
+                    onClick={() => this.showDeleteModal()}
+                    className="button"
+                  >
+                    {this.state.className ===
+                      'tracklist-banner scroll-state scroll-position' ||
+                    this.state.className === 'tracklist-banner scroll-state' ? (
+                      <span className="icon">
+                        <i className="fa fa-navicon" />
+                      </span>
+                    ) : (
+                      'Radera'
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => this.showUnfollowModal()}
+                    className="button"
+                  >
+                    {this.state.className ===
+                      'tracklist-banner scroll-state scroll-position' ||
+                    this.state.className === 'tracklist-banner scroll-state' ? (
+                      <span className="icon">
+                        <i className="fa fa-navicon" />
+                      </span>
+                    ) : (
+                      'Sluta följ'
+                    )}
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -178,6 +224,18 @@ class Tracklist extends Component {
         <ul className="menu-list tracklist-tracks">
           {this.props.tracklist ? this.renderTracklist() : null}
         </ul>
+        <div className={this.state.unfollowModalClassName}>
+          <UnfollowPlaylistModal
+            unfollowPlaylist={this.unfollowActivePlaylist}
+            closeModal={this.closeUnfollowPlaylistModal}
+          />
+        </div>
+        <div className={this.state.deleteModalClassName}>
+          <DeletePlaylistModal
+            deletePlaylist={this.deleteActivePlaylist}
+            closeModal={this.closeDeletePlaylistModal}
+          />
+        </div>
       </div>
     )
   }

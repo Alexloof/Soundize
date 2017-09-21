@@ -46,6 +46,9 @@ class Home extends Component {
                 onSeekMouseDown={this.props.onSeekMouseDown}
                 onSeekChange={this.props.onSeekChange}
                 onSeekMouseUp={this.props.onSeekMouseUp}
+                me={this.props.me}
+                unfollowActivePlaylist={this.props.unfollowActivePlaylist}
+                deleteActivePlaylist={this.props.deleteActivePlaylist}
               />
             ) : null}
           </div>

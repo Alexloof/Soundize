@@ -142,13 +142,13 @@
           width: 100%;
         }
       }
-      input[type="range"] {
+      input[type='range'] {
         width: 100%;
         background-color: transparent;
         position: relative;
         z-index: 10;
       }
-      input[type="range"]::-webkit-slider-thumb {
+      input[type='range']::-webkit-slider-thumb {
         //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
         border: 0px solid #00001e;
         height: 10px;
@@ -159,7 +159,7 @@
         -webkit-appearance: none;
         margin-top: -3.85px;
       }
-      input[type="range"]::-webkit-slider-runnable-track {
+      input[type='range']::-webkit-slider-runnable-track {
         width: 100%;
         height: 2px;
         cursor: pointer; //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
@@ -167,7 +167,7 @@
         border-radius: 50px;
         border: 0px solid #000101;
       }
-      input[type="range"]::-moz-range-thumb {
+      input[type='range']::-moz-range-thumb {
         //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
         border: 0px solid #00001e;
         height: 10px;
@@ -176,7 +176,7 @@
         background: $gray-light;
         cursor: pointer;
       }
-      input[type="range"]::-ms-thumb {
+      input[type='range']::-ms-thumb {
         //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
         border: 0px solid #00001e;
         height: 10px;
@@ -190,22 +190,23 @@
     .fullscreen {
       .fa {
         font-size: 18px;
+        cursor: pointer;
       }
     }
     video {
       display: none !important;
     }
-    input[type="range"] {
+    input[type='range'] {
       -webkit-appearance: none;
       width: 100%;
       background-color: transparent;
       position: relative;
       z-index: 10;
     }
-    input[type="range"]:focus {
+    input[type='range']:focus {
       outline: none;
     }
-    input[type="range"]::-webkit-slider-runnable-track {
+    input[type='range']::-webkit-slider-runnable-track {
       width: 100%;
       height: 3px;
       cursor: pointer; //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
@@ -213,7 +214,7 @@
       border-radius: 50px;
       border: 0px solid #000101;
     }
-    input[type="range"]::-webkit-slider-thumb {
+    input[type='range']::-webkit-slider-thumb {
       //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
       border: 0px solid #00001e;
       height: 15px;
@@ -225,10 +226,10 @@
       margin-top: -5.85px;
       z-index: 10;
     }
-    input[type="range"]:focus::-webkit-slider-runnable-track {
+    input[type='range']:focus::-webkit-slider-runnable-track {
       background: transparent;
     }
-    input[type="range"]::-moz-range-track {
+    input[type='range']::-moz-range-track {
       width: 100%;
       height: 3px;
       cursor: pointer; //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
@@ -236,7 +237,7 @@
       border-radius: 50px;
       border: 0px solid #000101;
     }
-    input[type="range"]::-moz-range-thumb {
+    input[type='range']::-moz-range-thumb {
       //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
       border: 0px solid #00001e;
       height: 15px;
@@ -245,7 +246,7 @@
       background: $gray-light;
       cursor: pointer;
     }
-    input[type="range"]::-ms-track {
+    input[type='range']::-ms-track {
       width: 100%;
       height: 3px;
       cursor: pointer;
@@ -253,17 +254,17 @@
       border-color: transparent;
       color: transparent;
     }
-    input[type="range"]::-ms-fill-lower {
+    input[type='range']::-ms-fill-lower {
       background: transparent;
       border: 0px solid #000101;
       border-radius: 50px; //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
     }
-    input[type="range"]::-ms-fill-upper {
+    input[type='range']::-ms-fill-upper {
       background: transparent;
       border: 0px solid #000101;
       border-radius: 50px; //box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
     }
-    input[type="range"]::-ms-thumb {
+    input[type='range']::-ms-thumb {
       //box-shadow: 0px 0px 0.9px #000000, 0px 0px 0px #0d0d0d;
       border: 0px solid #00001e;
       height: 15px;
@@ -273,10 +274,10 @@
       cursor: pointer;
       height: 3px;
     }
-    input[type="range"]:focus::-ms-fill-lower {
+    input[type='range']:focus::-ms-fill-lower {
       background: transparent;
     }
-    input[type="range"]:focus::-ms-fill-upper {
+    input[type='range']:focus::-ms-fill-upper {
       background: transparent;
     }
   }

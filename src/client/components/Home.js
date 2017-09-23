@@ -49,6 +49,9 @@ class Home extends Component {
                 me={this.props.me}
                 unfollowActivePlaylist={this.props.unfollowActivePlaylist}
                 deleteActivePlaylist={this.props.deleteActivePlaylist}
+                privatePlaylists={this.props.privatePlaylists}
+                addTrackToPlaylist={this.props.addTrackToPlaylist}
+                addTrackToQueue={this.props.addTrackToQueue}
               />
             ) : null}
           </div>
@@ -57,6 +60,7 @@ class Home extends Component {
               latestPlayed={this.props.latestPlayed}
               startActiveTrack={this.props.startActiveTrack}
               setActiveTrack={this.props.setActiveTrack}
+              queuedTracks={this.props.queuedTracks}
             />
           </div>
         </div>

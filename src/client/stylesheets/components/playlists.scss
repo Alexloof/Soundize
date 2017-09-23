@@ -4,7 +4,7 @@
   background-color: $gray-light;
   box-shadow: 2px 2px 4px 0px rgba(78, 78, 78, 0.1);
   padding-right: 0;
-  width: 20% !important;
+  width: 250px !important;
   padding-top: 1.5%;
   padding-bottom: 0;
   height: 100%;
@@ -56,7 +56,7 @@
           z-index: 10;
         }
         .tooltiptext::after {
-          content: " ";
+          content: ' ';
           position: absolute;
           top: 50%;
           right: 100%; /* To the left of the tooltip */

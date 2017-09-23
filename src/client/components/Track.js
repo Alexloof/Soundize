@@ -2,6 +2,16 @@ import React, { Component } from 'react'
 import ReactPlayer from 'react-player'
 
 class Track extends Component {
+  state = {
+    dropdownClassName: 'dropdown'
+  }
+  handleClick = event => {
+    if (this.state.dropdownClassName === 'dropdown is-active') {
+      if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+        this.setState({ dropdownClassName: 'dropdown' })
+      }
+    }
+  }
   onSeekMouseDown = e => {
     this.setState({ seeking: true })
     this.props.onSeekMouseDown()
@@ -85,6 +95,44 @@ class Track extends Component {
       return <div key={index} className="color-pop" />
     })
   }
+  toggleDropdown = () => {
+    if (this.state.dropdownClassName === 'dropdown') {
+      this.setState({ dropdownClassName: 'dropdown is-active' })
+      document.addEventListener('mousedown', this.handleClick)
+    } else {
+      this.setState({ dropdownClassName: 'dropdown' })
+      document.removeEventListener('mousedown', this.handleClick)
+    }
+  }
+  addTrackToPlaylist = (ownerId, playlistId) => {
+    this.props.addTrackToPlaylist(
+      ownerId,
+      playlistId,
+      this.props.track.track.uri
+    )
+    this.toggleDropdown()
+  }
+  addTrackToQueue = () => {
+    this.props.addTrackToQueue(this.props.track.track)
+    this.toggleDropdown()
+  }
+  renderPlaylists = () => {
+    return this.props.privatePlaylists.map((playlist, index) => {
+      return (
+        <li key={index}>
+          <a
+            onClick={() =>
+              this.addTrackToPlaylist(playlist.owner.id, playlist.id)}
+          >
+            {playlist.name}
+          </a>
+        </li>
+      )
+    })
+  }
+  setWrapperRef = node => {
+    this.wrapperRef = node
+  }
   render() {
     return (
       <li className={this.setClassName()}>
@@ -141,10 +189,59 @@ class Track extends Component {
                   <div className="bg-pop" />
                 </div>
               </div>
-              <div className="track-mini-meny">
-                <i className="fa fa-circle" aria-hidden="true" />
-                <i className="fa fa-circle" aria-hidden="true" />
-                <i className="fa fa-circle" aria-hidden="true" />
+
+              <div className={this.state.dropdownClassName}>
+                <div
+                  className="dropdown-trigger"
+                  onClick={() => this.toggleDropdown()}
+                >
+                  <div
+                    className="track-open-mini-meny"
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                  >
+                    <i className="fa fa-circle" aria-hidden="true" />
+                    <i className="fa fa-circle" aria-hidden="true" />
+                    <i className="fa fa-circle" aria-hidden="true" />
+                  </div>
+                </div>
+                <div
+                  ref={this.setWrapperRef}
+                  className="dropdown-menu track-mini-meny"
+                  id="dropdown-menu"
+                  role="menu"
+                >
+                  <div className="dropdown-content">
+                    <div
+                      className="dropdown-item open-add-track"
+                      aria-haspopup="true"
+                      aria-controls="dropdown-menu4"
+                    >
+                      Lägg till i spellista<span className="icon is-small">
+                        <i className="fa fa-angle-right" aria-hidden="true" />
+                      </span>
+                      <div className="mini-meny-playlists">
+                        <ul className="menu-list">{this.renderPlaylists()}</ul>
+                      </div>
+                    </div>
+                    {this.props.track.track.preview_url !== null ? (
+                      <div
+                        onClick={() => this.addTrackToQueue()}
+                        className="dropdown-item"
+                      >
+                        Lägg till i kön
+                      </div>
+                    ) : null}
+                    {this.props.myPlaylist ? (
+                      <div
+                        onClick={() => this.removeTrackFromPlaylist()}
+                        className="dropdown-item"
+                      >
+                        Ta bort från spellistan
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -176,9 +273,9 @@ class Track extends Component {
                 max={1}
                 step="any"
                 value={this.props.playedTime || 0}
-                onMouseDown={this.onSeekMouseDown}
+                /* onMouseDown={this.onSeekMouseDown}
                 onChange={this.onSeekChange}
-                onMouseUp={this.onSeekMouseUp}
+                onMouseUp={this.onSeekMouseUp} */
               />
             </div>
           </div>

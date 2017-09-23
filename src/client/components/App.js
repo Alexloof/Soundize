@@ -13,6 +13,7 @@ class App extends Component {
     token: '',
     user: '',
     playlists: '',
+    privatePlaylists: '',
     featuredPlaylists: '',
     tracklist: '',
     activeTrack: '',
@@ -21,7 +22,8 @@ class App extends Component {
     seeking: false,
     displayMusicBar: false,
     activePlaylist: '',
-    latestPlayed: []
+    latestPlayed: [],
+    queuedTracks: []
   }
 
   componentDidMount() {
@@ -43,6 +45,7 @@ class App extends Component {
     spotifyApi.getUserPlaylists(this.state.user.id).then(data => {
       this.onClickPlaylist(data.body.items[0].owner.id, data.body.items[0].id)
       this.setActivePlaylist(data.body.items[0].id)
+      this.getPrivatePlaylists(data.body.items)
       this.setState({ playlists: data.body.items }, () =>
         browserHistory.replace('/app/stream')
       )
@@ -50,6 +53,18 @@ class App extends Component {
       console.log('Something went wrong getting playlists!', err)
     })
     this.getFeaturedPlaylists(new Date().toISOString())
+  }
+  getPrivatePlaylists = playlists => {
+    let privatePlaylists = []
+    playlists.map(playlist => {
+      if (
+        playlist.collaborative === true ||
+        playlist.owner.id === this.state.user.id
+      ) {
+        privatePlaylists.push(playlist)
+      }
+    })
+    this.setState({ privatePlaylists })
   }
   getMe() {
     spotifyApi.getMe().then(data => {
@@ -92,17 +107,20 @@ class App extends Component {
       console.log('Something went wrong!', err)
     })
   }
-  addTrackToPlaylist = (playlistId, spotifyTrackId) => {
+  addTrackToPlaylist = (ownerId, playlistId, spotifyTrackId) => {
     spotifyApi
       .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyTrackId])
       .then(
-        function(data) {
+        data => {
           console.log('Added tracks to playlist!')
         },
         function(err) {
           console.log('Something went wrong!', err)
         }
       )
+  }
+  addTrackToQueue = track => {
+    this.setState({ queuedTracks: [...this.state.queuedTracks, track] })
   }
   getFeaturedPlaylists = time => {
     spotifyApi
@@ -178,6 +196,7 @@ class App extends Component {
       child => {
         return React.cloneElement(child, {
           playlists: this.state.playlists,
+          privatePlaylists: this.state.privatePlaylists,
           featuredPlaylists: this.state.featuredPlaylists,
           tracklist: this.state.tracklist,
           onClickPlaylist: this.onClickPlaylist,
@@ -194,10 +213,13 @@ class App extends Component {
           activePlaylist: this.state.activePlaylist,
           setActivePlaylist: this.setActivePlaylist,
           latestPlayed: this.state.latestPlayed,
+          queuedTracks: this.state.queuedTracks,
           createPlaylist: this.createPlaylist,
           me: this.state.user,
           unfollowActivePlaylist: this.unfollowActivePlaylist,
-          deleteActivePlaylist: this.deleteActivePlaylist
+          deleteActivePlaylist: this.deleteActivePlaylist,
+          addTrackToPlaylist: this.addTrackToPlaylist,
+          addTrackToQueue: this.addTrackToQueue
         })
       }
     )

@@ -51,6 +51,13 @@ class Tracklist extends Component {
     this.props.deleteActivePlaylist(this.props.tracklist.id)
     this.setState({ deleteModalClassName: 'modal are-you-sure' })
   }
+  checkPlaylistOwner = () => {
+    if (this.props.tracklist.owner.id === this.props.me.id) {
+      return true
+    } else {
+      false
+    }
+  }
   renderTracklist() {
     return this.props.tracklist.tracks.items.map((track, index) => {
       if (track.track !== null) {
@@ -68,6 +75,10 @@ class Tracklist extends Component {
               onSeekMouseDown={this.props.onSeekMouseDown}
               onSeekChange={this.props.onSeekChange}
               onSeekMouseUp={this.props.onSeekMouseUp}
+              privatePlaylists={this.props.privatePlaylists}
+              addTrackToPlaylist={this.props.addTrackToPlaylist}
+              addTrackToQueue={this.props.addTrackToQueue}
+              myPlaylist={this.checkPlaylistOwner()}
             />
           )
         } else {
@@ -78,6 +89,10 @@ class Tracklist extends Component {
               setActiveTrack={this.props.setActiveTrack}
               stopActiveTrack={this.props.stopActiveTrack}
               startActiveTrack={this.props.startActiveTrack}
+              privatePlaylists={this.props.privatePlaylists}
+              addTrackToPlaylist={this.props.addTrackToPlaylist}
+              addTrackToQueue={this.props.addTrackToQueue}
+              myPlaylist={this.checkPlaylistOwner()}
             />
           )
         }

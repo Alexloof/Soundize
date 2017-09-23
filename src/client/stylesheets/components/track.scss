@@ -85,7 +85,7 @@
             }
           }
         }
-        .track-mini-meny {
+        .track-open-mini-meny {
           margin-top: 9px;
           margin-right: 0.4rem;
           margin-left: 15px;
@@ -97,6 +97,73 @@
             padding: 0.5px;
           }
         }
+        .track-mini-meny {
+          width: 140px;
+          min-width: 0px;
+          .dropdown-content {
+            padding: 0px;
+            position: relative;
+            border-radius: 0px;
+            :last-child {
+              border-bottom: none;
+            }
+            .dropdown-item {
+              cursor: pointer;
+              padding: 8px;
+              font-size: 12px;
+              border-bottom: 1px solid $gray-light;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            .open-add-track {
+              cursor: default;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              &:hover {
+                text-decoration: none;
+              }
+              i.fa {
+                font-size: 21px;
+              }
+              .mini-meny-playlists {
+                visibility: hidden;
+                position: absolute;
+                background: white;
+                left: 100%;
+                top: 0;
+                -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+                  0 0 0 1px rgba(10, 10, 10, 0.1);
+                box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+                  0 0 0 1px rgba(10, 10, 10, 0.1);
+                max-height: 300px;
+                overflow-y: auto;
+                .menu-list {
+                  border-left: 0;
+                  margin: 0;
+                  padding: 0;
+                  width: 110px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  a {
+                    padding: 8px;
+                    font-size: 12px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    &:hover {
+                      text-decoration: underline;
+                      background-color: transparent;
+                    }
+                  }
+                }
+              }
+              &:hover .mini-meny-playlists {
+                visibility: visible;
+              }
+            }
+          }
+        }
       }
     }
 
@@ -105,6 +172,7 @@
       width: 40px;
       border-radius: 50%;
       margin-bottom: 15px;
+      margin-right: 2%;
       &:focus {
         border-color: #dbdbdb;
       }

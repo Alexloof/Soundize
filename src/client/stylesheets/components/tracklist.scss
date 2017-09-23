@@ -9,7 +9,7 @@
     position: fixed;
     width: 50.2vw;
     background-color: rgba(74, 74, 74, 1);
-    z-index: 9;
+    z-index: 25;
     top: -52px;
     display: flex;
     flex-direction: row;
@@ -22,9 +22,9 @@
     .tracklist-name {
       text-overflow: ellipsis;
       overflow: hidden;
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      max-width: 69%;
+      font-size: 1.4rem;
+      margin-bottom: 0;
+      max-width: 72%;
       padding-left: 1%;
     }
     .tracklist-scroll-banner-right-grp {
@@ -32,7 +32,7 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      width: 30%;
+      width: 25%;
       .tracklist-scroll-btn-grp {
         display: flex;
         flex-direction: row;
@@ -48,6 +48,9 @@
           letter-spacing: 2px;
           height: 30px;
           border-radius: 50px;
+          i.fa {
+            font-size: 16px;
+          }
           &:hover {
             background-color: $gray-light;
             color: $gray-lightdark;
@@ -131,61 +134,4 @@
   .tracklist-tracks {
     margin-top: 1.5%;
   }
-  // .tracklist-banner.scroll-state {
-  //   position: fixed;
-  //   left: 24.5%;
-  //   bottom: 95vh;
-  //   transition: 0.3s all ease;
-  //   width: 50.3vw;
-  //   z-index: 9;
-  //   padding: 5px;
-  //   align-items: center;
-  //   background-color: rgba(74, 74, 74, 1);
-  //   .tracklist-img {
-  //     height: 50px;
-  //     width: 50px;
-  //     min-width: 0px !important;
-  //     img {
-  //       height: 50px;
-  //       width: 50px;
-  //     }
-  //   }
-
-  //   .tracklist-banner-info-lower {
-  //     .small-info {
-  //       display: none;
-  //     }
-  //   }
-  //   .tracklist-banner-info {
-  //     flex-direction: row;
-  //     width: 90%;
-  //     .large-info {
-  //       overflow: hidden;
-  //       white-space: nowrap;
-  //     }
-  //     .menu-label {
-  //       display: none;
-  //     }
-  //     .tracklist-name {
-  //       font-size: 1.5rem;
-  //       text-overflow: ellipsis;
-  //       overflow: hidden;
-  //     }
-  //   }
-  //   .tracklist-banner-btn-group {
-  //     width: 100px !important;
-  //     margin-left: 5%;
-  //     .button {
-  //       width: 40px !important;
-  //       overflow: hidden;
-  //       border-radius: 50px !important;
-  //       .fa {
-  //         font-size: 14px;
-  //       }
-  //     }
-  //   }
-  // }
-  // .tracklist-banner.scroll-state.scroll-position {
-  //   bottom: calc(100vh - 112px);
-  // }
 }

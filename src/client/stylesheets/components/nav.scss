@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   top: 0;
-  z-index: 10;
+  z-index: 30;
   box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.83);
   .navbar-start {
     margin-left: 15%;
@@ -32,10 +32,10 @@
       color: $nav-font-color;
     }
   }
-  input[type="text"] {
+  input[type='text'] {
     align-self: center;
     width: 200px;
-    border-radius: 0px;
+    border-radius: 50px;
     transition: 0.3s all ease-in-out;
     height: 2rem;
     &:focus {

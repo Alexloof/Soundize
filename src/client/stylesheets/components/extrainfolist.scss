@@ -5,7 +5,7 @@
   background-color: $gray-light;
   box-shadow: -2px -2px 4px 0px rgba(78, 78, 78, 0.1);
   padding-right: 0;
-  width: 20% !important;
+  width: 250px !important;
   padding-top: 1.5%;
   padding-bottom: 0;
   height: 100%;
@@ -25,6 +25,57 @@
       margin-left: 30px;
     }
     .latest-played {
+      max-height: 220px;
+      overflow-y: hidden;
+      li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        .left-grp {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          max-width: 82%;
+          img {
+            height: 35px;
+            width: 35px;
+            border-radius: 50px;
+          }
+          .track-info {
+            margin-left: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 16px;
+            .artist-label {
+              font-size: 10px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .title-label {
+              font-size: 11px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+        .right-grp {
+          margin-right: 10px;
+          button {
+            border-radius: 50px;
+            &:focus {
+              border-color: #dbdbdb;
+            }
+            .fa {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+    .queued-tracks {
       max-height: 220px;
       overflow-y: hidden;
       li {

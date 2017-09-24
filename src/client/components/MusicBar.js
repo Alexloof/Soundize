@@ -45,11 +45,9 @@ class MusicBar extends Component {
     this.props.onSeekMouseDown()
   }
   onSeekChange = e => {
-    //this.setState({ played: parseFloat(e.target.value) })
     this.props.onSeekChange(parseFloat(e.target.value))
   }
   onSeekMouseUp = e => {
-    //this.setState({ seeking: false })
     this.player.seekTo(parseFloat(e.target.value))
     this.props.onSeekMouseUp(parseFloat(e.target.value))
   }
@@ -71,7 +69,7 @@ class MusicBar extends Component {
       </button>
     ) : (
       <button
-        onClick={() => this.props.startTrack()}
+        onClick={() => this.props.startTrack(this.state.activeTrack)}
         className="button play-btn"
       >
         <span className="icon">
@@ -81,12 +79,11 @@ class MusicBar extends Component {
     )
   }
   trackEnded = () => {
-    setTimeout(() => {
-      this.props.zeroTrack()
-      if (this.state.loop) {
-        this.props.startTrack()
-      }
-    }, 100)
+    if (this.state.loop) {
+      this.props.startTrack(this.state.activeTrack)
+    } else {
+      this.props.playNextTrack()
+    }
   }
   playedTimeColor = () => {
     let procent = 1.11 * this.props.playedTime
@@ -138,7 +135,7 @@ class MusicBar extends Component {
             {this.renderPlayPauseButton()}
 
             <button
-              onClick={() => console.log('stepForward track')}
+              onClick={() => this.props.playNextTrack()}
               className="button step-change-btn"
             >
               <span className="icon">

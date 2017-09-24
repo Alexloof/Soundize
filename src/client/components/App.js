@@ -23,7 +23,9 @@ class App extends Component {
     displayMusicBar: false,
     activePlaylist: '',
     latestPlayed: [],
-    queuedTracks: []
+    queuedTracks: [],
+    activeTracklist: '',
+    activeTrackIndex: ''
   }
 
   componentDidMount() {
@@ -71,6 +73,7 @@ class App extends Component {
       this.setState({ user: data.body }, () => this.getPlaylists())
     }, function(err) {
       console.log('Something went wrong getting user details!', err)
+      browserHistory.replace('/')
     })
   }
   onClickPlaylist = (user, id) => {
@@ -107,9 +110,9 @@ class App extends Component {
       console.log('Something went wrong!', err)
     })
   }
-  addTrackToPlaylist = (ownerId, playlistId, spotifyTrackId) => {
+  addTrackToPlaylist = (ownerId, playlistId, spotifykURI) => {
     spotifyApi
-      .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyTrackId])
+      .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyURI])
       .then(
         data => {
           console.log('Added tracks to playlist!')
@@ -121,6 +124,25 @@ class App extends Component {
   }
   addTrackToQueue = track => {
     this.setState({ queuedTracks: [...this.state.queuedTracks, track] })
+  }
+  removeTrackFromPlaylist = (ownerId, playlistId, spotifyURI) => {
+    var tracks = [{ uri: spotifyURI }]
+    spotifyApi
+      .removeTracksFromPlaylist(ownerId, playlistId, tracks)
+      .then(
+        data => {
+          this.setActivePlaylist(playlistId)
+          spotifyApi.getPlaylist(ownerId, playlistId).then(data => {
+            this.setState({ tracklist: data.body })
+          }, function(err) {
+            console.log('Something went wrong getting tracklist!', err)
+          })
+          console.log('Track removed from playlist!')
+        },
+        function(err) {
+          console.log('Something went wrong!', err)
+        }
+      )
   }
   getFeaturedPlaylists = time => {
     spotifyApi
@@ -150,13 +172,66 @@ class App extends Component {
       }
     )
   }
+  playNextTrack = () => {
+    let nextTrack
+    let newQueuedTracks = []
+    if (this.state.queuedTracks.length > 0) {
+      nextTrack = this.state.queuedTracks[0]
+      this.state.queuedTracks.map((track, index) => {
+        if (index !== 0) {
+          newQueuedTracks.push(track)
+        }
+      })
+      this.setState({ queuedTracks: newQueuedTracks })
+      if (this.state.latestPlayed[0] === nextTrack) {
+        this.zeroTrack()
+        this.startActiveTrack(nextTrack)
+      } else {
+        this.setActiveTrack(
+          nextTrack,
+          this.state.activeTracklist,
+          this.state.activeTrackIndex
+        )
+      }
+    } else {
+      nextTrack = this.state.activeTracklist.tracks.items[
+        this.state.activeTrackIndex + 1
+      ].track
+      this.setActiveTrack(
+        nextTrack,
+        this.state.activeTracklist,
+        this.state.activeTrackIndex + 1
+      )
+    }
+
+    if (nextTrack.preview_url === null) {
+      return false
+    } else {
+      this.addTrackToLatestPlayed(nextTrack)
+    }
+  }
   setActivePlaylist = id => {
     this.setState({ activePlaylist: id })
   }
-  setActiveTrack = track => {
+  setActiveTrack = (track, activeTracklist, index) => {
     if (this.state.activeTrack.id !== track.id) {
-      this.setState({ playedTime: 0 })
-      this.setState({ activeTrack: track })
+      this.setState({
+        playedTime: 0,
+        activeTrack: track,
+        activeTrackIndex: index
+      })
+    }
+    if (this.state.activeTracklist !== activeTracklist) {
+      this.setState({ activeTracklist })
+    }
+  }
+  addTrackToLatestPlayed = track => {
+    if (this.state.latestPlayed.length > 0) {
+      if (this.state.latestPlayed[0].id !== track.id) {
+        this.setState({ latestPlayed: [track, ...this.state.latestPlayed] })
+      }
+    } else {
+      this.setState({ latestPlayed: [track] })
     }
   }
   stopActiveTrack = track => {
@@ -167,13 +242,7 @@ class App extends Component {
       playing: true,
       displayMusicBar: true
     })
-    if (this.state.latestPlayed.length > 0) {
-      if (this.state.latestPlayed[0].id !== track.id) {
-        this.setState({ latestPlayed: [track, ...this.state.latestPlayed] })
-      }
-    } else {
-      this.setState({ latestPlayed: [track] })
-    }
+    this.addTrackToLatestPlayed(track)
   }
   setPlayedTime = playedTime => {
     this.setState({ playedTime: playedTime.played })
@@ -188,7 +257,7 @@ class App extends Component {
     this.setState({ seeking: false, playedTime: e })
   }
   zeroTrack = () => {
-    this.setState({ playedTime: 0, playing: false })
+    this.setState({ playing: false })
   }
   render() {
     const childrenWithExtraProp = React.Children.map(
@@ -219,7 +288,8 @@ class App extends Component {
           unfollowActivePlaylist: this.unfollowActivePlaylist,
           deleteActivePlaylist: this.deleteActivePlaylist,
           addTrackToPlaylist: this.addTrackToPlaylist,
-          addTrackToQueue: this.addTrackToQueue
+          addTrackToQueue: this.addTrackToQueue,
+          removeTrackFromPlaylist: this.removeTrackFromPlaylist
         })
       }
     )
@@ -240,6 +310,7 @@ class App extends Component {
           onSeekMouseUp={this.onSeekMouseUp}
           zeroTrack={this.zeroTrack}
           displayMusicBar={this.state.displayMusicBar}
+          playNextTrack={this.playNextTrack}
         />
       </div>
     )

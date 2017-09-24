@@ -34,7 +34,7 @@ class Track extends Component {
     })
   }
   startTrack = track => {
-    this.props.setActiveTrack(track)
+    this.props.setActiveTrack(track, this.props.index)
     this.props.startActiveTrack(track)
   }
   stopTrack = track => {
@@ -116,6 +116,10 @@ class Track extends Component {
     this.props.addTrackToQueue(this.props.track.track)
     this.toggleDropdown()
   }
+  removeTrackFromPlaylist = spotifyURI => {
+    this.props.removeTrackFromPlaylist(spotifyURI)
+    this.toggleDropdown()
+  }
   renderPlaylists = () => {
     return this.props.privatePlaylists.map((playlist, index) => {
       return (
@@ -191,11 +195,9 @@ class Track extends Component {
               </div>
 
               <div className={this.state.dropdownClassName}>
-                <div
-                  className="dropdown-trigger"
-                  onClick={() => this.toggleDropdown()}
-                >
+                <div className="dropdown-trigger">
                   <div
+                    onClick={() => this.toggleDropdown()}
                     className="track-open-mini-meny"
                     aria-haspopup="true"
                     aria-controls="dropdown-menu"
@@ -234,7 +236,10 @@ class Track extends Component {
                     ) : null}
                     {this.props.myPlaylist ? (
                       <div
-                        onClick={() => this.removeTrackFromPlaylist()}
+                        onClick={() =>
+                          this.removeTrackFromPlaylist(
+                            this.props.track.track.uri
+                          )}
                         className="dropdown-item"
                       >
                         Ta bort från spellistan

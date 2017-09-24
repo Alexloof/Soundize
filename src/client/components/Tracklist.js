@@ -58,6 +58,16 @@ class Tracklist extends Component {
       false
     }
   }
+  removeTrackFromPlaylist = spotifyURI => {
+    this.props.removeTrackFromPlaylist(
+      this.props.tracklist.owner.id,
+      this.props.tracklist.id,
+      spotifyURI
+    )
+  }
+  setActiveTrack = (track, index) => {
+    this.props.setActiveTrack(track, this.props.tracklist, index)
+  }
   renderTracklist() {
     return this.props.tracklist.tracks.items.map((track, index) => {
       if (track.track !== null) {
@@ -66,7 +76,7 @@ class Tracklist extends Component {
             <Track
               key={index}
               track={track}
-              setActiveTrack={this.props.setActiveTrack}
+              setActiveTrack={this.setActiveTrack}
               stopActiveTrack={this.props.stopActiveTrack}
               startActiveTrack={this.props.startActiveTrack}
               activeTrack={this.props.activeTrack}
@@ -79,6 +89,8 @@ class Tracklist extends Component {
               addTrackToPlaylist={this.props.addTrackToPlaylist}
               addTrackToQueue={this.props.addTrackToQueue}
               myPlaylist={this.checkPlaylistOwner()}
+              removeTrackFromPlaylist={this.removeTrackFromPlaylist}
+              index={index}
             />
           )
         } else {
@@ -86,13 +98,15 @@ class Tracklist extends Component {
             <Track
               key={index}
               track={track}
-              setActiveTrack={this.props.setActiveTrack}
+              setActiveTrack={this.setActiveTrack}
               stopActiveTrack={this.props.stopActiveTrack}
               startActiveTrack={this.props.startActiveTrack}
               privatePlaylists={this.props.privatePlaylists}
               addTrackToPlaylist={this.props.addTrackToPlaylist}
               addTrackToQueue={this.props.addTrackToQueue}
               myPlaylist={this.checkPlaylistOwner()}
+              removeTrackFromPlaylist={this.removeTrackFromPlaylist}
+              index={index}
             />
           )
         }

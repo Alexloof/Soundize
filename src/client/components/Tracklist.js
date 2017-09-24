@@ -118,16 +118,32 @@ class Tracklist extends Component {
       <div className="menu ">
         <div className="tracklist-scroll-banner">
           <p className="tracklist-name title">
-            {this.props.tracklist.name ? this.props.tracklist.name : 'Låtar'}
+            {this.props.tracklist.name}
+            <span>
+              {' '}
+              -{' '}
+              {this.props.tracklist.owner.display_name ? (
+                this.props.tracklist.owner.display_name
+              ) : (
+                this.props.tracklist.owner.id
+              )}
+            </span>
           </p>
           <div className="tracklist-scroll-banner-right-grp">
             <div className="tracklist-scroll-btn-grp">
-              {!this.props.playing ? (
-                <button className="button is-outlined">
+              {this.props.playingPlaylist !== this.props.tracklist.id ||
+              this.props.playing === false ? (
+                <button
+                  onClick={() => this.props.playVisibleTracklist()}
+                  className="button is-outlined"
+                >
                   <i className="fa fa-play" />
                 </button>
               ) : (
-                <button className="button is-outlined">
+                <button
+                  onClick={() => this.props.stopActiveTrack()}
+                  className="button is-outlined"
+                >
                   <i className="fa fa-pause" />
                 </button>
               )}
@@ -183,8 +199,12 @@ class Tracklist extends Component {
                 </p>
               </div>
               <div className="tracklist-banner-btn-group">
-                {!this.props.playing ? (
-                  <button className="button is-outlined">
+                {this.props.playingPlaylist !== this.props.tracklist.id ||
+                this.props.playing === false ? (
+                  <button
+                    onClick={() => this.props.playVisibleTracklist()}
+                    className="button is-outlined"
+                  >
                     {this.state.className ===
                       'tracklist-banner scroll-state scroll-position' ||
                     this.state.className === 'tracklist-banner scroll-state' ? (
@@ -194,7 +214,10 @@ class Tracklist extends Component {
                     )}
                   </button>
                 ) : (
-                  <button className="button is-outlined">
+                  <button
+                    onClick={() => this.props.stopActiveTrack()}
+                    className="button is-outlined"
+                  >
                     {this.state.className ===
                       'tracklist-banner scroll-state scroll-position' ||
                     this.state.className === 'tracklist-banner scroll-state' ? (

@@ -125,7 +125,7 @@ class MusicBar extends Component {
           </div>
           <div className="track-controls">
             <button
-              onClick={() => console.log('stepBack track')}
+              onClick={() => this.props.playPreviousTrack()}
               className="button step-change-btn"
             >
               <span className="icon">

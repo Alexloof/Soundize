@@ -55,6 +55,8 @@ class Home extends Component {
                 addTrackToPlaylist={this.props.addTrackToPlaylist}
                 addTrackToQueue={this.props.addTrackToQueue}
                 removeTrackFromPlaylist={this.props.removeTrackFromPlaylist}
+                playingPlaylist={this.props.playingPlaylist}
+                playVisibleTracklist={this.props.playVisibleTracklist}
               />
             ) : null}
           </div>

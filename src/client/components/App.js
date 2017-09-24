@@ -209,22 +209,39 @@ class App extends Component {
         this.state.activeTrackIndex + 1
       )
     }
-
-    if (nextTrack.preview_url === null) {
-      this.playNextTrack()
+    if (!nextTrack.preview_url) {
+      setTimeout(() => {
+        this.playNextTrack()
+      }, 500)
     } else {
       this.addTrackToLatestPlayed(nextTrack)
+    }
+  }
+  playPreviousTrack = () => {
+    if (this.state.latestPlayed.length > 1) {
+      let newTrack = this.state.latestPlayed[1]
+      if (newTrack === this.state.activeTrack) {
+        newTrack = this.state.latestPlayed[2]
+      }
+      this.setActiveTrack(newTrack)
+      this.setState({ playing: true })
     }
   }
   setActivePlaylist = id => {
     this.setState({ activePlaylist: id })
   }
   setActiveTrack = (track, activeTracklist, index) => {
+    let newIndex
+    if (index || index === 0) {
+      newIndex = index
+    } else {
+      newIndex = this.state.activeTrackIndex
+    }
     if (this.state.activeTrack.id !== track.id) {
       this.setState({
         playedTime: 0,
         activeTrack: track,
-        activeTrackIndex: index ? index : this.state.activeTrackIndex
+        activeTrackIndex: newIndex
       })
     }
     if (this.state.activeTracklist !== activeTracklist && activeTracklist) {
@@ -249,6 +266,14 @@ class App extends Component {
       displayMusicBar: true
     })
     this.addTrackToLatestPlayed(track)
+  }
+  playVisibleTracklist = () => {
+    this.setActiveTrack(
+      this.state.tracklist.tracks.items[0].track,
+      this.state.tracklist,
+      0
+    )
+    this.startActiveTrack(this.state.tracklist.tracks.items[0].track)
   }
   setPlayedTime = playedTime => {
     this.setState({ playedTime: playedTime.played })
@@ -297,7 +322,8 @@ class App extends Component {
           addTrackToQueue: this.addTrackToQueue,
           removeTrackFromPlaylist: this.removeTrackFromPlaylist,
           playingPlaylist: this.state.activeTracklist.id,
-          removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks
+          removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
+          playVisibleTracklist: this.playVisibleTracklist
         })
       }
     )
@@ -319,6 +345,7 @@ class App extends Component {
           zeroTrack={this.zeroTrack}
           displayMusicBar={this.state.displayMusicBar}
           playNextTrack={this.playNextTrack}
+          playPreviousTrack={this.playPreviousTrack}
         />
       </div>
     )

@@ -29,14 +29,8 @@ class Login extends Component {
 
     return (
       <div>
-        <a
-          href="https://accounts.spotify.com/authorize?client_id=8d7cb1d087644280982de543cbb92989&redirect_uri=http://localhost:8080/app&response_type=token&state=123"
-          className="button"
-        >
-          Login
-        </a>
         <a href={url} className="button">
-          LoginTest
+          Login
         </a>
       </div>
     )

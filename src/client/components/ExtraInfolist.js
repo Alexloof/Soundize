@@ -64,14 +64,12 @@ class ExtraInfolist extends Component {
             </div>
           </div>
           <div className="right-grp">
-            <button
-              onClick={() => this.startTrack(track)}
-              className="button play-btn"
+            <span
+              onClick={() => this.props.removeTrackFromQueuedTracks(index)}
+              className="icon"
             >
-              <span className="icon">
-                <i className="fa fa-play" />
-              </span>
-            </button>
+              <i className="fa fa-remove" />
+            </span>
           </div>
         </li>
       )
@@ -92,7 +90,7 @@ class ExtraInfolist extends Component {
             {this.props.latestPlayed.length > 0 ? (
               this.renderLatestPlayed(this.props.latestPlayed)
             ) : (
-              <li>Inga spelade låtar...</li>
+              <li style={{ marginLeft: '30px' }}>Inga spelade låtar...</li>
             )}
           </FlipMove>
         </ul>
@@ -108,7 +106,7 @@ class ExtraInfolist extends Component {
             {this.props.queuedTracks.length > 0 ? (
               this.renderQueuedTracks(this.props.queuedTracks)
             ) : (
-              <li>Du har inga låtar på kö</li>
+              <li style={{ marginLeft: '30px' }}>Du har inga låtar på kö</li>
             )}
           </FlipMove>
         </ul>

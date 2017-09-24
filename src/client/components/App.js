@@ -125,6 +125,12 @@ class App extends Component {
   addTrackToQueue = track => {
     this.setState({ queuedTracks: [...this.state.queuedTracks, track] })
   }
+  removeTrackFromQueuedTracks = indexToRemove => {
+    let newQueuedTracks = this.state.queuedTracks.filter((track, index) => {
+      return index !== indexToRemove
+    })
+    this.setState({ queuedTracks: newQueuedTracks })
+  }
   removeTrackFromPlaylist = (ownerId, playlistId, spotifyURI) => {
     var tracks = [{ uri: spotifyURI }]
     spotifyApi
@@ -205,7 +211,7 @@ class App extends Component {
     }
 
     if (nextTrack.preview_url === null) {
-      return false
+      this.playNextTrack()
     } else {
       this.addTrackToLatestPlayed(nextTrack)
     }
@@ -218,10 +224,10 @@ class App extends Component {
       this.setState({
         playedTime: 0,
         activeTrack: track,
-        activeTrackIndex: index
+        activeTrackIndex: index ? index : this.state.activeTrackIndex
       })
     }
-    if (this.state.activeTracklist !== activeTracklist) {
+    if (this.state.activeTracklist !== activeTracklist && activeTracklist) {
       this.setState({ activeTracklist })
     }
   }
@@ -289,7 +295,9 @@ class App extends Component {
           deleteActivePlaylist: this.deleteActivePlaylist,
           addTrackToPlaylist: this.addTrackToPlaylist,
           addTrackToQueue: this.addTrackToQueue,
-          removeTrackFromPlaylist: this.removeTrackFromPlaylist
+          removeTrackFromPlaylist: this.removeTrackFromPlaylist,
+          playingPlaylist: this.state.activeTracklist.id,
+          removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks
         })
       }
     )

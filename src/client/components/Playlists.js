@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 
 class Playlists extends Component {
   setActivePlaylist = (owner, id) => {
@@ -9,9 +9,9 @@ class Playlists extends Component {
     return playlists.map(playlist => {
       let className
       if (playlist.id === this.props.activePlaylist) {
-        className = "tooltip active"
+        className = 'tooltip active'
       } else {
-        className = "tooltip"
+        className = 'tooltip'
       }
       return (
         <li
@@ -20,7 +20,11 @@ class Playlists extends Component {
           onClick={() => this.setActivePlaylist(playlist.owner.id, playlist.id)}
         >
           <a>
-            {playlist.name}
+            <span className="playlist-name">{playlist.name}</span>
+            {this.props.playing &&
+            this.props.playingPlaylist === playlist.id ? (
+              <i className="fa fa-volume-up" aria-hidden="true" />
+            ) : null}
             <span className="tooltiptext">
               {playlist.owner.display_name || playlist.owner.id}
             </span>
@@ -48,7 +52,7 @@ class Playlists extends Component {
         </ul>
         <p
           className="menu-label"
-          style={{ marginTop: "30px", marginBottom: "10px" }}
+          style={{ marginTop: '30px', marginBottom: '10px' }}
         >
           Spellistor för dig
         </p>

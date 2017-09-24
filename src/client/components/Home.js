@@ -31,6 +31,8 @@ class Home extends Component {
               activePlaylist={this.props.activePlaylist}
               setActivePlaylist={this.props.setActivePlaylist}
               onOpenCreatePlaylistModal={this.openModal}
+              playing={this.props.playing}
+              playingPlaylist={this.props.playingPlaylist}
             />
           </div>
           <div className="column is-6 tracklist">
@@ -62,6 +64,9 @@ class Home extends Component {
               startActiveTrack={this.props.startActiveTrack}
               setActiveTrack={this.props.setActiveTrack}
               queuedTracks={this.props.queuedTracks}
+              removeTrackFromQueuedTracks={
+                this.props.removeTrackFromQueuedTracks
+              }
             />
           </div>
         </div>

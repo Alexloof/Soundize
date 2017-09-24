@@ -80,6 +80,7 @@ class MusicBar extends Component {
   }
   trackEnded = () => {
     if (this.state.loop) {
+      this.props.zeroTrack()
       this.props.startTrack(this.state.activeTrack)
     } else {
       this.props.playNextTrack()

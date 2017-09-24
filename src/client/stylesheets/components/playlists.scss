@@ -43,6 +43,7 @@
         transition: all 0.2s ease-in-out;
         position: relative;
         cursor: pointer;
+
         .tooltiptext {
           visibility: hidden;
           position: absolute;
@@ -82,7 +83,7 @@
         }
       }
       li a {
-        height: 28px;
+        height: 36px;
         overflow: hidden;
         padding: 0.6em 0.75em;
         border-radius: 0px;
@@ -91,6 +92,13 @@
         white-space: nowrap;
         letter-spacing: 0.5;
         font-size: 13px;
+        width: 230px;
+        .fa {
+          position: absolute;
+          left: 90%;
+          font-size: 15px;
+          margin-top: 2px;
+        }
         &:hover {
           background: transparent;
         }

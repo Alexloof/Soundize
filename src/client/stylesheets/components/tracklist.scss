@@ -49,7 +49,10 @@
           height: 30px;
           border-radius: 50px;
           i.fa {
-            font-size: 16px;
+            font-size: 12px;
+          }
+          i.fa-navicon {
+            font-size: 15px;
           }
           &:hover {
             background-color: $gray-light;

@@ -63,6 +63,7 @@
         }
         .right-grp {
           margin-right: 10px;
+
           button {
             border-radius: 50px;
             &:focus {
@@ -114,6 +115,10 @@
         }
         .right-grp {
           margin-right: 10px;
+          .fa-remove {
+            cursor: pointer;
+            font-size: 18px;
+          }
           button {
             border-radius: 50px;
             &:focus {

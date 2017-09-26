@@ -28,9 +28,9 @@ class Login extends Component {
     console.log(url)
 
     return (
-      <div>
-        <a href={url} className="button">
-          Login
+      <div className="login-wrapper">
+        <a href={url} className="button login-button">
+          ENTER
         </a>
       </div>
     )

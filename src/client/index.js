@@ -11,7 +11,7 @@ import {
 import App from './components/App'
 import Home from './components/Home'
 import Login from './components/Login'
-import Stream from './components/Stream'
+import Search from './components/Search'
 
 import './stylesheets/main.scss'
 
@@ -21,9 +21,8 @@ const Root = () => {
       <Route>
         <Route path="/" component={Login} />
         <Route path="/app" component={App}>
-          <Route path="stream" component={Home}>
-            <Route path="/stream" component={Stream} />
-          </Route>
+          <Route path="stream" component={Home} />
+          <Route path="search/:id" component={Search} />
         </Route>
       </Route>
     </Router>

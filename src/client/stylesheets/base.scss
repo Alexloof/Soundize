@@ -1,5 +1,4 @@
 body {
-  background-color: $body-background-color;
   color: $body-default-color;
   font-family: $body-default-font-familty;
 }
@@ -7,6 +6,7 @@ body {
 html {
   font-size: 14px;
   overflow-y: auto;
+  background-color: $body-background-color;
 }
 
 * {
@@ -35,10 +35,6 @@ strong {
 
 .hidden {
   opacity: 0 !important;
-}
-
-#root {
-  margin-top: $nav-height;
 }
 
 //nedan är en klass för att göra scrollbar invisible i webkit-browsers som chrome

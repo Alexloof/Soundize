@@ -1,0 +1,16 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  .login-button {
+    height: 100px;
+    width: 300px;
+    color: white;
+    background: $gray-lightdark;
+    font-size: 20px;
+    letter-spacing: 2px;
+    box-shadow: 1px 1px 15px 4px rgba(93, 92, 92, 0.43);
+    border: 3px;
+  }
+}

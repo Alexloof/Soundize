@@ -1,10 +1,11 @@
-@import "variables.scss";
-@import "base.scss";
-@import "modals.scss";
+@import 'variables.scss';
+@import 'base.scss';
+@import 'modals.scss';
 
-@import "./components/nav";
-@import "./components/playlists";
-@import "./components/tracklist";
-@import "./components/track";
-@import "./components/musicbar";
-@import "./components/extrainfolist";
+@import './components/nav';
+@import './components/playlists';
+@import './components/tracklist';
+@import './components/track';
+@import './components/musicbar';
+@import './components/extrainfolist';
+@import './components/login';

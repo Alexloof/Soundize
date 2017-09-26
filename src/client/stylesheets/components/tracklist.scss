@@ -27,10 +27,17 @@
       max-width: 72%;
       padding: 1%;
       letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      div {
+        cursor: pointer;
+      }
       span {
         font-size: 0.7rem;
         letter-spacing: 1px;
-        color: gainsboro;
+        color: #dddbdb;
+        padding-left: 5px;
+        margin-top: 4px;
       }
     }
     .tracklist-scroll-banner-right-grp {
@@ -55,10 +62,12 @@
           height: 30px;
           border-radius: 50px;
           i.fa {
-            font-size: 12px;
+            font-size: 11px;
           }
-          i.fa-navicon {
+          i.fa-remove {
             font-size: 15px;
+            padding-bottom: 2px;
+            padding-left: 1px;
           }
           &:hover {
             background-color: $gray-light;

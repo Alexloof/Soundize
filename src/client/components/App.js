@@ -323,12 +323,13 @@ class App extends Component {
           removeTrackFromPlaylist: this.removeTrackFromPlaylist,
           playingPlaylist: this.state.activeTracklist.id,
           removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
-          playVisibleTracklist: this.playVisibleTracklist
+          playVisibleTracklist: this.playVisibleTracklist,
+          spotifyApi: spotifyApi
         })
       }
     )
     return (
-      <div>
+      <div style={{ marginTop: '52px' }}>
         <Nav user={this.state.user} />
         {childrenWithExtraProp}
         <MusicBar

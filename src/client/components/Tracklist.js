@@ -117,18 +117,18 @@ class Tracklist extends Component {
     return (
       <div className="menu ">
         <div className="tracklist-scroll-banner">
-          <p className="tracklist-name title">
-            {this.props.tracklist.name}
+          <div className="tracklist-name title">
+            <div onClick={() => window.scroll(0, 0)}>
+              {this.props.tracklist.name}
+            </div>
             <span>
-              {' '}
-              -{' '}
               {this.props.tracklist.owner.display_name ? (
                 this.props.tracklist.owner.display_name
               ) : (
                 this.props.tracklist.owner.id
               )}
             </span>
-          </p>
+          </div>
           <div className="tracklist-scroll-banner-right-grp">
             <div className="tracklist-scroll-btn-grp">
               {this.props.playingPlaylist !== this.props.tracklist.id ||
@@ -147,9 +147,9 @@ class Tracklist extends Component {
                   <i className="fa fa-pause" />
                 </button>
               )}
-              <button className="button">
+              <button onClick={() => this.showDeleteModal()} className="button">
                 <span className="icon">
-                  <i className="fa fa-navicon" />
+                  <i className="fa fa-remove" />
                 </span>
               </button>
             </div>

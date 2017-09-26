@@ -1,11 +1,23 @@
-import React, { Component } from "react"
-import { Link } from "react-router"
-import { browserHistory } from "react-router"
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 
 class Nav extends Component {
+  state = {
+    searchTest: ''
+  }
   onLogout = () => {
-    localStorage.removeItem("token")
-    browserHistory.replace("/")
+    localStorage.removeItem('token')
+    browserHistory.replace('/')
+  }
+  onInputChange = e => {
+    this.setState({ searchTest: e.target.value })
+  }
+  onSearchSubmit = e => {
+    e.preventDefault()
+    if (this.state.searchTest.length > 0) {
+      browserHistory.push(`/app/search/${this.state.searchTest.toLowerCase()}`)
+    }
   }
   render() {
     return (
@@ -47,28 +59,28 @@ class Nav extends Component {
             <Link
               className="navbar-item "
               to="/app/stream"
-              activeStyle={{ color: "#ff6b42" }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Min Musik
             </Link>
             <Link
               className="navbar-item "
-              to="/"
-              activeStyle={{ color: "#ff6b42" }}
+              to="/app/search/hej"
+              activeStyle={{ color: '#ff6b42' }}
             >
               Utforska
             </Link>
             <Link
               className="navbar-item "
               to="/"
-              activeStyle={{ color: "#ff6b42" }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Nytt
             </Link>
             <Link
               className="navbar-item "
               to="/"
-              activeStyle={{ color: "#ff6b42" }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Topplistor
             </Link>
@@ -78,12 +90,21 @@ class Nav extends Component {
           </div>
 
           <div className="navbar-end">
-            <input className="input" type="text" placeholder="Sök" />
+            <form onSubmit={this.onSearchSubmit}>
+              <input
+                className="input"
+                onChange={this.onInputChange}
+                value={this.state.searchTest}
+                type="text"
+                placeholder="Sök"
+              />
+            </form>
+
             <div className="navbar-item">
               {this.props.user ? (
                 <div
                   className="field is-grouped"
-                  style={{ alignItems: "center" }}
+                  style={{ alignItems: 'center' }}
                 >
                   <img src={this.props.user.images[0].url} />
                   <div className="navbar-item has-dropdown is-hoverable user-nav-dropdown">

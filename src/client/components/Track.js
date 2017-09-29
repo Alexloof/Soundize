@@ -105,15 +105,11 @@ class Track extends Component {
     }
   }
   addTrackToPlaylist = (ownerId, playlistId) => {
-    this.props.addTrackToPlaylist(
-      ownerId,
-      playlistId,
-      this.props.track.track.uri
-    )
+    this.props.addTrackToPlaylist(ownerId, playlistId, this.props.track.uri)
     this.toggleDropdown()
   }
   addTrackToQueue = () => {
-    this.props.addTrackToQueue(this.props.track.track)
+    this.props.addTrackToQueue(this.props.track)
     this.toggleDropdown()
   }
   removeTrackFromPlaylist = spotifyURI => {
@@ -121,18 +117,20 @@ class Track extends Component {
     this.toggleDropdown()
   }
   renderPlaylists = () => {
-    return this.props.privatePlaylists.map((playlist, index) => {
-      return (
-        <li key={index}>
-          <a
-            onClick={() =>
-              this.addTrackToPlaylist(playlist.owner.id, playlist.id)}
-          >
-            {playlist.name}
-          </a>
-        </li>
-      )
-    })
+    if (this.props.privatePlaylists) {
+      return this.props.privatePlaylists.map((playlist, index) => {
+        return (
+          <li key={index}>
+            <a
+              onClick={() =>
+                this.addTrackToPlaylist(playlist.owner.id, playlist.id)}
+            >
+              {playlist.name}
+            </a>
+          </li>
+        )
+      })
+    }
   }
   setWrapperRef = node => {
     this.wrapperRef = node

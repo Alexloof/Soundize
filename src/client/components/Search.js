@@ -9,19 +9,18 @@ class Search extends Component {
     searchedPlaylists: []
   }
   componentWillMount() {
+    window.scroll(0, 0)
     this.props.spotifyApi.searchTracks(this.props.params.id).then(data => {
       this.setState({ searchedTracks: data.body.tracks.items })
     }, function(err) {
       console.error(err)
     })
     this.props.spotifyApi.searchArtists(this.props.params.id).then(data => {
-      console.log(data.body)
       this.setState({ searchedArtists: data.body.artists.items })
     }, function(err) {
       console.error(err)
     })
     this.props.spotifyApi.searchPlaylists(this.props.params.id).then(data => {
-      console.log(data.body)
       this.setState({ searchedPlaylists: data.body.playlists.items })
     }, function(err) {
       console.log('Something went wrong!', err)
@@ -35,25 +34,37 @@ class Search extends Component {
         console.error(err)
       })
       this.props.spotifyApi.searchArtists(nextProps.params.id).then(data => {
-        console.log(data.body)
         this.setState({ searchedArtists: data.body.artists.items })
       }, function(err) {
         console.error(err)
       })
       this.props.spotifyApi.searchPlaylists(nextProps.params.id).then(data => {
-        console.log(data.body)
         this.setState({ searchedPlaylists: data.body.playlists.items })
       }, function(err) {
         console.log('Something went wrong!', err)
       })
+      window.scroll(0, 0)
     }
   }
   setActiveTrack = (track, index) => {
-    this.props.setActiveTrack(track, index)
+    this.props.setActiveTrack(track, this.state.searchedTracks, index)
   }
   renderArtists = () => {
-    return this.state.searchedArtists.map(artist => {
-      return <li>{artist.name}</li>
+    return this.state.searchedArtists.map((artist, index) => {
+      return (
+        <li key={index} className="artist-result">
+          <img
+            src={
+              artist.images[1] ? (
+                artist.images[1].url
+              ) : (
+                'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
+              )
+            }
+          />
+          <p>{artist.name}</p>
+        </li>
+      )
     })
   }
   renderTracks = () => {
@@ -102,8 +113,27 @@ class Search extends Component {
     })
   }
   renderPlaylists = () => {
-    return this.state.searchedPlaylists.map(playlist => {
-      return <li>{playlist.name}</li>
+    return this.state.searchedPlaylists.map((playlist, index) => {
+      return (
+        <li key={index} className="playlist-result">
+          <img
+            src={
+              playlist.images ? (
+                playlist.images[0].url
+              ) : (
+                'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
+              )
+            }
+          />
+          <p>
+            {playlist.name.length > 30 ? (
+              playlist.name.substr(0, 27) + '...'
+            ) : (
+              playlist.name
+            )}
+          </p>
+        </li>
+      )
     })
   }
   render() {
@@ -115,21 +145,33 @@ class Search extends Component {
         </div>
         <div className="search-data-wrapper">
           <div className="searched-artists">
-            <h2>Artists</h2>
+            <h2>Artister</h2>
             <ul className="menu-list artist-list">
-              {this.state.searchedArtists ? this.renderArtists() : null}
+              {this.state.searchedArtists.length > 0 ? (
+                this.renderArtists()
+              ) : (
+                <li>Inga matchande artister</li>
+              )}
             </ul>
           </div>
           <div className="searched-tracks">
-            <h2>Tracks</h2>
+            <h2>Låtar</h2>
             <ul className="menu-list track-list">
-              {this.state.searchedTracks ? this.renderTracks() : null}
+              {this.state.searchedTracks.length > 0 ? (
+                this.renderTracks()
+              ) : (
+                <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+              )}
             </ul>
           </div>
           <div className="searched-playlists">
-            <h2>Playlists</h2>
+            <h2>Spellistor</h2>
             <ul className="menu-list playlist-list">
-              {this.state.searchedPlaylists ? this.renderPlaylists() : null}
+              {this.state.searchedPlaylists.length > 0 ? (
+                this.renderPlaylists()
+              ) : (
+                <li>Inga matchande spellistor</li>
+              )}
             </ul>
           </div>
         </div>

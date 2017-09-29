@@ -48,9 +48,7 @@ class App extends Component {
       this.onClickPlaylist(data.body.items[0].owner.id, data.body.items[0].id)
       this.setActivePlaylist(data.body.items[0].id)
       this.getPrivatePlaylists(data.body.items)
-      this.setState({ playlists: data.body.items }, () =>
-        browserHistory.replace('/app/stream')
-      )
+      this.setState({ playlists: data.body.items })
     }, function(err) {
       console.log('Something went wrong getting playlists!', err)
     })
@@ -110,7 +108,7 @@ class App extends Component {
       console.log('Something went wrong!', err)
     })
   }
-  addTrackToPlaylist = (ownerId, playlistId, spotifykURI) => {
+  addTrackToPlaylist = (ownerId, playlistId, spotifyURI) => {
     spotifyApi
       .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyURI])
       .then(
@@ -200,9 +198,13 @@ class App extends Component {
         )
       }
     } else {
-      nextTrack = this.state.activeTracklist.tracks.items[
-        this.state.activeTrackIndex + 1
-      ].track
+      this.state.activeTracklist.tracks
+        ? (nextTrack = this.state.activeTracklist.tracks.items[
+            this.state.activeTrackIndex + 1
+          ].track)
+        : (nextTrack = this.state.activeTracklist[
+            this.state.activeTrackIndex + 1
+          ])
       this.setActiveTrack(
         nextTrack,
         this.state.activeTracklist,

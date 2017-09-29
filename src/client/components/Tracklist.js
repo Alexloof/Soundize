@@ -75,7 +75,7 @@ class Tracklist extends Component {
           return (
             <Track
               key={index}
-              track={track}
+              track={track.track}
               setActiveTrack={this.setActiveTrack}
               stopActiveTrack={this.props.stopActiveTrack}
               startActiveTrack={this.props.startActiveTrack}
@@ -97,7 +97,7 @@ class Tracklist extends Component {
           return (
             <Track
               key={index}
-              track={track}
+              track={track.track}
               setActiveTrack={this.setActiveTrack}
               stopActiveTrack={this.props.stopActiveTrack}
               startActiveTrack={this.props.startActiveTrack}

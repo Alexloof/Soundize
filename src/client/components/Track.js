@@ -48,10 +48,10 @@ class Track extends Component {
     }
   }
   renderStartStopButton = () => {
-    if (this.props.track.track.preview_url !== null) {
+    if (this.props.track.preview_url !== null) {
       return this.props.playing && this.props.activeTrack ? (
         <button
-          onClick={() => this.stopTrack(this.props.track.track)}
+          onClick={() => this.stopTrack(this.props.track)}
           className="button play-btn"
         >
           <span className="icon">
@@ -60,7 +60,7 @@ class Track extends Component {
         </button>
       ) : (
         <button
-          onClick={() => this.startTrack(this.props.track.track)}
+          onClick={() => this.startTrack(this.props.track)}
           className="button play-btn"
         >
           <span className="icon">
@@ -86,7 +86,7 @@ class Track extends Component {
     }
   }
   renderPopularity = () => {
-    let pop = Math.round(this.props.track.track.popularity / 10)
+    let pop = Math.round(this.props.track.popularity / 10)
     var foo = []
     for (var i = 1; i <= pop; i++) {
       foo.push(i)
@@ -144,7 +144,7 @@ class Track extends Component {
           <div className="img-click-play">
             {this.props.playing && this.props.activeTrack ? (
               <button
-                onClick={() => this.stopTrack(this.props.track.track)}
+                onClick={() => this.stopTrack(this.props.track)}
                 className="button play-btn"
               >
                 <span className="icon">
@@ -153,7 +153,7 @@ class Track extends Component {
               </button>
             ) : (
               <button
-                onClick={() => this.startTrack(this.props.track.track)}
+                onClick={() => this.startTrack(this.props.track)}
                 className="button play-btn"
               >
                 <span className="icon">
@@ -162,8 +162,8 @@ class Track extends Component {
               </button>
             )}
           </div>
-          {this.props.track.track.album.images.length !== 0 ? (
-            <img src={this.props.track.track.album.images[0].url} />
+          {this.props.track.album.images.length !== 0 ? (
+            <img src={this.props.track.album.images[0].url} />
           ) : (
             <img />
           )}
@@ -173,9 +173,9 @@ class Track extends Component {
           <div className="track-section-higher">
             <div className="track-details">
               <div className="artist-label">
-                {this.renderArtists(this.props.track.track.artists)}
+                {this.renderArtists(this.props.track.artists)}
               </div>
-              <div className="title-label">{this.props.track.track.name}</div>
+              <div className="title-label">{this.props.track.name}</div>
             </div>
             <div className="track-section-higher-right-grp">
               <div className="popularity">
@@ -226,7 +226,7 @@ class Track extends Component {
                         <ul className="menu-list">{this.renderPlaylists()}</ul>
                       </div>
                     </div>
-                    {this.props.track.track.preview_url !== null ? (
+                    {this.props.track.preview_url !== null ? (
                       <div
                         onClick={() => this.addTrackToQueue()}
                         className="dropdown-item"
@@ -237,9 +237,7 @@ class Track extends Component {
                     {this.props.myPlaylist ? (
                       <div
                         onClick={() =>
-                          this.removeTrackFromPlaylist(
-                            this.props.track.track.uri
-                          )}
+                          this.removeTrackFromPlaylist(this.props.track.uri)}
                         className="dropdown-item"
                       >
                         Ta bort från spellistan

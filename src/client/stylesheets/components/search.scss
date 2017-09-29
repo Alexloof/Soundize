@@ -1,0 +1,43 @@
+.search-component {
+  .search-banner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    h1 {
+      margin-bottom: 0 !important;
+      margin-right: 10px;
+      font-size: 1.6rem;
+    }
+    h2 {
+      margin-top: 0 !important;
+      font-size: 1.4rem;
+    }
+  }
+  .search-data-wrapper {
+    width: 1200px;
+    background: #cccccc;
+    min-height: 89vh;
+    margin: 0 auto;
+    display: flex;
+    h2 {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    .searched-artists {
+      width: 28.3%;
+      padding: 10px;
+    }
+    .searched-tracks {
+      width: 43.3%;
+      padding: 10px;
+      border-right: 1px solid black;
+      border-left: 1px solid black;
+    }
+    .searched-playlists {
+      width: 28.3%;
+      padding: 10px;
+    }
+  }
+}

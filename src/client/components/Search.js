@@ -12,17 +12,20 @@ class Search extends Component {
     window.scroll(0, 0)
     this.props.spotifyApi.searchTracks(this.props.params.id).then(data => {
       this.setState({ searchedTracks: data.body.tracks.items })
-    }, function(err) {
+    },
+    function(err) {
       console.error(err)
     })
     this.props.spotifyApi.searchArtists(this.props.params.id).then(data => {
       this.setState({ searchedArtists: data.body.artists.items })
-    }, function(err) {
+    },
+    function(err) {
       console.error(err)
     })
     this.props.spotifyApi.searchPlaylists(this.props.params.id).then(data => {
       this.setState({ searchedPlaylists: data.body.playlists.items })
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong!', err)
     })
   }
@@ -30,17 +33,20 @@ class Search extends Component {
     if (nextProps.params.id !== this.props.params.id) {
       this.props.spotifyApi.searchTracks(nextProps.params.id).then(data => {
         this.setState({ searchedTracks: data.body.tracks.items })
-      }, function(err) {
+      },
+      function(err) {
         console.error(err)
       })
       this.props.spotifyApi.searchArtists(nextProps.params.id).then(data => {
         this.setState({ searchedArtists: data.body.artists.items })
-      }, function(err) {
+      },
+      function(err) {
         console.error(err)
       })
       this.props.spotifyApi.searchPlaylists(nextProps.params.id).then(data => {
         this.setState({ searchedPlaylists: data.body.playlists.items })
-      }, function(err) {
+      },
+      function(err) {
         console.log('Something went wrong!', err)
       })
       window.scroll(0, 0)
@@ -55,11 +61,9 @@ class Search extends Component {
         <li key={index} className="artist-result">
           <img
             src={
-              artist.images[1] ? (
-                artist.images[1].url
-              ) : (
-                'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
-              )
+              artist.images[1]
+                ? artist.images[1].url
+                : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
             }
           />
           <p>{artist.name}</p>
@@ -118,19 +122,15 @@ class Search extends Component {
         <li key={index} className="playlist-result">
           <img
             src={
-              playlist.images ? (
-                playlist.images[0].url
-              ) : (
-                'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
-              )
+              playlist.images
+                ? playlist.images[0].url
+                : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
             }
           />
           <p>
-            {playlist.name.length > 30 ? (
-              playlist.name.substr(0, 27) + '...'
-            ) : (
-              playlist.name
-            )}
+            {playlist.name.length > 30
+              ? playlist.name.substr(0, 27) + '...'
+              : playlist.name}
           </p>
         </li>
       )

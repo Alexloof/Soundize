@@ -15,9 +15,10 @@ class Nav extends Component {
   onSearchSubmit = e => {
     e.preventDefault()
     if (this.state.searchTest.length > 0) {
-      this.props.history.push(
-        `/app/stream/search/${this.state.searchTest.toLowerCase()}`
-      )
+      this.props.history.push({
+        pathname: '/stream/search',
+        state: { id: this.state.searchTest.toLowerCase() }
+      })
     }
   }
   render() {
@@ -59,7 +60,7 @@ class Nav extends Component {
           <div className="navbar-start">
             <NavLink
               className="navbar-item "
-              to="/app/stream"
+              to="/stream/me"
               activeStyle={{ color: '#ff6b42' }}
             >
               Min Musik
@@ -73,20 +74,20 @@ class Nav extends Component {
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/"
+              to="/adadad"
               activeStyle={{ color: '#ff6b42' }}
             >
               Nytt
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/"
+              to="/sdsdsd"
               activeStyle={{ color: '#ff6b42' }}
             >
               Topplistor
             </NavLink>
             <NavLink
-              to="/"
+              to="/login"
               onClick={() => this.onLogout()}
               className="navbar-item"
             >

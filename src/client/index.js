@@ -5,40 +5,66 @@ import {
   Switch,
   Route,
   IndexRoute,
-  history
+  history,
+  Redirect
 } from 'react-router-dom'
 
 import App from './components/App'
 import Home from './components/Home'
 import Login from './components/Login'
 import Search from './components/Search'
-import Redirect from './components/Redirect'
+import RedirectLogin from './components/Redirect'
 
 import './stylesheets/main.scss'
+
+const routes = [
+  {
+    path: '',
+    component: () => <Redirect to="/login" />
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/app',
+    component: RedirectLogin
+  },
+  {
+    path: '/stream',
+    component: App,
+    routes: [
+      {
+        path: '/stream/me',
+        component: Home
+      },
+      {
+        path: '/stream/search',
+        component: Search
+      }
+    ]
+  }
+]
+
+const RouteWithSubRoutes = route => (
+  <Route
+    exact
+    path={route.path}
+    render={props => (
+      // pass the sub-routes down to keep nesting
+      <route.component {...props} routes={route.routes} />
+    )}
+  />
+)
 
 const Root = () => {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/app" component={Redirect} />
-        <Route path="/app/stream" component={Parent} />
-      </Switch>
+      <div>
+        {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+      </div>
     </Router>
   )
-}
-
-const renderRightComponent = props => {
-  console.log(props)
-  if ((props.match.url = '/app/stream')) {
-    return <Home />
-  } else if ((props.match.url = 'app/stream/search')) {
-    return <Search />
-  }
-}
-
-const Parent = props => {
-  return <App {...props}>{renderRightComponent(props)}</App>
 }
 
 ReactDOM.render(<Root />, document.querySelector('#root'))

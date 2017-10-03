@@ -296,6 +296,38 @@ class App extends Component {
     this.setState({ playing: false })
   }
   render() {
+    const extraProps = {
+      playlists: this.state.playlists,
+      privatePlaylists: this.state.privatePlaylists,
+      featuredPlaylists: this.state.featuredPlaylists,
+      tracklist: this.state.tracklist,
+      onClickPlaylist: this.onClickPlaylist,
+      getTrackAnalysis: this.getTrackAnalysis,
+      setActiveTrack: this.setActiveTrack,
+      stopActiveTrack: this.stopActiveTrack,
+      startActiveTrack: this.startActiveTrack,
+      activeTrack: this.state.activeTrack,
+      playing: this.state.playing,
+      playedTime: this.state.playedTime,
+      onSeekMouseDown: this.onSeekMouseDown,
+      onSeekChange: this.onSeekChange,
+      onSeekMouseUp: this.onSeekMouseUp,
+      activePlaylist: this.state.activePlaylist,
+      setActivePlaylist: this.setActivePlaylist,
+      latestPlayed: this.state.latestPlayed,
+      queuedTracks: this.state.queuedTracks,
+      createPlaylist: this.createPlaylist,
+      me: this.state.user,
+      unfollowActivePlaylist: this.unfollowActivePlaylist,
+      deleteActivePlaylist: this.deleteActivePlaylist,
+      addTrackToPlaylist: this.addTrackToPlaylist,
+      addTrackToQueue: this.addTrackToQueue,
+      removeTrackFromPlaylist: this.removeTrackFromPlaylist,
+      playingPlaylist: this.state.activeTracklist.id,
+      removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
+      playVisibleTracklist: this.playVisibleTracklist,
+      spotifyApi: spotifyApi
+    }
     const childrenWithExtraProp = React.Children.map(
       this.props.children,
       child => {
@@ -333,11 +365,21 @@ class App extends Component {
         })
       }
     )
-    console.log(this.props)
+    const getProps = props => {
+      return Object.assign({}, props, extraProps)
+    }
     return (
       <div style={{ marginTop: '52px' }}>
         <Nav user={this.state.user} history={this.props.history} />
-        {childrenWithExtraProp}
+        {this.props.routes.map((route, i) => (
+          <Route
+            key={i}
+            path={route.path}
+            render={props => (
+              <route.component {...getProps(props)} routes={route.routes} />
+            )}
+          />
+        ))}
         <MusicBar
           activeTrack={this.state.activeTrack}
           playing={this.state.playing}

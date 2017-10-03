@@ -9,46 +9,71 @@ class Search extends Component {
     searchedPlaylists: []
   }
   componentWillMount() {
+    console.log(this.props)
     window.scroll(0, 0)
-    this.props.spotifyApi.searchTracks(this.props.params.id).then(data => {
-      this.setState({ searchedTracks: data.body.tracks.items })
-    },
-    function(err) {
-      console.error(err)
-    })
-    this.props.spotifyApi.searchArtists(this.props.params.id).then(data => {
-      this.setState({ searchedArtists: data.body.artists.items })
-    },
-    function(err) {
-      console.error(err)
-    })
-    this.props.spotifyApi.searchPlaylists(this.props.params.id).then(data => {
-      this.setState({ searchedPlaylists: data.body.playlists.items })
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-    })
+    this.props.spotifyApi
+      .searchTracks(this.props.location.state.id)
+      .then(
+        data => {
+          this.setState({ searchedTracks: data.body.tracks.items })
+        },
+        function(err) {
+          console.error(err)
+        }
+      )
+    this.props.spotifyApi
+      .searchArtists(this.props.location.state.id)
+      .then(
+        data => {
+          this.setState({ searchedArtists: data.body.artists.items })
+        },
+        function(err) {
+          console.error(err)
+        }
+      )
+    this.props.spotifyApi
+      .searchPlaylists(this.props.location.state.id)
+      .then(
+        data => {
+          this.setState({ searchedPlaylists: data.body.playlists.items })
+        },
+        function(err) {
+          console.log('Something went wrong!', err)
+        }
+      )
   }
   componentWillUpdate(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) {
-      this.props.spotifyApi.searchTracks(nextProps.params.id).then(data => {
-        this.setState({ searchedTracks: data.body.tracks.items })
-      },
-      function(err) {
-        console.error(err)
-      })
-      this.props.spotifyApi.searchArtists(nextProps.params.id).then(data => {
-        this.setState({ searchedArtists: data.body.artists.items })
-      },
-      function(err) {
-        console.error(err)
-      })
-      this.props.spotifyApi.searchPlaylists(nextProps.params.id).then(data => {
-        this.setState({ searchedPlaylists: data.body.playlists.items })
-      },
-      function(err) {
-        console.log('Something went wrong!', err)
-      })
+    if (nextProps.location.state.id !== this.props.location.state.id) {
+      this.props.spotifyApi
+        .searchTracks(nextProps.location.state.id)
+        .then(
+          data => {
+            this.setState({ searchedTracks: data.body.tracks.items })
+          },
+          function(err) {
+            console.error(err)
+          }
+        )
+      this.props.spotifyApi
+        .searchArtists(nextProps.location.state.id)
+        .then(
+          data => {
+            this.setState({ searchedArtists: data.body.artists.items })
+          },
+          function(err) {
+            console.error(err)
+          }
+        )
+      this.props.spotifyApi
+        .searchPlaylists(nextProps.location.state.id)
+        .then(
+          data => {
+            this.setState({ searchedPlaylists: data.body.playlists.items })
+          },
+          function(err) {
+            console.log('Something went wrong!', err)
+          }
+        )
       window.scroll(0, 0)
     }
   }
@@ -141,7 +166,7 @@ class Search extends Component {
       <div className="search-component">
         <div className="search-banner">
           <h1 className="title">Sökresultat för: </h1>
-          <h2 className="subtitle">{this.props.params.id}</h2>
+          <h2 className="subtitle">{this.props.location.state.id}</h2>
         </div>
         <div className="search-data-wrapper">
           <div className="searched-artists">

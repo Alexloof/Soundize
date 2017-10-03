@@ -15,9 +15,9 @@ class Redirect extends Component {
       if (newHash) {
         localStorage.setItem('token', newHash)
         console.log('SUCCESS!')
-        this.props.history.push('/app/stream')
+        this.props.history.push('/stream/me')
       } else {
-        this.props.history.push('/')
+        this.props.history.push('/login')
       }
     }
   }

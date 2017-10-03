@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
-var SpotifyWebApi = require('spotify-web-api-node')
-var spotifyApi = new SpotifyWebApi()
-
-import { browserHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import Nav from './Nav'
 import MusicBar from './MusicBar'
+import Home from './Home'
+import Search from './Search'
+
+var SpotifyWebApi = require('spotify-web-api-node')
+var spotifyApi = new SpotifyWebApi()
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  IndexRoute,
+  history
+} from 'react-router-dom'
 
 class App extends Component {
   state = {
@@ -28,18 +37,7 @@ class App extends Component {
     activeTrackIndex: ''
   }
 
-  componentDidMount() {
-    console.log(localStorage.getItem('token'))
-    if (
-      !localStorage.getItem('token') ||
-      (localStorage.getItem('token') !==
-        this.props.location.hash.slice(14, -34) &&
-        this.props.location.hash)
-    ) {
-      console.log('Ny token')
-      let newHash = this.props.location.hash.slice(14, -34)
-      localStorage.setItem('token', newHash)
-    }
+  componentWillMount() {
     spotifyApi.setAccessToken(localStorage.getItem('token'))
     this.getMe()
   }
@@ -49,7 +47,8 @@ class App extends Component {
       this.setActivePlaylist(data.body.items[0].id)
       this.getPrivatePlaylists(data.body.items)
       this.setState({ playlists: data.body.items })
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong getting playlists!', err)
     })
     this.getFeaturedPlaylists(new Date().toISOString())
@@ -69,16 +68,17 @@ class App extends Component {
   getMe() {
     spotifyApi.getMe().then(data => {
       this.setState({ user: data.body }, () => this.getPlaylists())
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong getting user details!', err)
-      browserHistory.replace('/')
     })
   }
   onClickPlaylist = (user, id) => {
     spotifyApi.getPlaylist(user, id).then(data => {
       this.setState({ tracklist: data.body })
       window.scrollTo(0, 0)
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong getting clickedtracklist!', err)
     })
   }
@@ -97,14 +97,16 @@ class App extends Component {
   unfollowActivePlaylist = (user, playlistId) => {
     spotifyApi.unfollowPlaylist(user, playlistId).then(data => {
       this.getPlaylists()
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong!', err)
     })
   }
   deleteActivePlaylist = id => {
     spotifyApi.unfollowPlaylist(this.state.user.id, id).then(data => {
       this.getPlaylists()
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong!', err)
     })
   }
@@ -138,7 +140,8 @@ class App extends Component {
           this.setActivePlaylist(playlistId)
           spotifyApi.getPlaylist(ownerId, playlistId).then(data => {
             this.setState({ tracklist: data.body })
-          }, function(err) {
+          },
+          function(err) {
             console.log('Something went wrong getting tracklist!', err)
           })
           console.log('Track removed from playlist!')
@@ -330,9 +333,10 @@ class App extends Component {
         })
       }
     )
+    console.log(this.props)
     return (
       <div style={{ marginTop: '52px' }}>
-        <Nav user={this.state.user} />
+        <Nav user={this.state.user} history={this.props.history} />
         {childrenWithExtraProp}
         <MusicBar
           activeTrack={this.state.activeTrack}

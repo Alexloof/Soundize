@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
-import { browserHistory } from 'react-router'
+import { NavLink } from 'react-router-dom'
 
 class Nav extends Component {
   state = {
@@ -16,7 +15,9 @@ class Nav extends Component {
   onSearchSubmit = e => {
     e.preventDefault()
     if (this.state.searchTest.length > 0) {
-      browserHistory.push(`/app/search/${this.state.searchTest.toLowerCase()}`)
+      this.props.history.push(
+        `/app/stream/search/${this.state.searchTest.toLowerCase()}`
+      )
     }
   }
   render() {
@@ -56,37 +57,41 @@ class Nav extends Component {
 
         <div id="navMenubd-example" className="navbar-menu">
           <div className="navbar-start">
-            <Link
+            <NavLink
               className="navbar-item "
               to="/app/stream"
               activeStyle={{ color: '#ff6b42' }}
             >
               Min Musik
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               className="navbar-item "
               to="/app/search/hej"
               activeStyle={{ color: '#ff6b42' }}
             >
               Utforska
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               className="navbar-item "
               to="/"
               activeStyle={{ color: '#ff6b42' }}
             >
               Nytt
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               className="navbar-item "
               to="/"
               activeStyle={{ color: '#ff6b42' }}
             >
               Topplistor
-            </Link>
-            <Link onClick={() => this.onLogout()} className="navbar-item">
+            </NavLink>
+            <NavLink
+              to="/"
+              onClick={() => this.onLogout()}
+              className="navbar-item"
+            >
               Refresh
-            </Link>
+            </NavLink>
           </div>
 
           <div className="navbar-end">

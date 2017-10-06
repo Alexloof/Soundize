@@ -3,22 +3,24 @@ import { NavLink } from 'react-router-dom'
 
 class Nav extends Component {
   state = {
-    searchTest: ''
+    searchText: ''
   }
   onLogout = () => {
     localStorage.removeItem('token')
-    browserHistory.replace('/')
+    this.props.history.replace('/')
   }
   onInputChange = e => {
-    this.setState({ searchTest: e.target.value })
+    this.setState({ searchText: e.target.value })
   }
   onSearchSubmit = e => {
     e.preventDefault()
-    if (this.state.searchTest.length > 0) {
+    if (this.state.searchText.length > 0) {
       this.props.history.push({
         pathname: '/stream/search',
-        state: { id: this.state.searchTest.toLowerCase() }
+        search: `?q=${this.state.searchText.toLowerCase()}`,
+        state: { id: this.state.searchText.toLowerCase() }
       })
+      this.setState({ searchText: '' })
     }
   }
   render() {
@@ -100,7 +102,7 @@ class Nav extends Component {
               <input
                 className="input"
                 onChange={this.onInputChange}
-                value={this.state.searchTest}
+                value={this.state.searchText}
                 type="text"
                 placeholder="Sök"
               />

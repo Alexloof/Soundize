@@ -274,6 +274,7 @@ class Track extends Component {
                 max={1}
                 step="any"
                 value={this.props.playedTime || 0}
+                readOnly
                 /* onMouseDown={this.onSeekMouseDown}
                 onChange={this.onSeekChange}
                 onMouseUp={this.onSeekMouseUp} */

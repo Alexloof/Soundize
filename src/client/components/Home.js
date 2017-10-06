@@ -4,6 +4,7 @@ import Tracklist from './Tracklist'
 import Playlists from './Playlists'
 import ExtraInfolist from './ExtraInfolist'
 import CreateNewPlaylistModal from './modals/CreateNewPlaylistModal'
+import Loading from './Loading'
 
 class Home extends Component {
   state = {
@@ -36,7 +37,7 @@ class Home extends Component {
             />
           </div>
           <div className="column is-6 tracklist">
-            {this.props.tracklist ? (
+            {this.props.tracklist && !this.props.loadingPlaylist ? (
               <Tracklist
                 tracklist={this.props.tracklist}
                 setActiveTrack={this.props.setActiveTrack}
@@ -58,7 +59,9 @@ class Home extends Component {
                 playingPlaylist={this.props.playingPlaylist}
                 playVisibleTracklist={this.props.playVisibleTracklist}
               />
-            ) : null}
+            ) : (
+              <Loading />
+            )}
           </div>
           <div className="column extra-infolist">
             <ExtraInfolist

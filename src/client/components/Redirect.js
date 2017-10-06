@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 class Redirect extends Component {
   componentWillMount = () => {
-    console.log(this.props)
     console.log(localStorage.getItem('token'))
     if (
       !localStorage.getItem('token') ||
@@ -19,6 +18,8 @@ class Redirect extends Component {
       } else {
         this.props.history.push('/login')
       }
+    } else {
+      this.props.history.push('/stream/me')
     }
   }
   render() {

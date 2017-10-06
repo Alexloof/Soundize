@@ -1,41 +1,53 @@
 import React, { Component } from 'react'
 
 import Track from './Track'
+import Loading from './Loading'
 
 class Search extends Component {
   state = {
     searchedTracks: [],
     searchedArtists: [],
-    searchedPlaylists: []
+    searchedPlaylists: [],
+    loadingTracks: true,
+    loadingArtists: true,
+    loadingPlaylists: true
   }
   componentWillMount() {
-    console.log(this.props)
     window.scroll(0, 0)
     this.props.spotifyApi
-      .searchTracks(this.props.location.state.id)
+      .searchTracks(this.props.location.search.slice(3))
       .then(
         data => {
-          this.setState({ searchedTracks: data.body.tracks.items })
+          this.setState({
+            searchedTracks: data.body.tracks.items,
+            loadingTracks: false
+          })
         },
         function(err) {
           console.error(err)
         }
       )
     this.props.spotifyApi
-      .searchArtists(this.props.location.state.id)
+      .searchArtists(this.props.location.search.slice(3))
       .then(
         data => {
-          this.setState({ searchedArtists: data.body.artists.items })
+          this.setState({
+            searchedArtists: data.body.artists.items,
+            loadingArtists: false
+          })
         },
         function(err) {
           console.error(err)
         }
       )
     this.props.spotifyApi
-      .searchPlaylists(this.props.location.state.id)
+      .searchPlaylists(this.props.location.search.slice(3))
       .then(
         data => {
-          this.setState({ searchedPlaylists: data.body.playlists.items })
+          this.setState({
+            searchedPlaylists: data.body.playlists.items,
+            loadingPlaylists: false
+          })
         },
         function(err) {
           console.log('Something went wrong!', err)
@@ -43,12 +55,20 @@ class Search extends Component {
       )
   }
   componentWillUpdate(nextProps) {
-    if (nextProps.location.state.id !== this.props.location.state.id) {
+    if (nextProps.location.state.id !== this.props.location.search.slice(3)) {
+      this.setState({
+        loadingArtists: true,
+        loadingPlaylists: true,
+        loadingTracks: true
+      })
       this.props.spotifyApi
         .searchTracks(nextProps.location.state.id)
         .then(
           data => {
-            this.setState({ searchedTracks: data.body.tracks.items })
+            this.setState({
+              searchedTracks: data.body.tracks.items,
+              loadingTracks: false
+            })
           },
           function(err) {
             console.error(err)
@@ -58,7 +78,10 @@ class Search extends Component {
         .searchArtists(nextProps.location.state.id)
         .then(
           data => {
-            this.setState({ searchedArtists: data.body.artists.items })
+            this.setState({
+              searchedArtists: data.body.artists.items,
+              loadingArtists: false
+            })
           },
           function(err) {
             console.error(err)
@@ -68,7 +91,10 @@ class Search extends Component {
         .searchPlaylists(nextProps.location.state.id)
         .then(
           data => {
-            this.setState({ searchedPlaylists: data.body.playlists.items })
+            this.setState({
+              searchedPlaylists: data.body.playlists.items,
+              loadingPlaylists: false
+            })
           },
           function(err) {
             console.log('Something went wrong!', err)
@@ -166,36 +192,48 @@ class Search extends Component {
       <div className="search-component">
         <div className="search-banner">
           <h1 className="title">Sökresultat för: </h1>
-          <h2 className="subtitle">{this.props.location.state.id}</h2>
+          <h2 className="subtitle">{this.props.location.search.slice(3)}</h2>
         </div>
         <div className="search-data-wrapper">
           <div className="searched-artists">
             <h2>Artister</h2>
             <ul className="menu-list artist-list">
-              {this.state.searchedArtists.length > 0 ? (
-                this.renderArtists()
+              {!this.state.loadingArtists ? (
+                this.state.searchedArtists.length > 0 ? (
+                  this.renderArtists()
+                ) : (
+                  <li>Inga matchande artister</li>
+                )
               ) : (
-                <li>Inga matchande artister</li>
+                <Loading />
               )}
             </ul>
           </div>
           <div className="searched-tracks">
             <h2>Låtar</h2>
             <ul className="menu-list track-list">
-              {this.state.searchedTracks.length > 0 ? (
-                this.renderTracks()
+              {!this.state.loadingTracks ? (
+                this.state.searchedTracks.length > 0 ? (
+                  this.renderTracks()
+                ) : (
+                  <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+                )
               ) : (
-                <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+                <Loading />
               )}
             </ul>
           </div>
           <div className="searched-playlists">
             <h2>Spellistor</h2>
             <ul className="menu-list playlist-list">
-              {this.state.searchedPlaylists.length > 0 ? (
-                this.renderPlaylists()
+              {!this.state.loadingPlaylists ? (
+                this.state.searchedPlaylists.length > 0 ? (
+                  this.renderPlaylists()
+                ) : (
+                  <li>Inga matchande spellistor</li>
+                )
               ) : (
-                <li>Inga matchande spellistor</li>
+                <Loading />
               )}
             </ul>
           </div>

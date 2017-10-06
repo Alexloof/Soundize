@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import Nav from './Nav'
 import MusicBar from './MusicBar'
@@ -34,7 +34,8 @@ class App extends Component {
     latestPlayed: [],
     queuedTracks: [],
     activeTracklist: '',
-    activeTrackIndex: ''
+    activeTrackIndex: '',
+    loadingPlaylist: false
   }
 
   componentWillMount() {
@@ -74,8 +75,9 @@ class App extends Component {
     })
   }
   onClickPlaylist = (user, id) => {
+    this.setState({ loadingPlaylist: true })
     spotifyApi.getPlaylist(user, id).then(data => {
-      this.setState({ tracklist: data.body })
+      this.setState({ tracklist: data.body, loadingPlaylist: false })
       window.scrollTo(0, 0)
     },
     function(err) {
@@ -326,45 +328,9 @@ class App extends Component {
       playingPlaylist: this.state.activeTracklist.id,
       removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
       playVisibleTracklist: this.playVisibleTracklist,
-      spotifyApi: spotifyApi
+      spotifyApi: spotifyApi,
+      loadingPlaylist: this.state.loadingPlaylist
     }
-    const childrenWithExtraProp = React.Children.map(
-      this.props.children,
-      child => {
-        return React.cloneElement(child, {
-          playlists: this.state.playlists,
-          privatePlaylists: this.state.privatePlaylists,
-          featuredPlaylists: this.state.featuredPlaylists,
-          tracklist: this.state.tracklist,
-          onClickPlaylist: this.onClickPlaylist,
-          getTrackAnalysis: this.getTrackAnalysis,
-          setActiveTrack: this.setActiveTrack,
-          stopActiveTrack: this.stopActiveTrack,
-          startActiveTrack: this.startActiveTrack,
-          activeTrack: this.state.activeTrack,
-          playing: this.state.playing,
-          playedTime: this.state.playedTime,
-          onSeekMouseDown: this.onSeekMouseDown,
-          onSeekChange: this.onSeekChange,
-          onSeekMouseUp: this.onSeekMouseUp,
-          activePlaylist: this.state.activePlaylist,
-          setActivePlaylist: this.setActivePlaylist,
-          latestPlayed: this.state.latestPlayed,
-          queuedTracks: this.state.queuedTracks,
-          createPlaylist: this.createPlaylist,
-          me: this.state.user,
-          unfollowActivePlaylist: this.unfollowActivePlaylist,
-          deleteActivePlaylist: this.deleteActivePlaylist,
-          addTrackToPlaylist: this.addTrackToPlaylist,
-          addTrackToQueue: this.addTrackToQueue,
-          removeTrackFromPlaylist: this.removeTrackFromPlaylist,
-          playingPlaylist: this.state.activeTracklist.id,
-          removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
-          playVisibleTracklist: this.playVisibleTracklist,
-          spotifyApi: spotifyApi
-        })
-      }
-    )
     const getProps = props => {
       return Object.assign({}, props, extraProps)
     }

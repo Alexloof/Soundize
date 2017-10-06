@@ -19,18 +19,6 @@ import './stylesheets/main.scss'
 
 const routes = [
   {
-    path: '',
-    component: () => <Redirect to="/login" />
-  },
-  {
-    path: '/login',
-    component: Login
-  },
-  {
-    path: '/app',
-    component: RedirectLogin
-  },
-  {
     path: '/stream',
     component: App,
     routes: [
@@ -48,7 +36,6 @@ const routes = [
 
 const RouteWithSubRoutes = route => (
   <Route
-    exact
     path={route.path}
     render={props => (
       // pass the sub-routes down to keep nesting
@@ -60,9 +47,13 @@ const RouteWithSubRoutes = route => (
 const Root = () => {
   return (
     <Router>
-      <div>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route path="/app" component={RedirectLogin} />
         {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-      </div>
+        <Redirect from="/" to="/login" />
+        <Route component={() => <div>404</div>} />
+      </Switch>
     </Router>
   )
 }

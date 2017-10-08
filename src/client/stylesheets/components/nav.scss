@@ -46,6 +46,10 @@
   .navbar-end {
     form {
       align-self: center;
+      .icon.is-right {
+        height: 2em;
+        cursor: pointer;
+      }
     }
     img {
       max-height: 30px;

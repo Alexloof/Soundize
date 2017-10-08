@@ -8,7 +8,7 @@
     height: 50px;
     position: fixed;
     width: 50.2vw;
-    background-color: rgba(74, 74, 74, 1);
+    background-color: rgba(51, 51, 51, 0.98);
     z-index: 25;
     top: -52px;
     display: flex;
@@ -90,7 +90,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 3%;
-    background-color: $gray-lightdark;
+    background-color: $brand-primary;
     color: $gray-light;
     padding: 1rem;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);

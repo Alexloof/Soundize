@@ -10,6 +10,9 @@ class Home extends Component {
   state = {
     modalClassName: 'modal create-playlist-modal'
   }
+  componentWillMount() {
+    window.scroll(0, 0)
+  }
   closeModal = () => {
     this.setState({ modalClassName: 'modal create-playlist-modal' })
   }

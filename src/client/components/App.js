@@ -66,12 +66,15 @@ class App extends Component {
     this.setState({ privatePlaylists })
   }
   getMe() {
-    spotifyApi.getMe().then(data => {
-      this.setState({ user: data.body }, () => this.getPlaylists())
-    }, function(err) {
-      console.log('Something went wrong getting user details!', err)
-      this.props.history.replace('/login')
-    })
+    spotifyApi.getMe().then(
+      data => {
+        this.setState({ user: data.body }, () => this.getPlaylists())
+      },
+      err => {
+        console.log('Something went wrong getting user details!', err)
+        this.props.history.replace('/login')
+      }
+    )
   }
   onClickPlaylist = (user, id) => {
     this.setState({ loadingPlaylist: true })
@@ -335,6 +338,7 @@ class App extends Component {
         {this.props.routes.map((route, i) => (
           <Route
             key={i}
+            exact
             path={route.path}
             render={props => (
               <route.component {...getProps(props)} routes={route.routes} />

@@ -63,28 +63,28 @@ class Nav extends Component {
             <NavLink
               className="navbar-item "
               to="/stream/me"
-              activeStyle={{ color: '#ff6b42' }}
+              activeStyle={{ color: '#ff4d1c' }}
             >
               Min Musik
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/app/search/hej"
-              activeStyle={{ color: '#ff6b42' }}
+              to="/stream/discover"
+              activeStyle={{ color: '#ff4d1c' }}
             >
               Utforska
             </NavLink>
             <NavLink
               className="navbar-item "
               to="/adadad"
-              activeStyle={{ color: '#ff6b42' }}
+              activeStyle={{ color: '#ff4d1c' }}
             >
               Nytt
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/sdsdsd"
-              activeStyle={{ color: '#ff6b42' }}
+              to="/asass"
+              activeStyle={{ color: '#ff4d1c' }}
             >
               Topplistor
             </NavLink>
@@ -99,13 +99,21 @@ class Nav extends Component {
 
           <div className="navbar-end">
             <form onSubmit={this.onSearchSubmit}>
-              <input
-                className="input"
-                onChange={this.onInputChange}
-                value={this.state.searchText}
-                type="text"
-                placeholder="Sök"
-              />
+              <div className="control has-icons-right">
+                <input
+                  className="input"
+                  onChange={this.onInputChange}
+                  value={this.state.searchText}
+                  type="text"
+                  placeholder="Sök"
+                />
+                <span
+                  onClick={this.onSearchSubmit}
+                  className="icon is-small is-right"
+                >
+                  <i className="fa fa-search" />
+                </span>
+              </div>
             </form>
 
             <div className="navbar-item">

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 
 //Colors
-$brand-primary: #272720;
+$brand-primary: #313131;
 $brand-secondary: #ff4d1c;
 $brand-third: #982f2f;
 
@@ -14,9 +14,9 @@ $gray-dark: #282828;
 //Body
 $body-background-color: #dee4e1;
 $body-default-color: #333333;
-$body-default-font-familty: "Open Sans", sans-serif;
+$body-default-font-familty: 'Open Sans', sans-serif;
 
 //Nav
-$nav-background-color: #404040;
+$nav-background-color: $brand-primary;
 $nav-font-color: #ffffff;
 $nav-height: 52px;

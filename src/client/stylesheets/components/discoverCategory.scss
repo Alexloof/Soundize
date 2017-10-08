@@ -1,0 +1,56 @@
+.discover-category-component {
+  width: 1100px;
+  background-color: $gray-light;
+  min-height: 90vh;
+  margin: 0 auto;
+  display: flex;
+  box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
+  padding: 20px;
+  padding-top: 35px;
+  margin-bottom: 52px;
+  .discover-category-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    .discover-category-item {
+      width: 18%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+
+      img {
+        width: 200px;
+        height: 200px;
+        transition: 0.3s all ease;
+      }
+      .discovery-category-item-name {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 30px;
+        background-color: rgba(32, 32, 32, 0.68);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        h2 {
+          color: $gray-light;
+          cursor: pointer;
+          transition: 0.35s all ease;
+          letter-spacing: 1px;
+          font-size: 0.9rem;
+        }
+      }
+
+      &:hover h2 {
+        text-decoration: underline;
+        color: $brand-secondary;
+      }
+      &:hover img {
+        filter: invert(10%);
+      }
+    }
+  }
+}

@@ -4,8 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  IndexRoute,
-  history,
   Redirect
 } from 'react-router-dom'
 
@@ -14,21 +12,41 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Search from './components/Search'
 import RedirectLogin from './components/Redirect'
+import Discover from './components/Discover'
+import DiscoverCategory from './components/DiscoverCategory'
+import PlaylistDetail from './components/PlaylistDetail'
 
 import './stylesheets/main.scss'
 
-const routes = [
+const app_routes = [
   {
     path: '/stream',
     component: App,
     routes: [
       {
         path: '/stream/me',
-        component: Home
+        component: Home,
+        exact: false
+      },
+      {
+        path: '/stream/discover',
+        component: Discover,
+        exact: true
+      },
+      {
+        path: '/stream/discover/:category',
+        component: DiscoverCategory,
+        exact: false
+      },
+      {
+        path: '/stream/discover/playlist/:user/:id',
+        component: PlaylistDetail,
+        exact: false
       },
       {
         path: '/stream/search',
-        component: Search
+        component: Search,
+        exact: false
       }
     ]
   }
@@ -50,7 +68,9 @@ const Root = () => {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route path="/app" component={RedirectLogin} />
-        {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+        {app_routes.map((route, i) => (
+          <RouteWithSubRoutes key={i} {...route} />
+        ))}
         <Redirect from="/" to="/login" />
         <Route component={() => <div>404</div>} />
       </Switch>

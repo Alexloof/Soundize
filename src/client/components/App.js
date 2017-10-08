@@ -48,8 +48,7 @@ class App extends Component {
       this.setActivePlaylist(data.body.items[0].id)
       this.getPrivatePlaylists(data.body.items)
       this.setState({ playlists: data.body.items })
-    },
-    function(err) {
+    }, function(err) {
       console.log('Something went wrong getting playlists!', err)
     })
     this.getFeaturedPlaylists(new Date().toISOString())
@@ -69,9 +68,9 @@ class App extends Component {
   getMe() {
     spotifyApi.getMe().then(data => {
       this.setState({ user: data.body }, () => this.getPlaylists())
-    },
-    function(err) {
+    }, function(err) {
       console.log('Something went wrong getting user details!', err)
+      this.props.history.replace('/login')
     })
   }
   onClickPlaylist = (user, id) => {
@@ -79,8 +78,7 @@ class App extends Component {
     spotifyApi.getPlaylist(user, id).then(data => {
       this.setState({ tracklist: data.body, loadingPlaylist: false })
       window.scrollTo(0, 0)
-    },
-    function(err) {
+    }, function(err) {
       console.log('Something went wrong getting clickedtracklist!', err)
     })
   }
@@ -99,16 +97,14 @@ class App extends Component {
   unfollowActivePlaylist = (user, playlistId) => {
     spotifyApi.unfollowPlaylist(user, playlistId).then(data => {
       this.getPlaylists()
-    },
-    function(err) {
+    }, function(err) {
       console.log('Something went wrong!', err)
     })
   }
   deleteActivePlaylist = id => {
     spotifyApi.unfollowPlaylist(this.state.user.id, id).then(data => {
       this.getPlaylists()
-    },
-    function(err) {
+    }, function(err) {
       console.log('Something went wrong!', err)
     })
   }
@@ -142,8 +138,7 @@ class App extends Component {
           this.setActivePlaylist(playlistId)
           spotifyApi.getPlaylist(ownerId, playlistId).then(data => {
             this.setState({ tracklist: data.body })
-          },
-          function(err) {
+          }, function(err) {
             console.log('Something went wrong getting tracklist!', err)
           })
           console.log('Track removed from playlist!')

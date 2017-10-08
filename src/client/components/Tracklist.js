@@ -14,7 +14,7 @@ class Tracklist extends Component {
     let scrolled = false
     const el = document.getElementsByClassName('tracklist-scroll-banner')
     this.interval = setInterval(() => {
-      if (window.pageYOffset > 240) {
+      if (window.pageYOffset > 300) {
         if (scrolled === false) {
           scrolled = true
           el[0].classList = [el[0].classList[0] + ' banner-show']
@@ -58,6 +58,7 @@ class Tracklist extends Component {
       false
     }
   }
+
   removeTrackFromPlaylist = spotifyURI => {
     this.props.removeTrackFromPlaylist(
       this.props.tracklist.owner.id,
@@ -227,6 +228,7 @@ class Tracklist extends Component {
                     )}
                   </button>
                 )}
+                {}
                 {this.props.tracklist.owner.id === this.props.me.id ? (
                   <button
                     onClick={() => this.showDeleteModal()}
@@ -242,7 +244,9 @@ class Tracklist extends Component {
                       'Radera'
                     )}
                   </button>
-                ) : (
+                ) : this.props.checkFollowStatusOnPlaylist(
+                  this.props.tracklist.id
+                ) ? (
                   <button
                     onClick={() => this.showUnfollowModal()}
                     className="button"
@@ -255,6 +259,25 @@ class Tracklist extends Component {
                       </span>
                     ) : (
                       'Sluta följ'
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() =>
+                      this.props.followPlaylist(
+                        this.props.tracklist.owner.id,
+                        this.props.tracklist.id
+                      )}
+                    className="button"
+                  >
+                    {this.state.className ===
+                      'tracklist-banner scroll-state scroll-position' ||
+                    this.state.className === 'tracklist-banner scroll-state' ? (
+                      <span className="icon">
+                        <i className="fa fa-navicon" />
+                      </span>
+                    ) : (
+                      'Följ'
                     )}
                   </button>
                 )}

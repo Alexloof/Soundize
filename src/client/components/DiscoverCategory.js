@@ -13,7 +13,6 @@ class DiscoverCategory extends Component {
       })
       .then(
         data => {
-          console.log(data.body)
           this.setState({ categoryPlaylists: data.body.playlists.items })
         },
         function(err) {
@@ -27,6 +26,12 @@ class DiscoverCategory extends Component {
   render() {
     return (
       <div className="discover-category-component">
+        <button
+          onClick={() => this.props.history.goBack()}
+          className="go-back-button"
+        >
+          <i className="fa fa-chevron-left" aria-hidden="true" />
+        </button>
         <ul className="menu-list discover-category-list">
           {this.state.categoryPlaylists.map((playlist, index) => {
             return (

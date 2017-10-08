@@ -12,6 +12,13 @@ class Home extends Component {
   }
   componentWillMount() {
     window.scroll(0, 0)
+    if (this.props.playlists) {
+      this.props.onClickPlaylist(
+        this.props.playlists[0].owner.id,
+        this.props.playlists[0].id
+      )
+      this.props.setActivePlaylist(this.props.playlists[0].id)
+    }
   }
   closeModal = () => {
     this.setState({ modalClassName: 'modal create-playlist-modal' })
@@ -40,7 +47,11 @@ class Home extends Component {
             />
           </div>
           <div className="column is-6 tracklist">
-            {this.props.tracklist && !this.props.loadingPlaylist ? (
+            {!this.props.tracklist ? (
+              <div>Välkommen Tillbaka!</div>
+            ) : this.props.loadingPlaylist ? (
+              <Loading />
+            ) : (
               <Tracklist
                 tracklist={this.props.tracklist}
                 setActiveTrack={this.props.setActiveTrack}
@@ -61,9 +72,11 @@ class Home extends Component {
                 removeTrackFromPlaylist={this.props.removeTrackFromPlaylist}
                 playingPlaylist={this.props.playingPlaylist}
                 playVisibleTracklist={this.props.playVisibleTracklist}
+                checkFollowStatusOnPlaylist={
+                  this.props.checkFollowStatusOnPlaylist
+                }
+                followPlaylist={this.props.followPlaylist}
               />
-            ) : (
-              <Loading />
             )}
           </div>
           <div className="column extra-infolist">

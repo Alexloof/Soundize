@@ -111,7 +111,7 @@ class MusicBar extends Component {
       <div className={className}>
         <div className="my-container">
           <div className="img-info">
-            {this.state.activeTrack.album ? (
+            {this.state.activeTrack.album.images ? (
               <img src={this.state.activeTrack.album.images[0].url} />
             ) : (
               <img />
@@ -158,8 +158,8 @@ class MusicBar extends Component {
           </div>
           <div className="track-running-wrapper">
             <div className="time-counter">
-              {(Math.round(this.state.duration * this.props.playedTime) / 100
-              ).toFixed(2)}
+              {(Math.round(this.state.duration * this.props.playedTime) /
+                100).toFixed(2)}
             </div>
             <div className="running-track">
               <div
@@ -224,9 +224,9 @@ class MusicBar extends Component {
           key={this.state.activeTrack.id}
           playing={this.props.playing}
           url={
-            this.state.activeTrack.preview_url
-              ? this.state.activeTrack.preview_url
-              : null
+            this.state.activeTrack.preview_url ? (
+              this.state.activeTrack.preview_url
+            ) : null
           }
           onError={e => console.log('error', e)}
           onDuration={duration => this.setState({ duration })}

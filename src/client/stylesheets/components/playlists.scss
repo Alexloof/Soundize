@@ -80,6 +80,9 @@
         background-color: #e6e6e6;
         a {
           color: $brand-secondary;
+          img {
+            filter: grayscale(0%);
+          }
         }
       }
       li a {
@@ -92,12 +95,24 @@
         white-space: nowrap;
         letter-spacing: 0.5;
         font-size: 13px;
-        width: 230px;
+        width: 225px;
+        display: flex;
+        align-items: center;
+        img {
+          width: 25px;
+          height: 25px;
+          border-radius: 50px;
+          margin-right: 10px;
+          filter: grayscale(85%);
+        }
+        .playlist-name {
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
         .fa {
           position: absolute;
           left: 90%;
           font-size: 15px;
-          margin-top: 2px;
         }
         &:hover {
           background: transparent;

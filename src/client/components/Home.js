@@ -19,16 +19,6 @@ class Home extends Component {
   state = {
     modalClassName: 'modal create-playlist-modal'
   }
-  componentDidMount() {
-    // window.scroll(0, 0)
-    // if (this.props.playlists) {
-    //   this.props.onClickPlaylist(
-    //     this.props.playlists[0].owner.id,
-    //     this.props.playlists[0].id
-    //   )
-    //   this.props.setActivePlaylist(this.props.playlists[0].id)
-    // }
-  }
   async componentWillReceiveProps(newProps) {
     if (this.props.user !== newProps.user) {
       await this.props.getPlaylists(newProps.user.id)
@@ -54,11 +44,6 @@ class Home extends Component {
         <div className="columns">
           <div className="column playlists-menu">
             <Playlists
-              //onClickPlaylist={this.props.onClickPlaylist}
-              //playlists={this.props.playlists}
-              //featuredPlaylists={this.props.featuredPlaylists}
-              //activePlaylist={this.props.activePlaylist}
-              //setActivePlaylist={this.props.setActivePlaylist}
               onOpenCreatePlaylistModal={this.openModal}
               //playing={this.props.playing}
               //playingPlaylist={this.props.playingPlaylist}
@@ -71,7 +56,6 @@ class Home extends Component {
               <Loading />
             ) : (
               <Tracklist
-                // tracklist={this.props.activeTracklist}
                 setActiveTrack={this.props.setActiveTrack}
                 activeTrack={this.props.activeTrack}
                 stopActiveTrack={this.props.stopActiveTrack}
@@ -81,19 +65,15 @@ class Home extends Component {
                 onSeekMouseDown={this.props.onSeekMouseDown}
                 onSeekChange={this.props.onSeekChange}
                 onSeekMouseUp={this.props.onSeekMouseUp}
-                //me={this.props.me}
-                unfollowActivePlaylist={this.props.unfollowActivePlaylist}
-                //deleteActivePlaylist={this.props.deleteActivePlaylist}
                 privatePlaylists={this.props.privatePlaylists}
                 addTrackToPlaylist={this.props.addTrackToPlaylist}
                 addTrackToQueue={this.props.addTrackToQueue}
                 removeTrackFromPlaylist={this.props.removeTrackFromPlaylist}
                 playingPlaylist={this.props.playingPlaylist}
                 playVisibleTracklist={this.props.playVisibleTracklist}
-                checkFollowStatusOnPlaylist={
-                  this.props.checkFollowStatusOnPlaylist
-                }
-                followPlaylist={this.props.followPlaylist}
+                //checkFollowStatusOnPlaylist={
+                //  this.props.checkFollowStatusOnPlaylist
+                //}
               />
             )}
           </div>

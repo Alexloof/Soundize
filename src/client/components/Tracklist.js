@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import {
   deletePlaylist,
   getPlaylists,
-  setActivePlaylist
+  setActivePlaylist,
+  unfollowPlaylist,
+  followPlaylist
 } from '../actions/playlist_actions'
 import { setActiveTracklist } from '../actions/track_actions'
 
@@ -48,12 +50,18 @@ class Tracklist extends Component {
   closeDeletePlaylistModal = () => {
     this.setState({ deleteModalClassName: 'modal are-you-sure' })
   }
-  unfollowActivePlaylist = () => {
-    this.props.unfollowActivePlaylist(
+  followActivePlaylist = () => {
+    this.props.followPlaylist(
       this.props.activeTracklist.owner.id,
       this.props.activeTracklist.id
     )
-    this.setState({ unfollowModalClassName: 'modal are-you-sure' })
+  }
+  unfollowActivePlaylist = () => {
+    this.closeUnfollowPlaylistModal()
+    this.props.unfollowPlaylist(
+      this.props.activeTracklist.owner.id,
+      this.props.activeTracklist.id
+    )
   }
   deleteActivePlaylist = async () => {
     this.closeDeletePlaylistModal()
@@ -87,6 +95,18 @@ class Tracklist extends Component {
   }
   setActiveTrack = (track, index) => {
     this.props.setActiveTrack(track, this.props.activeTracklist, index)
+  }
+  checkFollowStatusOnPlaylist = playlistId => {
+    const status = this.props.userPlaylists.map(playlist => {
+      if (playlist.id === playlistId) {
+        return true
+      }
+    })
+    if (status.includes(true)) {
+      return true
+    } else {
+      return false
+    }
   }
   renderTracklist() {
     return this.props.activeTracklist.tracks.items.map((track, index) => {
@@ -255,7 +275,7 @@ class Tracklist extends Component {
                       'Radera'
                     )}
                   </button>
-                ) : this.props.checkFollowStatusOnPlaylist(
+                ) : this.checkFollowStatusOnPlaylist(
                   this.props.activeTracklist.id
                 ) ? (
                   <button
@@ -274,11 +294,7 @@ class Tracklist extends Component {
                   </button>
                 ) : (
                   <button
-                    onClick={() =>
-                      this.props.followPlaylist(
-                        this.props.activeTracklist.owner.id,
-                        this.props.activeTracklist.id
-                      )}
+                    onClick={() => this.followActivePlaylist()}
                     className="button"
                   >
                     {this.state.className ===
@@ -341,5 +357,7 @@ export default connect(mapStateToProps, {
   deletePlaylist,
   getPlaylists,
   setActiveTracklist,
-  setActivePlaylist
+  setActivePlaylist,
+  unfollowPlaylist,
+  followPlaylist
 })(Tracklist)

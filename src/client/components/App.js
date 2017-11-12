@@ -314,20 +314,7 @@ class App extends Component {
   zeroTrack = () => {
     this.setState({ playing: false })
   }
-  checkFollowStatusOnPlaylist = playlistId => {
-    if (this.state.playlists) {
-      const status = this.state.playlists.map(playlist => {
-        if (playlist.id === playlistId) {
-          return true
-        }
-      })
-      if (status.includes(true)) {
-        return true
-      } else {
-        return false
-      }
-    }
-  }
+
   render() {
     const extraProps = {
       //playlists: this.state.playlists,
@@ -360,8 +347,8 @@ class App extends Component {
       removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
       playVisibleTracklist: this.playVisibleTracklist,
       spotifyApi: spotifyApi,
-      loadingPlaylist: this.state.loadingPlaylist,
-      checkFollowStatusOnPlaylist: this.checkFollowStatusOnPlaylist
+      loadingPlaylist: this.state.loadingPlaylist
+      //checkFollowStatusOnPlaylist: this.checkFollowStatusOnPlaylist
       // followPlaylist: this.followPlaylist
     }
     const getProps = props => {

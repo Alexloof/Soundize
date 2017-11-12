@@ -88,42 +88,46 @@ class App extends Component {
       console.log('Something went wrong getting clickedtracklist!', err)
     })
   }
-  createPlaylist = (name, desc) => {
-    spotifyApi
-      .createPlaylist(this.state.user.id, name, { public: true })
-      .then(
-        data => {
-          this.getPlaylists()
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
-  }
-  unfollowActivePlaylist = (user, playlistId) => {
-    spotifyApi.unfollowPlaylist(user, playlistId).then(data => {
-      this.getPlaylists()
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-    })
-  }
-  followPlaylist = (userId, playlistId) => {
-    spotifyApi.followPlaylist(userId, playlistId).then(data => {
-      this.getPlaylists()
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-    })
-  }
-  deleteActivePlaylist = id => {
-    spotifyApi.unfollowPlaylist(this.state.user.id, id).then(data => {
-      this.getPlaylists()
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-    })
-  }
+  // createPlaylist = (name, desc) => {
+  //   spotifyApi
+  //     .createPlaylist(this.state.user.id, name, { public: true })
+  //     .then(
+  //       data => {
+  //         this.getPlaylists()
+  //       },
+  //       function(err) {
+  //         console.log('Something went wrong!', err)
+  //       }
+  //     )
+  // }
+
+  // unfollowActivePlaylist = (user, playlistId) => {
+  //   spotifyApi.unfollowPlaylist(user, playlistId).then(data => {
+  //     this.getPlaylists()
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong!', err)
+  //   })
+  // }
+
+  // followPlaylist = (userId, playlistId) => {
+  //   spotifyApi.followPlaylist(userId, playlistId).then(data => {
+  //     this.getPlaylists()
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong!', err)
+  //   })
+  // }
+
+  // deleteActivePlaylist = id => {
+  //   spotifyApi.unfollowPlaylist(this.state.user.id, id).then(data => {
+  //     this.getPlaylists()
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong!', err)
+  //   })
+  // }
+
   addTrackToPlaylist = (ownerId, playlistId, spotifyURI) => {
     spotifyApi
       .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyURI])
@@ -344,9 +348,9 @@ class App extends Component {
       setActivePlaylist: this.setActivePlaylist,
       latestPlayed: this.state.latestPlayed,
       queuedTracks: this.state.queuedTracks,
-      createPlaylist: this.createPlaylist,
+      //createPlaylist: this.createPlaylist,
       //me: this.state.user,
-      unfollowActivePlaylist: this.unfollowActivePlaylist,
+      //unfollowActivePlaylist: this.unfollowActivePlaylist,
       deleteActivePlaylist: this.deleteActivePlaylist,
       addTrackToPlaylist: this.addTrackToPlaylist,
       addTrackToQueue: this.addTrackToQueue,
@@ -356,8 +360,8 @@ class App extends Component {
       playVisibleTracklist: this.playVisibleTracklist,
       spotifyApi: spotifyApi,
       loadingPlaylist: this.state.loadingPlaylist,
-      checkFollowStatusOnPlaylist: this.checkFollowStatusOnPlaylist,
-      followPlaylist: this.followPlaylist
+      checkFollowStatusOnPlaylist: this.checkFollowStatusOnPlaylist
+      // followPlaylist: this.followPlaylist
     }
     const getProps = props => {
       return Object.assign({}, props, extraProps)

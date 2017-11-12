@@ -1,7 +1,8 @@
 import {
   SET_PLAYLISTS,
   SET_PRIVATE_PLAYLISTS,
-  SET_FEATURED_PLAYLISTS
+  SET_FEATURED_PLAYLISTS,
+  SET_ACTIVE_PLAYLIST
 } from '../actions/playlist_actions'
 
 const INITIAL_STATE = {
@@ -20,6 +21,8 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, privatePlaylists: action.payload }
     case SET_FEATURED_PLAYLISTS:
       return { ...state, featuredPlaylists: action.payload }
+    case SET_ACTIVE_PLAYLIST:
+      return { ...state, activePlaylistId: action.payload }
     default:
       return state
   }

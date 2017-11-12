@@ -11,6 +11,7 @@ import {
 export const SET_PLAYLISTS = 'set_playlists'
 export const SET_PRIVATE_PLAYLISTS = 'set_private_playlists'
 export const SET_FEATURED_PLAYLISTS = 'set_featured_playlists'
+export const SET_ACTIVE_PLAYLIST = 'set_active_playlist'
 
 export const getPlaylists = userId => async dispatch => {
   let playlists = await fetchPlaylists(userId, dispatch)
@@ -53,4 +54,8 @@ export const followPlaylist = (ownerId, playlistId) => async dispatch => {
 
 export const deletePlaylist = (userId, playlistId) => async dispatch => {
   await deleteUserPlaylist(userId, playlistId, dispatch)
+}
+
+export const setActivePlaylist = playlistId => async dispatch => {
+  dispatch({ type: SET_ACTIVE_PLAYLIST, payload: playlistId })
 }

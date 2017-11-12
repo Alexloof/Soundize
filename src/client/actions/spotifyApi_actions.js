@@ -1,6 +1,7 @@
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 
+// AUTH
 export const setAccessToken = async dispatch => {
   const token = localStorage.getItem('token')
 
@@ -11,6 +12,7 @@ export const setAccessToken = async dispatch => {
   }
 }
 
+// USER
 export const fetchUser = async dispatch => {
   return spotifyApi.getMe().then(
     data => {
@@ -22,6 +24,7 @@ export const fetchUser = async dispatch => {
   )
 }
 
+// PLAYLISTS
 export const fetchPlaylists = async (userId, dispatch) => {
   return spotifyApi.getUserPlaylists(userId).then(data => {
     return data.body.items

@@ -9,8 +9,8 @@ import MusicBar from './MusicBar'
 import Home from './Home'
 import Search from './Search'
 
-var SpotifyWebApi = require('spotify-web-api-node')
-var spotifyApi = new SpotifyWebApi()
+// var SpotifyWebApi = require('spotify-web-api-node')
+// var spotifyApi = new SpotifyWebApi()
 
 import {
   BrowserRouter as Router,
@@ -29,7 +29,6 @@ class App extends Component {
     playedTime: 0,
     seeking: false,
     displayMusicBar: false,
-    activePlaylist: '',
     latestPlayed: [],
     queuedTracks: [],
     activeTracklist: '',
@@ -250,9 +249,9 @@ class App extends Component {
       this.setState({ playing: true })
     }
   }
-  setActivePlaylist = id => {
-    this.setState({ activePlaylist: id })
-  }
+  // setActivePlaylist = id => {
+  //   this.setState({ activePlaylist: id })
+  // }
   setActiveTrack = (track, activeTracklist, index) => {
     let newIndex
     if (index || index === 0) {
@@ -344,14 +343,14 @@ class App extends Component {
       onSeekMouseDown: this.onSeekMouseDown,
       onSeekChange: this.onSeekChange,
       onSeekMouseUp: this.onSeekMouseUp,
-      activePlaylist: this.state.activePlaylist,
-      setActivePlaylist: this.setActivePlaylist,
+      //activePlaylist: this.state.activePlaylist,
+      //setActivePlaylist: this.setActivePlaylist,
       latestPlayed: this.state.latestPlayed,
       queuedTracks: this.state.queuedTracks,
       //createPlaylist: this.createPlaylist,
       //me: this.state.user,
       //unfollowActivePlaylist: this.unfollowActivePlaylist,
-      deleteActivePlaylist: this.deleteActivePlaylist,
+      //deleteActivePlaylist: this.deleteActivePlaylist,
       addTrackToPlaylist: this.addTrackToPlaylist,
       addTrackToQueue: this.addTrackToQueue,
       removeTrackFromPlaylist: this.removeTrackFromPlaylist,

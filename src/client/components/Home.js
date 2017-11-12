@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import {
   getPlaylists,
   getPrivatePlaylists,
-  getFeaturedPlaylists
+  getFeaturedPlaylists,
+  createPlaylist
 } from '../actions/playlist_actions'
 
 import Tracklist from './Tracklist'
@@ -41,9 +42,11 @@ class Home extends Component {
   openModal = () => {
     this.setState({ modalClassName: 'modal create-playlist-modal is-active' })
   }
-  createPlaylist = (name, desc) => {
-    this.props.createPlaylist(name, desc)
+  createPlaylist = async (name, desc) => {
     this.closeModal()
+    await this.props.createPlaylist(this.props.user.id, name, desc)
+    this.props.getPlaylists()
+    this.props.getPrivatePlaylists()
   }
   render() {
     return (
@@ -62,13 +65,13 @@ class Home extends Component {
             />
           </div>
           <div className="column is-6 tracklist">
-            {!this.props.tracklist ? (
+            {!this.props.activeTracklist ? (
               <div>Välkommen Tillbaka!</div>
             ) : this.props.loadingPlaylist ? (
               <Loading />
             ) : (
               <Tracklist
-                tracklist={this.props.tracklist}
+                // tracklist={this.props.activeTracklist}
                 setActiveTrack={this.props.setActiveTrack}
                 activeTrack={this.props.activeTrack}
                 stopActiveTrack={this.props.stopActiveTrack}
@@ -78,9 +81,9 @@ class Home extends Component {
                 onSeekMouseDown={this.props.onSeekMouseDown}
                 onSeekChange={this.props.onSeekChange}
                 onSeekMouseUp={this.props.onSeekMouseUp}
-                me={this.props.me}
+                //me={this.props.me}
                 unfollowActivePlaylist={this.props.unfollowActivePlaylist}
-                deleteActivePlaylist={this.props.deleteActivePlaylist}
+                //deleteActivePlaylist={this.props.deleteActivePlaylist}
                 privatePlaylists={this.props.privatePlaylists}
                 addTrackToPlaylist={this.props.addTrackToPlaylist}
                 addTrackToQueue={this.props.addTrackToQueue}
@@ -117,17 +120,19 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = ({ user, playlist }) => {
+const mapStateToProps = ({ user, playlist, track }) => {
   return {
     user: user.user,
     playlists: playlist.playlists,
     privatePlaylists: playlist.privatePlaylists,
-    featuredPlaylists: playlist.featuredPlaylists
+    featuredPlaylists: playlist.featuredPlaylists,
+    activeTracklist: track.activeTracklist
   }
 }
 
 export default connect(mapStateToProps, {
   getPlaylists,
   getPrivatePlaylists,
-  getFeaturedPlaylists
+  getFeaturedPlaylists,
+  createPlaylist
 })(Home)

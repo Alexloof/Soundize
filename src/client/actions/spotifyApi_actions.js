@@ -54,7 +54,7 @@ export const fetchFeaturedPlaylists = async (timestamp, dispatch) => {
 }
 
 export const createUserPlaylist = async (userId, name, desc, dispatch) => {
-  spotifyApi.createPlaylist(userId, name, { public: true }).then(data => {
+  await spotifyApi.createPlaylist(userId, name, { public: true }).then(data => {
     console.log('Playlist created', data)
   },
   function(err) {
@@ -63,7 +63,7 @@ export const createUserPlaylist = async (userId, name, desc, dispatch) => {
 }
 
 export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  spotifyApi.unfollowPlaylist(ownerId, playlistId).then(data => {
+  await spotifyApi.unfollowPlaylist(ownerId, playlistId).then(data => {
     console.log('Unfollowed a playlist', data)
   },
   function(err) {
@@ -72,7 +72,7 @@ export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
 }
 
 export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  spotifyApi.followPlaylist(userId, playlistId).then(data => {
+  await spotifyApi.followPlaylist(userId, playlistId).then(data => {
     console.log('Followed a playlist', data)
   },
   function(err) {
@@ -81,7 +81,7 @@ export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
 }
 
 export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {
-  spotifyApi.unfollowPlaylist(userId, playlistId).then(data => {
+  await spotifyApi.unfollowPlaylist(userId, playlistId).then(data => {
     console.log('deleted a playlist', data)
   },
   function(err) {

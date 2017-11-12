@@ -26,7 +26,7 @@ class Playlists extends Component {
           onClick={() => this.setActivePlaylist(playlist.owner.id, playlist.id)}
         >
           <a>
-            <img src={playlist.images[0].url} />
+            <img src={playlist.images[0] ? playlist.images[0].url : null} />
 
             <span className="playlist-name">{playlist.name}</span>
             {this.props.playing &&

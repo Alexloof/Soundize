@@ -77,16 +77,18 @@ class App extends Component {
   //     }
   //   )
   // }
-  onClickPlaylist = (user, id) => {
-    this.setState({ loadingPlaylist: true })
-    spotifyApi.getPlaylist(user, id).then(data => {
-      this.setState({ tracklist: data.body, loadingPlaylist: false })
-      window.scrollTo(0, 0)
-    },
-    function(err) {
-      console.log('Something went wrong getting clickedtracklist!', err)
-    })
-  }
+
+  // onClickPlaylist = (user, id) => {
+  //   this.setState({ loadingPlaylist: true })
+  //   spotifyApi.getPlaylist(user, id).then(data => {
+  //     this.setState({ tracklist: data.body, loadingPlaylist: false })
+  //     window.scrollTo(0, 0)
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong getting clickedtracklist!', err)
+  //   })
+  // }
+
   // createPlaylist = (name, desc) => {
   //   spotifyApi
   //     .createPlaylist(this.state.user.id, name, { public: true })
@@ -332,7 +334,7 @@ class App extends Component {
       //privatePlaylists: this.state.privatePlaylists,
       //featuredPlaylists: this.state.featuredPlaylists,
       tracklist: this.state.tracklist,
-      onClickPlaylist: this.onClickPlaylist,
+      //onClickPlaylist: this.onClickPlaylist,
       getTrackAnalysis: this.getTrackAnalysis,
       setActiveTrack: this.setActiveTrack,
       stopActiveTrack: this.stopActiveTrack,

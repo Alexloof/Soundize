@@ -1,4 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+import {
+  deletePlaylist,
+  getPlaylists,
+  setActivePlaylist
+} from '../actions/playlist_actions'
+import { setActiveTracklist } from '../actions/track_actions'
 
 import Track from './Track'
 import UnfollowPlaylistModal from './modals/UnfollowPlaylistModal'
@@ -42,17 +50,28 @@ class Tracklist extends Component {
   }
   unfollowActivePlaylist = () => {
     this.props.unfollowActivePlaylist(
-      this.props.tracklist.owner.id,
-      this.props.tracklist.id
+      this.props.activeTracklist.owner.id,
+      this.props.activeTracklist.id
     )
     this.setState({ unfollowModalClassName: 'modal are-you-sure' })
   }
-  deleteActivePlaylist = () => {
-    this.props.deleteActivePlaylist(this.props.tracklist.id)
-    this.setState({ deleteModalClassName: 'modal are-you-sure' })
+  deleteActivePlaylist = async () => {
+    this.closeDeletePlaylistModal()
+    await this.props.deletePlaylist(
+      this.props.user.id,
+      this.props.activeTracklist.id
+    )
+    await this.props.getPlaylists()
+
+    // set new active tracklist to hide the deleted one
+    this.props.setActiveTracklist(
+      this.props.userPlaylists[0].owner.id,
+      this.props.userPlaylists[0].id
+    )
+    this.props.setActivePlaylist(this.props.userPlaylists[0].id)
   }
   checkPlaylistOwner = () => {
-    if (this.props.tracklist.owner.id === this.props.me.id) {
+    if (this.props.activeTracklist.owner.id === this.props.user.id) {
       return true
     } else {
       false
@@ -61,16 +80,16 @@ class Tracklist extends Component {
 
   removeTrackFromPlaylist = spotifyURI => {
     this.props.removeTrackFromPlaylist(
-      this.props.tracklist.owner.id,
-      this.props.tracklist.id,
+      this.props.activeTracklist.owner.id,
+      this.props.activeTracklist.id,
       spotifyURI
     )
   }
   setActiveTrack = (track, index) => {
-    this.props.setActiveTrack(track, this.props.tracklist, index)
+    this.props.setActiveTrack(track, this.props.activeTracklist, index)
   }
   renderTracklist() {
-    return this.props.tracklist.tracks.items.map((track, index) => {
+    return this.props.activeTracklist.tracks.items.map((track, index) => {
       if (track.track !== null) {
         if (track.track.id === this.props.activeTrack.id) {
           return (
@@ -120,19 +139,17 @@ class Tracklist extends Component {
         <div className="tracklist-scroll-banner">
           <div className="tracklist-name title">
             <div onClick={() => window.scroll(0, 0)}>
-              {this.props.tracklist.name}
+              {this.props.activeTracklist.name}
             </div>
             <span>
-              {this.props.tracklist.owner.display_name ? (
-                this.props.tracklist.owner.display_name
-              ) : (
-                this.props.tracklist.owner.id
-              )}
+              {this.props.activeTracklist.owner.display_name
+                ? this.props.activeTracklist.owner.display_name
+                : this.props.activeTracklist.owner.id}
             </span>
           </div>
           <div className="tracklist-scroll-banner-right-grp">
             <div className="tracklist-scroll-btn-grp">
-              {this.props.playingPlaylist !== this.props.tracklist.id ||
+              {this.props.playingPlaylist !== this.props.activeTracklist.id ||
               this.props.playing === false ? (
                 <button
                   onClick={() => this.props.playVisibleTracklist()}
@@ -155,12 +172,12 @@ class Tracklist extends Component {
               </button>
             </div>
             <div className="tracklist-scroll-img">
-              {this.props.tracklist.images ? (
+              {this.props.activeTracklist.images ? (
                 <img
                   src={
-                    this.props.tracklist.images.length > 0 ? (
-                      this.props.tracklist.images[0].url
-                    ) : null
+                    this.props.activeTracklist.images.length > 0
+                      ? this.props.activeTracklist.images[0].url
+                      : null
                   }
                 />
               ) : null}
@@ -172,35 +189,29 @@ class Tracklist extends Component {
             <div className="large-info">
               <p className="menu-label">Spellista</p>
               <p className="tracklist-name title">
-                {this.props.tracklist.name ? (
-                  this.props.tracklist.name
-                ) : (
-                  'Låtar'
-                )}
+                {this.props.activeTracklist.name
+                  ? this.props.activeTracklist.name
+                  : 'Låtar'}
               </p>
             </div>
             <div className="tracklist-banner-info-lower">
               <div className="small-info">
                 <p>
                   Följare:{' '}
-                  {this.props.tracklist.followers ? (
-                    this.props.tracklist.followers.total
-                  ) : (
-                    '0'
-                  )}
+                  {this.props.activeTracklist.followers
+                    ? this.props.activeTracklist.followers.total
+                    : '0'}
                 </p>
                 <p>
                   Skapad av:{' '}
-                  {this.props.tracklist.owner ? (
-                    this.props.tracklist.owner.display_name ||
-                    this.props.tracklist.owner.id
-                  ) : (
-                    'Okänd'
-                  )}{' '}
+                  {this.props.activeTracklist.owner
+                    ? this.props.activeTracklist.owner.display_name ||
+                      this.props.activeTracklist.owner.id
+                    : 'Okänd'}{' '}
                 </p>
               </div>
               <div className="tracklist-banner-btn-group">
-                {this.props.playingPlaylist !== this.props.tracklist.id ||
+                {this.props.playingPlaylist !== this.props.activeTracklist.id ||
                 this.props.playing === false ? (
                   <button
                     onClick={() => this.props.playVisibleTracklist()}
@@ -229,7 +240,7 @@ class Tracklist extends Component {
                   </button>
                 )}
                 {}
-                {this.props.tracklist.owner.id === this.props.me.id ? (
+                {this.props.activeTracklist.owner.id === this.props.user.id ? (
                   <button
                     onClick={() => this.showDeleteModal()}
                     className="button"
@@ -245,7 +256,7 @@ class Tracklist extends Component {
                     )}
                   </button>
                 ) : this.props.checkFollowStatusOnPlaylist(
-                  this.props.tracklist.id
+                  this.props.activeTracklist.id
                 ) ? (
                   <button
                     onClick={() => this.showUnfollowModal()}
@@ -265,8 +276,8 @@ class Tracklist extends Component {
                   <button
                     onClick={() =>
                       this.props.followPlaylist(
-                        this.props.tracklist.owner.id,
-                        this.props.tracklist.id
+                        this.props.activeTracklist.owner.id,
+                        this.props.activeTracklist.id
                       )}
                     className="button"
                   >
@@ -285,20 +296,20 @@ class Tracklist extends Component {
             </div>
           </div>
           <div className="tracklist-img">
-            {this.props.tracklist.images ? (
+            {this.props.activeTracklist.images ? (
               <img
                 src={
-                  this.props.tracklist.images.length > 0 ? (
-                    this.props.tracklist.images[0].url
-                  ) : null
+                  this.props.activeTracklist.images.length > 0
+                    ? this.props.activeTracklist.images[0].url
+                    : null
                 }
               />
             ) : null}
           </div>
         </div>
-        <ul className="menu-list tracklist-tracks">
-          {this.props.tracklist ? this.renderTracklist() : null}
-        </ul>
+
+        <ul className="menu-list tracklist-tracks">{this.renderTracklist()}</ul>
+
         <div className={this.state.unfollowModalClassName}>
           <UnfollowPlaylistModal
             unfollowPlaylist={this.unfollowActivePlaylist}
@@ -316,4 +327,19 @@ class Tracklist extends Component {
   }
 }
 
-export default Tracklist
+Tracklist.propTypes = {}
+
+const mapStateToProps = ({ user, track, playlist }) => {
+  return {
+    user: user.user,
+    userPlaylists: playlist.playlists,
+    activeTracklist: track.activeTracklist
+  }
+}
+
+export default connect(mapStateToProps, {
+  deletePlaylist,
+  getPlaylists,
+  setActiveTracklist,
+  setActivePlaylist
+})(Tracklist)

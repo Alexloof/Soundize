@@ -21,7 +21,10 @@ export const getPlaylists = userId => async dispatch => {
   }
 }
 
-export const getPrivatePlaylists = (playlists, userId) => async dispatch => {
+export const getPrivatePlaylists = (
+  playlists = [],
+  userId
+) => async dispatch => {
   let privatePlaylists = []
   playlists.map(playlist => {
     if (playlist.collaborative === true || playlist.owner.id === userId) {

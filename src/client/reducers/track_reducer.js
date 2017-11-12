@@ -2,7 +2,7 @@ import { SET_ACTIVE_TRACKLIST } from '../actions/track_actions'
 
 const INITIAL_STATE = {
   tracklist: {},
-  activeTracklist: {},
+  activeTracklist: null,
   loadingTracklist: false,
   activeTrack: {},
   activeTrackIndex: '',

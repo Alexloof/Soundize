@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import {
+  getPlaylists,
+  getPrivatePlaylists,
+  getFeaturedPlaylists
+} from '../actions/playlist_actions'
 
 import Tracklist from './Tracklist'
 import Playlists from './Playlists'
@@ -11,14 +18,21 @@ class Home extends Component {
   state = {
     modalClassName: 'modal create-playlist-modal'
   }
-  componentWillMount() {
-    window.scroll(0, 0)
-    if (this.props.playlists) {
-      this.props.onClickPlaylist(
-        this.props.playlists[0].owner.id,
-        this.props.playlists[0].id
-      )
-      this.props.setActivePlaylist(this.props.playlists[0].id)
+  componentDidMount() {
+    // window.scroll(0, 0)
+    // if (this.props.playlists) {
+    //   this.props.onClickPlaylist(
+    //     this.props.playlists[0].owner.id,
+    //     this.props.playlists[0].id
+    //   )
+    //   this.props.setActivePlaylist(this.props.playlists[0].id)
+    // }
+  }
+  async componentWillReceiveProps(newProps) {
+    if (this.props.user !== newProps.user) {
+      await this.props.getPlaylists(newProps.user.id)
+      this.props.getPrivatePlaylists(this.props.playlists, newProps.user.id)
+      this.props.getFeaturedPlaylists()
     }
   }
   closeModal = () => {
@@ -103,4 +117,17 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home)
+const mapStateToProps = ({ user, playlist }) => {
+  return {
+    user: user.user,
+    playlists: playlist.playlists,
+    privatePlaylists: playlist.privatePlaylists,
+    featuredPlaylists: playlist.featuredPlaylists
+  }
+}
+
+export default connect(mapStateToProps, {
+  getPlaylists,
+  getPrivatePlaylists,
+  getFeaturedPlaylists
+})(Home)

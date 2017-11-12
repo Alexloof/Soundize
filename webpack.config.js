@@ -7,7 +7,7 @@ const autoprefixer = require('autoprefixer')
 // Not needed - 'babel-polyfill' ?
 
 module.exports = {
-  entry: ['./src/client/index.js'],
+  entry: ['babel-polyfill', './src/client/index.js'],
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),

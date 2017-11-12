@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { getCurrentUser, setupAuthToAPI } from '../actions/user_actions'
 
 import Nav from './Nav'
 import MusicBar from './MusicBar'
@@ -20,10 +23,6 @@ import {
 class App extends Component {
   state = {
     token: '',
-    user: '',
-    playlists: '',
-    privatePlaylists: '',
-    featuredPlaylists: '',
     tracklist: '',
     activeTrack: '',
     playing: false,
@@ -38,43 +37,47 @@ class App extends Component {
     loadingPlaylist: false
   }
 
-  componentWillMount() {
-    spotifyApi.setAccessToken(localStorage.getItem('token'))
-    this.getMe()
+  async componentDidMount() {
+    // spotifyApi.setAccessToken(localStorage.getItem('token'))
+    // this.getMe()
+
+    await this.props.setupAuthToAPI()
+    await this.props.getCurrentUser()
+    console.log(this.props.user)
   }
-  getPlaylists() {
-    spotifyApi.getUserPlaylists(this.state.user.id).then(data => {
-      this.setState({ playlists: data.body.items })
-      this.getPrivatePlaylists(data.body.items)
-    },
-    function(err) {
-      console.log('Something went wrong getting playlists!', err)
-    })
-    this.getFeaturedPlaylists(new Date().toISOString())
-  }
-  getPrivatePlaylists = playlists => {
-    let privatePlaylists = []
-    playlists.map(playlist => {
-      if (
-        playlist.collaborative === true ||
-        playlist.owner.id === this.state.user.id
-      ) {
-        privatePlaylists.push(playlist)
-      }
-    })
-    this.setState({ privatePlaylists })
-  }
-  getMe() {
-    spotifyApi.getMe().then(
-      data => {
-        this.setState({ user: data.body }, () => this.getPlaylists())
-      },
-      err => {
-        console.log('Something went wrong getting user details!', err)
-        this.props.history.replace('/login')
-      }
-    )
-  }
+  // getPlaylists() {
+  //   spotifyApi.getUserPlaylists(this.state.user.id).then(data => {
+  //     this.setState({ playlists: data.body.items })
+  //     this.getPrivatePlaylists(data.body.items)
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong getting playlists!', err)
+  //   })
+  //   this.getFeaturedPlaylists(new Date().toISOString())
+  // }
+  // getPrivatePlaylists = playlists => {
+  //   let privatePlaylists = []
+  //   playlists.map(playlist => {
+  //     if (
+  //       playlist.collaborative === true ||
+  //       playlist.owner.id === this.state.user.id
+  //     ) {
+  //       privatePlaylists.push(playlist)
+  //     }
+  //   })
+  //   this.setState({ privatePlaylists })
+  // }
+  // getMe() {
+  //   spotifyApi.getMe().then(
+  //     data => {
+  //       this.setState({ user: data.body }, () => this.getPlaylists())
+  //     },
+  //     err => {
+  //       console.log('Something went wrong getting user details!', err)
+  //       this.props.history.replace('/login')
+  //     }
+  //   )
+  // }
   onClickPlaylist = (user, id) => {
     this.setState({ loadingPlaylist: true })
     spotifyApi.getPlaylist(user, id).then(data => {
@@ -162,24 +165,24 @@ class App extends Component {
         }
       )
   }
-  getFeaturedPlaylists = time => {
-    spotifyApi
-      .getFeaturedPlaylists({
-        limit: 5,
-        offset: 0,
-        country: 'SE',
-        locale: 'sv_SE',
-        timestamp: time
-      })
-      .then(
-        data => {
-          this.setState({ featuredPlaylists: data.body.playlists.items })
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
-  }
+  // getFeaturedPlaylists = time => {
+  //   spotifyApi
+  //     .getFeaturedPlaylists({
+  //       limit: 5,
+  //       offset: 0,
+  //       country: 'SE',
+  //       locale: 'sv_SE',
+  //       timestamp: time
+  //     })
+  //     .then(
+  //       data => {
+  //         this.setState({ featuredPlaylists: data.body.playlists.items })
+  //       },
+  //       function(err) {
+  //         console.log('Something went wrong!', err)
+  //       }
+  //     )
+  // }
   getTrackAnalysis = id => {
     spotifyApi.getAudioAnalysisForTrack(id).then(
       function(data) {
@@ -322,9 +325,9 @@ class App extends Component {
   }
   render() {
     const extraProps = {
-      playlists: this.state.playlists,
-      privatePlaylists: this.state.privatePlaylists,
-      featuredPlaylists: this.state.featuredPlaylists,
+      //playlists: this.state.playlists,
+      //privatePlaylists: this.state.privatePlaylists,
+      //featuredPlaylists: this.state.featuredPlaylists,
       tracklist: this.state.tracklist,
       onClickPlaylist: this.onClickPlaylist,
       getTrackAnalysis: this.getTrackAnalysis,
@@ -342,7 +345,7 @@ class App extends Component {
       latestPlayed: this.state.latestPlayed,
       queuedTracks: this.state.queuedTracks,
       createPlaylist: this.createPlaylist,
-      me: this.state.user,
+      //me: this.state.user,
       unfollowActivePlaylist: this.unfollowActivePlaylist,
       deleteActivePlaylist: this.deleteActivePlaylist,
       addTrackToPlaylist: this.addTrackToPlaylist,
@@ -393,4 +396,8 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = ({ user }) => {
+  return { user: user.user }
+}
+
+export default connect(mapStateToProps, { getCurrentUser, setupAuthToAPI })(App)

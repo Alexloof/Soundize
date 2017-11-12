@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import FlipMove from 'react-flip-move'
+import { connect } from 'react-redux'
 
 class ExtraInfolist extends Component {
   startTrack = track => {
@@ -87,8 +88,8 @@ class ExtraInfolist extends Component {
             easing="ease-out"
             appearAnimation="accordionHorizontal"
           >
-            {this.props.latestPlayed.length > 0 ? (
-              this.renderLatestPlayed(this.props.latestPlayed)
+            {this.props.latestPlayedTacks ? (
+              this.renderLatestPlayed(this.props.latestPlayedTacks)
             ) : (
               <li style={{ marginLeft: '30px' }}>Inga spelade låtar...</li>
             )}
@@ -103,7 +104,7 @@ class ExtraInfolist extends Component {
             easing="ease-out"
             appearAnimation="accordionHorizontal"
           >
-            {this.props.queuedTracks.length > 0 ? (
+            {this.props.queuedTracks ? (
               this.renderQueuedTracks(this.props.queuedTracks)
             ) : (
               <li style={{ marginLeft: '30px' }}>Du har inga låtar på kö</li>
@@ -115,4 +116,11 @@ class ExtraInfolist extends Component {
   }
 }
 
-export default ExtraInfolist
+const mapStateToProps = ({ track }) => {
+  return {
+    queuedTracks: track.queuedTracks,
+    latestPlayedTacks: track.latestPlayedTacks
+  }
+}
+
+export default connect()(ExtraInfolist)

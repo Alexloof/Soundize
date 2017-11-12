@@ -12,13 +12,7 @@ import Search from './Search'
 var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi()
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  IndexRoute,
-  history
-} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 class App extends Component {
   state = {
@@ -29,8 +23,6 @@ class App extends Component {
     playedTime: 0,
     seeking: false,
     displayMusicBar: false,
-    latestPlayed: [],
-    queuedTracks: [],
     activeTracklist: '',
     activeTrackIndex: '',
     loadingPlaylist: false
@@ -129,47 +121,51 @@ class App extends Component {
   //   })
   // }
 
-  addTrackToPlaylist = (ownerId, playlistId, spotifyURI) => {
-    spotifyApi
-      .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyURI])
-      .then(
-        data => {
-          console.log('Added tracks to playlist!')
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
-  }
-  addTrackToQueue = track => {
-    this.setState({ queuedTracks: [...this.state.queuedTracks, track] })
-  }
-  removeTrackFromQueuedTracks = indexToRemove => {
-    let newQueuedTracks = this.state.queuedTracks.filter((track, index) => {
-      return index !== indexToRemove
-    })
-    this.setState({ queuedTracks: newQueuedTracks })
-  }
-  removeTrackFromPlaylist = (ownerId, playlistId, spotifyURI) => {
-    var tracks = [{ uri: spotifyURI }]
-    spotifyApi
-      .removeTracksFromPlaylist(ownerId, playlistId, tracks)
-      .then(
-        data => {
-          this.setActivePlaylist(playlistId)
-          spotifyApi.getPlaylist(ownerId, playlistId).then(data => {
-            this.setState({ tracklist: data.body })
-          },
-          function(err) {
-            console.log('Something went wrong getting tracklist!', err)
-          })
-          console.log('Track removed from playlist!')
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
-  }
+  // addTrackToPlaylist = (ownerId, playlistId, spotifyURI) => {
+  //   spotifyApi
+  //     .addTracksToPlaylist(this.state.user.id, playlistId, [spotifyURI])
+  //     .then(
+  //       data => {
+  //         console.log('Added tracks to playlist!')
+  //       },
+  //       function(err) {
+  //         console.log('Something went wrong!', err)
+  //       }
+  //     )
+  // }
+
+  // addTrackToQueue = track => {
+  //   this.setState({ queuedTracks: [...this.state.queuedTracks, track] })
+  // }
+
+  // removeTrackFromQueuedTracks = indexToRemove => {
+  //   let newQueuedTracks = this.state.queuedTracks.filter((track, index) => {
+  //     return index !== indexToRemove
+  //   })
+  //   this.setState({ queuedTracks: newQueuedTracks })
+  // }
+
+  // removeTrackFromPlaylist = (ownerId, playlistId, spotifyURI) => {
+  //   var tracks = [{ uri: spotifyURI }]
+  //   spotifyApi
+  //     .removeTracksFromPlaylist(ownerId, playlistId, tracks)
+  //     .then(
+  //       data => {
+  //         this.setActivePlaylist(playlistId)
+  //         spotifyApi.getPlaylist(ownerId, playlistId).then(data => {
+  //           this.setState({ tracklist: data.body })
+  //         },
+  //         function(err) {
+  //           console.log('Something went wrong getting tracklist!', err)
+  //         })
+  //         console.log('Track removed from playlist!')
+  //       },
+  //       function(err) {
+  //         console.log('Something went wrong!', err)
+  //       }
+  //     )
+  // }
+
   // getFeaturedPlaylists = time => {
   //   spotifyApi
   //     .getFeaturedPlaylists({
@@ -188,16 +184,7 @@ class App extends Component {
   //       }
   //     )
   // }
-  getTrackAnalysis = id => {
-    spotifyApi.getAudioAnalysisForTrack(id).then(
-      function(data) {
-        console.log(data.body)
-      },
-      function(err) {
-        done(err)
-      }
-    )
-  }
+
   playNextTrack = () => {
     let nextTrack
     let newQueuedTracks = []
@@ -272,25 +259,28 @@ class App extends Component {
       this.setState({ activeTracklist })
     }
   }
-  addTrackToLatestPlayed = track => {
-    if (this.state.latestPlayed.length > 0) {
-      if (this.state.latestPlayed[0].id !== track.id) {
-        this.setState({ latestPlayed: [track, ...this.state.latestPlayed] })
-      }
-    } else {
-      this.setState({ latestPlayed: [track] })
-    }
-  }
-  stopActiveTrack = track => {
-    this.setState({ playing: false })
-  }
-  startActiveTrack = track => {
-    this.setState({
-      playing: true,
-      displayMusicBar: true
-    })
-    this.addTrackToLatestPlayed(track)
-  }
+  // addTrackToLatestPlayed = track => {
+  //   if (this.state.latestPlayed.length > 0) {
+  //     if (this.state.latestPlayed[0].id !== track.id) {
+  //       this.setState({ latestPlayed: [track, ...this.state.latestPlayed] })
+  //     }
+  //   } else {
+  //     this.setState({ latestPlayed: [track] })
+  //   }
+  // }
+
+  // stopActiveTrack = track => {
+  //   this.setState({ playing: false })
+  // }
+
+  // startActiveTrack = track => {
+  //   this.setState({
+  //     playing: true,
+  //     displayMusicBar: true
+  //   })
+  //   this.addTrackToLatestPlayed(track)
+  // }
+
   playVisibleTracklist = () => {
     this.setActiveTrack(
       this.state.tracklist.tracks.items[0].track,
@@ -322,29 +312,28 @@ class App extends Component {
       //featuredPlaylists: this.state.featuredPlaylists,
       //tracklist: this.state.tracklist,
       //onClickPlaylist: this.onClickPlaylist,
-      getTrackAnalysis: this.getTrackAnalysis,
       setActiveTrack: this.setActiveTrack,
-      stopActiveTrack: this.stopActiveTrack,
-      startActiveTrack: this.startActiveTrack,
+      //stopActiveTrack: this.stopActiveTrack,
+      //startActiveTrack: this.startActiveTrack,
       activeTrack: this.state.activeTrack,
-      playing: this.state.playing,
+      //playing: this.state.playing,
       playedTime: this.state.playedTime,
       onSeekMouseDown: this.onSeekMouseDown,
       onSeekChange: this.onSeekChange,
       onSeekMouseUp: this.onSeekMouseUp,
       //activePlaylist: this.state.activePlaylist,
       //setActivePlaylist: this.setActivePlaylist,
-      latestPlayed: this.state.latestPlayed,
-      queuedTracks: this.state.queuedTracks,
+      //latestPlayed: this.state.latestPlayed,
+      //queuedTracks: this.state.queuedTracks,
       //createPlaylist: this.createPlaylist,
       //me: this.state.user,
       //unfollowActivePlaylist: this.unfollowActivePlaylist,
       //deleteActivePlaylist: this.deleteActivePlaylist,
-      addTrackToPlaylist: this.addTrackToPlaylist,
-      addTrackToQueue: this.addTrackToQueue,
-      removeTrackFromPlaylist: this.removeTrackFromPlaylist,
+      //addTrackToPlaylist: this.addTrackToPlaylist,
+      //addTrackToQueue: this.addTrackToQueue,
+      //removeTrackFromPlaylist: this.removeTrackFromPlaylist,
       playingPlaylist: this.state.activeTracklist.id,
-      removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
+      //removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
       playVisibleTracklist: this.playVisibleTracklist,
       spotifyApi: spotifyApi,
       loadingPlaylist: this.state.loadingPlaylist
@@ -369,16 +358,16 @@ class App extends Component {
         ))}
         <MusicBar
           activeTrack={this.state.activeTrack}
-          playing={this.state.playing}
-          startTrack={this.startActiveTrack}
-          stopTrack={this.stopActiveTrack}
+          //playing={this.state.playing}
+          //startTrack={this.startActiveTrack}
+          //stopTrack={this.stopActiveTrack}
           setPlayedTime={this.setPlayedTime}
           playedTime={this.state.playedTime}
           seeking={this.state.seeking}
           onSeekMouseDown={this.onSeekMouseDown}
           onSeekChange={this.onSeekChange}
           onSeekMouseUp={this.onSeekMouseUp}
-          zeroTrack={this.zeroTrack}
+          //zeroTrack={this.zeroTrack}
           displayMusicBar={this.state.displayMusicBar}
           playNextTrack={this.playNextTrack}
           playPreviousTrack={this.playPreviousTrack}

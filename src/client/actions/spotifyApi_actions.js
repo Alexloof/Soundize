@@ -101,3 +101,39 @@ export const getTracklistOfPlaylist = async (userId, playlistId, dispatch) => {
     )
   })
 }
+
+export const addTrackToPlaylistCall = async (
+  ownerId,
+  playlistId,
+  spotifyURI,
+  dispatch
+) => {
+  await spotifyApi
+    .addTracksToPlaylist(ownerId, playlistId, [spotifyURI])
+    .then(
+      data => {
+        console.log('Added tracks to playlist!', data)
+      },
+      function(err) {
+        console.log('Something went wrong!', err)
+      }
+    )
+}
+
+export const removeTrackFromPlaylistCall = async (
+  ownerId,
+  playlistId,
+  tracks,
+  dispatch
+) => {
+  await spotifyApi
+    .removeTracksFromPlaylist(ownerId, playlistId, tracks)
+    .then(
+      data => {
+        console.log('Track removed from playlist!', data)
+      },
+      function(err) {
+        console.log('Something went wrong!', err)
+      }
+    )
+}

@@ -9,8 +9,8 @@ import MusicBar from './MusicBar'
 import Home from './Home'
 import Search from './Search'
 
-// var SpotifyWebApi = require('spotify-web-api-node')
-// var spotifyApi = new SpotifyWebApi()
+var SpotifyWebApi = require('spotify-web-api-node')
+var spotifyApi = new SpotifyWebApi()
 
 import {
   BrowserRouter as Router,

@@ -51,14 +51,14 @@ class Home extends Component {
         <div className="columns">
           <div className="column playlists-menu">
             <Playlists
-              onClickPlaylist={this.props.onClickPlaylist}
-              playlists={this.props.playlists}
-              featuredPlaylists={this.props.featuredPlaylists}
-              activePlaylist={this.props.activePlaylist}
-              setActivePlaylist={this.props.setActivePlaylist}
+              //onClickPlaylist={this.props.onClickPlaylist}
+              //playlists={this.props.playlists}
+              //featuredPlaylists={this.props.featuredPlaylists}
+              //activePlaylist={this.props.activePlaylist}
+              //setActivePlaylist={this.props.setActivePlaylist}
               onOpenCreatePlaylistModal={this.openModal}
-              playing={this.props.playing}
-              playingPlaylist={this.props.playingPlaylist}
+              //playing={this.props.playing}
+              //playingPlaylist={this.props.playingPlaylist}
             />
           </div>
           <div className="column is-6 tracklist">

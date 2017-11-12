@@ -88,3 +88,16 @@ export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {
     console.log('Something went wrong!', err)
   })
 }
+
+// TRACK
+export const getTracklistOfPlaylist = async (userId, playlistId, dispatch) => {
+  return spotifyApi.getPlaylist(userId, playlistId).then(data => {
+    return data.body
+  },
+  function(err) {
+    console.log(
+      'Something went wrong getting tracklist for a specific playlist!',
+      err
+    )
+  })
+}

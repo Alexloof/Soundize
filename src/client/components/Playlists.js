@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { setActivePlaylist } from '../actions/playlist_actions'
+import { setActiveTracklist } from '../actions/track_actions'
 
 class Playlists extends Component {
-  setActivePlaylist = (owner, id) => {
-    this.props.setActivePlaylist(id)
-    this.props.onClickPlaylist(owner, id)
+  setActivePlaylist = async (ownerId, playlistId) => {
+    this.props.setActivePlaylist(playlistId)
+    await this.props.setActiveTracklist(ownerId, playlistId)
+    window.scrollTo(0, 0)
   }
   renderPlaylists(playlists) {
     return playlists.map(playlist => {
       let className
-      if (playlist.id === this.props.activePlaylist) {
+      if (playlist.id === this.props.activePlaylistId) {
         className = 'tooltip active'
       } else {
         className = 'tooltip'
@@ -48,9 +54,9 @@ class Playlists extends Component {
           />
         </p>
         <ul className="menu-list my-playlists invisible-scrollbar">
-          {this.props.playlists ? (
-            this.renderPlaylists(this.props.playlists)
-          ) : null}
+          {this.props.playlists
+            ? this.renderPlaylists(this.props.playlists)
+            : null}
         </ul>
         <p
           className="menu-label"
@@ -59,13 +65,29 @@ class Playlists extends Component {
           Spellistor för dig
         </p>
         <ul className="menu-list featured-playlists">
-          {this.props.featuredPlaylists ? (
-            this.renderPlaylists(this.props.featuredPlaylists)
-          ) : null}
+          {this.props.featuredPlaylists
+            ? this.renderPlaylists(this.props.featuredPlaylists)
+            : null}
         </ul>
       </aside>
     )
   }
 }
 
-export default Playlists
+Playlists.propTypes = {
+  onOpenCreatePlaylistModal: PropTypes.func.isRequired
+}
+
+const mapStateToProps = ({ user, playlist }) => {
+  return {
+    user: user.user,
+    playlists: playlist.playlists,
+    featuredPlaylists: playlist.featuredPlaylists,
+    activePlaylistId: playlist.activePlaylistId
+  }
+}
+
+export default connect(mapStateToProps, {
+  setActivePlaylist,
+  setActiveTracklist
+})(Playlists)

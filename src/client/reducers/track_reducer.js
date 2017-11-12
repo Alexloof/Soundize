@@ -1,3 +1,5 @@
+import { SET_ACTIVE_TRACKLIST } from '../actions/track_actions'
+
 const INITIAL_STATE = {
   tracklist: {},
   activeTracklist: {},
@@ -10,6 +12,8 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case SET_ACTIVE_TRACKLIST:
+      return { ...state, activeTracklist: action.payload }
     default:
       return state
   }

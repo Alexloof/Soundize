@@ -65,7 +65,7 @@ class Home extends Component {
                 onSeekMouseDown={this.props.onSeekMouseDown}
                 onSeekChange={this.props.onSeekChange}
                 onSeekMouseUp={this.props.onSeekMouseUp}
-                privatePlaylists={this.props.privatePlaylists}
+                //privatePlaylists={this.props.privatePlaylists}
                 addTrackToPlaylist={this.props.addTrackToPlaylist}
                 addTrackToQueue={this.props.addTrackToQueue}
                 removeTrackFromPlaylist={this.props.removeTrackFromPlaylist}

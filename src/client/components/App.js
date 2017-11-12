@@ -320,7 +320,7 @@ class App extends Component {
       //playlists: this.state.playlists,
       //privatePlaylists: this.state.privatePlaylists,
       //featuredPlaylists: this.state.featuredPlaylists,
-      tracklist: this.state.tracklist,
+      //tracklist: this.state.tracklist,
       //onClickPlaylist: this.onClickPlaylist,
       getTrackAnalysis: this.getTrackAnalysis,
       setActiveTrack: this.setActiveTrack,
@@ -356,7 +356,7 @@ class App extends Component {
     }
     return (
       <div style={{ marginTop: '52px' }}>
-        <Nav user={this.state.user} />
+        <Nav user={this.props.user} />
         {this.props.routes.map((route, i) => (
           <Route
             key={i}

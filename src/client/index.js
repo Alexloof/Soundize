@@ -82,4 +82,8 @@ const Root = () => {
   )
 }
 
+if (module.hot) {
+  module.hot.accept()
+}
+
 ReactDOM.render(<Root />, document.querySelector('#root'))

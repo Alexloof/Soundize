@@ -4,6 +4,16 @@
   "private": true,
   "description": "A client-side webapp powered by Spotify API",
   "author": "Alex Lööf",
+  "license": "ISC",
+  "main": "src/client/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alexloof/Soundize.git"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "dev": "webpack-dev-server --progress --colors --hot --history-api-fallback"
+  },
   "dependencies": {
     "autoprefixer": "^6.4.1",
     "axios": "^0.16.2",
@@ -30,9 +40,6 @@
     "screenfull": "^3.3.1",
     "spotify-web-api-node": "^2.4.0",
     "style-loader": "^0.13.1"
-  },
-  "scripts": {
-    "dev": "webpack-dev-server --hot --history-api-fallback"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

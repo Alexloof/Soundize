@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 class Redirect extends Component {
   componentWillMount = () => {
@@ -27,4 +28,4 @@ class Redirect extends Component {
   }
 }
 
-export default Redirect
+export default withRouter(Redirect)

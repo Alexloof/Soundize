@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 class DiscoverCategory extends Component {
   state = {
@@ -54,4 +55,4 @@ class DiscoverCategory extends Component {
   }
 }
 
-export default DiscoverCategory
+export default withRouter(DiscoverCategory)

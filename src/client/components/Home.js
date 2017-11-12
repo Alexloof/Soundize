@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import Tracklist from './Tracklist'
 import Playlists from './Playlists'
 import ExtraInfolist from './ExtraInfolist'
 import CreateNewPlaylistModal from './modals/CreateNewPlaylistModal'
-import Loading from './Loading'
+import Loading from './general/Loading'
 
 class Home extends Component {
   state = {
@@ -102,4 +103,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default withRouter(Home)

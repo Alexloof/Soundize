@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import Tracklist from './Tracklist'
-import Loading from './Loading'
+import Loading from './general/Loading'
 
 class PlaylistDetail extends Component {
   componentWillMount() {
@@ -35,4 +36,4 @@ class PlaylistDetail extends Component {
   }
 }
 
-export default PlaylistDetail
+export default withRouter(PlaylistDetail)

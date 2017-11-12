@@ -46,7 +46,8 @@ class App extends Component {
     spotifyApi.getUserPlaylists(this.state.user.id).then(data => {
       this.setState({ playlists: data.body.items })
       this.getPrivatePlaylists(data.body.items)
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong getting playlists!', err)
     })
     this.getFeaturedPlaylists(new Date().toISOString())
@@ -79,7 +80,8 @@ class App extends Component {
     spotifyApi.getPlaylist(user, id).then(data => {
       this.setState({ tracklist: data.body, loadingPlaylist: false })
       window.scrollTo(0, 0)
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong getting clickedtracklist!', err)
     })
   }
@@ -98,21 +100,24 @@ class App extends Component {
   unfollowActivePlaylist = (user, playlistId) => {
     spotifyApi.unfollowPlaylist(user, playlistId).then(data => {
       this.getPlaylists()
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong!', err)
     })
   }
   followPlaylist = (userId, playlistId) => {
     spotifyApi.followPlaylist(userId, playlistId).then(data => {
       this.getPlaylists()
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong!', err)
     })
   }
   deleteActivePlaylist = id => {
     spotifyApi.unfollowPlaylist(this.state.user.id, id).then(data => {
       this.getPlaylists()
-    }, function(err) {
+    },
+    function(err) {
       console.log('Something went wrong!', err)
     })
   }
@@ -146,7 +151,8 @@ class App extends Component {
           this.setActivePlaylist(playlistId)
           spotifyApi.getPlaylist(ownerId, playlistId).then(data => {
             this.setState({ tracklist: data.body })
-          }, function(err) {
+          },
+          function(err) {
             console.log('Something went wrong getting tracklist!', err)
           })
           console.log('Track removed from playlist!')
@@ -355,7 +361,7 @@ class App extends Component {
     }
     return (
       <div style={{ marginTop: '52px' }}>
-        <Nav user={this.state.user} history={this.props.history} />
+        <Nav user={this.state.user} />
         {this.props.routes.map((route, i) => (
           <Route
             key={i}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class Nav extends Component {
   state = {
@@ -146,4 +147,4 @@ class Nav extends Component {
   }
 }
 
-export default Nav
+export default withRouter(Nav)

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import Track from './Track'
-import Loading from './Loading'
+import Loading from './general/Loading'
 
 class Search extends Component {
   state = {
@@ -114,11 +115,9 @@ class Search extends Component {
         <li key={index} className="artist-result">
           <img
             src={
-              artist.images[1] ? (
-                artist.images[1].url
-              ) : (
-                'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
-              )
+              artist.images[1]
+                ? artist.images[1].url
+                : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
             }
           />
           <p>{artist.name}</p>
@@ -177,19 +176,15 @@ class Search extends Component {
         <li key={index} className="playlist-result">
           <img
             src={
-              playlist.images ? (
-                playlist.images[0].url
-              ) : (
-                'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
-              )
+              playlist.images
+                ? playlist.images[0].url
+                : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
             }
           />
           <p>
-            {playlist.name.length > 30 ? (
-              playlist.name.substr(0, 27) + '...'
-            ) : (
-              playlist.name
-            )}
+            {playlist.name.length > 30
+              ? playlist.name.substr(0, 27) + '...'
+              : playlist.name}
           </p>
         </li>
       )
@@ -206,11 +201,12 @@ class Search extends Component {
           <div className="searched-artists">
             <h2>Artister</h2>
             <ul className="menu-list artist-list">
-              {!this.state.loadingArtists ? this.state.searchedArtists.length >
-              0 ? (
-                this.renderArtists()
-              ) : (
-                <li>Inga matchande artister</li>
+              {!this.state.loadingArtists ? (
+                this.state.searchedArtists.length > 0 ? (
+                  this.renderArtists()
+                ) : (
+                  <li>Inga matchande artister</li>
+                )
               ) : (
                 <Loading />
               )}
@@ -219,11 +215,12 @@ class Search extends Component {
           <div className="searched-tracks">
             <h2>Låtar</h2>
             <ul className="menu-list track-list">
-              {!this.state.loadingTracks ? this.state.searchedTracks.length >
-              0 ? (
-                this.renderTracks()
-              ) : (
-                <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+              {!this.state.loadingTracks ? (
+                this.state.searchedTracks.length > 0 ? (
+                  this.renderTracks()
+                ) : (
+                  <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+                )
               ) : (
                 <Loading />
               )}
@@ -232,11 +229,12 @@ class Search extends Component {
           <div className="searched-playlists">
             <h2>Spellistor</h2>
             <ul className="menu-list playlist-list">
-              {!this.state.loadingPlaylists ? this.state.searchedPlaylists
-                .length > 0 ? (
-                this.renderPlaylists()
-              ) : (
-                <li>Inga matchande spellistor</li>
+              {!this.state.loadingPlaylists ? (
+                this.state.searchedPlaylists.length > 0 ? (
+                  this.renderPlaylists()
+                ) : (
+                  <li>Inga matchande spellistor</li>
+                )
               ) : (
                 <Loading />
               )}
@@ -248,4 +246,4 @@ class Search extends Component {
   }
 }
 
-export default Search
+export default withRouter(Search)

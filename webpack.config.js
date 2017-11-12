@@ -1,23 +1,25 @@
-const webpack = require("webpack")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const path = require("path")
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
-const autoprefixer = require("autoprefixer")
+const autoprefixer = require('autoprefixer')
+
+// Not needed - 'babel-polyfill' ?
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/client/index.js"],
+  entry: ['./src/client/index.js'],
   output: {
-    publicPath: "/",
-    path: path.resolve(__dirname, "./dist"),
-    filename: "bundle.js"
+    publicPath: '/',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js'
   },
   resolve: {
-    extensions: [".jsx", ".json", ".js"]
+    extensions: ['.jsx', '.json', '.js']
   },
   module: {
     rules: [
       {
-        loader: "babel-loader",
+        loader: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/
       },
@@ -25,13 +27,13 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: "style-loader" // creates style nodes from JS strings
+            loader: 'style-loader' // creates style nodes from JS strings
           },
           {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: 'css-loader' // translates CSS into CommonJS
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               plugins: function() {
                 return [autoprefixer]
@@ -39,28 +41,28 @@ module.exports = {
             }
           },
           {
-            loader: "sass-loader" // compiles Sass to CSS
+            loader: 'sass-loader' // compiles Sass to CSS
           }
         ]
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ["file-loader"]
+        use: ['file-loader']
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ["file-loader"]
+        use: ['file-loader']
       },
       {
         test: /\.json$/,
-        loader: "json-loader"
+        loader: 'json-loader'
       }
     ]
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/client/index.html"
+      template: './src/client/index.html'
     })
   ]
 }

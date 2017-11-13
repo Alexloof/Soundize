@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
 import screenfull from 'screenfull'
+
+import {
+  toggleStartPauseTrack,
+  setPlayedTime,
+  playActiveTrack,
+  pauseActiveTrack,
+  startSeek,
+  stopSeek,
+  changeSeek,
+  zeroPlayedTime
+} from '../actions/player_actions'
 
 class MusicBar extends Component {
   state = {
@@ -10,8 +22,6 @@ class MusicBar extends Component {
     },
     playing: false,
     duration: 0,
-    played: 0,
-    loaded: 0,
     muted: false,
     volume: 0.5,
     loop: false
@@ -34,22 +44,24 @@ class MusicBar extends Component {
   }
   onProgress = state => {
     // We only want to update time slider if we are not currently seeking
-    if (!this.props.seeking) {
-      this.props.setPlayedTime(state)
+    if (!this.props.isSeeking) {
+      this.props.setPlayedTime(state.played)
     }
   }
-  startStopTrack = track => {
-    this.setState({ playing: !this.state.playing })
+  startStopTrack = () => {
+    this.props.toggleStartPauseTrack()
   }
-  onSeekMouseDown = e => {
-    this.props.onSeekMouseDown()
+
+  onSeekMouseDown = () => {
+    this.props.startSeek()
   }
   onSeekChange = e => {
-    this.props.onSeekChange(parseFloat(e.target.value))
+    this.props.changeSeek(parseFloat(e.target.value))
   }
   onSeekMouseUp = e => {
     this.player.seekTo(parseFloat(e.target.value))
-    this.props.onSeekMouseUp(parseFloat(e.target.value))
+    this.props.stopSeek()
+    this.props.changeSeek(parseFloat(e.target.value))
   }
   setVolume = e => {
     this.setState({ volume: parseFloat(e.target.value) })
@@ -58,9 +70,9 @@ class MusicBar extends Component {
     this.setState({ muted: !this.state.muted })
   }
   renderPlayPauseButton = () => {
-    return this.props.playing ? (
+    return this.props.isPlaying ? (
       <button
-        onClick={() => this.props.stopTrack()}
+        onClick={() => this.props.pauseActiveTrack()}
         className="button play-btn"
       >
         <span className="icon">
@@ -69,7 +81,7 @@ class MusicBar extends Component {
       </button>
     ) : (
       <button
-        onClick={() => this.props.startTrack(this.state.activeTrack)}
+        onClick={() => this.props.playActiveTrack()}
         className="button play-btn"
       >
         <span className="icon">
@@ -78,10 +90,12 @@ class MusicBar extends Component {
       </button>
     )
   }
+
+  //TODO PLAY NEXT TRACK
   trackEnded = () => {
     if (this.state.loop) {
-      this.props.zeroTrack()
-      this.props.startTrack(this.state.activeTrack)
+      this.props.zeroPlayedTime()
+      this.props.playActiveTrack()
     } else {
       this.props.playNextTrack()
     }
@@ -102,143 +116,172 @@ class MusicBar extends Component {
   }
   render() {
     let className
-    if (this.props.displayMusicBar) {
+    if (this.props.showMusicbar) {
       className = 'music-bar display-music-bar'
     } else {
       className = 'music-bar'
     }
-    return (
-      <div className={className}>
-        <div className="my-container">
-          <div className="img-info">
-            {this.state.activeTrack.album.images ? (
-              <img src={this.state.activeTrack.album.images[0].url} />
-            ) : (
-              <img />
-            )}
-            <div className="track-info">
-              <p className="artist-label">
-                {this.renderArtists(this.state.activeTrack.artists)}
-              </p>
-              <p className="track-title">{this.state.activeTrack.name}</p>
+    if (this.props.activeTrack) {
+      return (
+        <div className={className}>
+          <div className="my-container">
+            <div className="img-info">
+              <img
+                src={
+                  this.props.activeTrack
+                    ? this.props.activeTrack.album.images[0].url
+                    : null
+                }
+              />
+
+              <div className="track-info">
+                <p className="artist-label">
+                  {this.renderArtists(this.props.activeTrack.artists)}
+                </p>
+                <p className="track-title">{this.props.activeTrack.name}</p>
+              </div>
             </div>
-          </div>
-          <div className="track-controls">
-            <button
-              onClick={() => this.props.playPreviousTrack()}
-              className="button step-change-btn"
-            >
-              <span className="icon">
-                <i className="fa fa-step-backward" />
-              </span>
-            </button>
+            <div className="track-controls">
+              <button
+                onClick={() => this.props.playPreviousTrack()}
+                className="button step-change-btn"
+              >
+                <span className="icon">
+                  <i className="fa fa-step-backward" />
+                </span>
+              </button>
 
-            {this.renderPlayPauseButton()}
+              {this.renderPlayPauseButton()}
 
-            <button
-              onClick={() => this.props.playNextTrack()}
-              className="button step-change-btn"
-            >
-              <span className="icon">
-                <i className="fa fa-step-forward" />
-              </span>
-            </button>
-            <button
-              onClick={() => this.setState({ loop: !this.state.loop })}
-              className="button step-change-btn"
-            >
-              <span className="icon">
-                {this.state.loop ? (
-                  <i className="fa fa-retweet active" />
+              <button
+                onClick={() => this.props.playNextTrack()}
+                className="button step-change-btn"
+              >
+                <span className="icon">
+                  <i className="fa fa-step-forward" />
+                </span>
+              </button>
+              <button
+                onClick={() => this.setState({ loop: !this.state.loop })}
+                className="button step-change-btn"
+              >
+                <span className="icon">
+                  {this.state.loop ? (
+                    <i className="fa fa-retweet active" />
+                  ) : (
+                    <i className="fa fa-retweet" />
+                  )}
+                </span>
+              </button>
+            </div>
+            <div className="track-running-wrapper">
+              <div className="time-counter">
+                {(Math.round(this.state.duration * this.props.playedTime) / 100
+                ).toFixed(2)}
+              </div>
+              <div className="running-track">
+                <div
+                  style={{ width: this.playedTimeColor() }}
+                  className="played-color"
+                />
+                <div className="track-color" />
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step="any"
+                  //ref={input => (input = this.props.playedTime)}
+                  value={this.props.playedTime}
+                  onMouseDown={this.onSeekMouseDown}
+                  onChange={this.onSeekChange}
+                  onMouseUp={this.onSeekMouseUp}
+                />
+              </div>
+
+              <div className="time-duration">
+                {(Math.round(this.state.duration) / 100).toFixed(2)}
+              </div>
+            </div>
+
+            <div className="sound-options">
+              <span className="icon" onClick={() => this.toggleMuted()}>
+                {!this.state.muted ? (
+                  <i className="fa fa-volume-up" />
                 ) : (
-                  <i className="fa fa-retweet" />
+                  <i className="fa fa-volume-off" />
                 )}
               </span>
-            </button>
-          </div>
-          <div className="track-running-wrapper">
-            <div className="time-counter">
-              {(Math.round(this.state.duration * this.props.playedTime) / 100
-              ).toFixed(2)}
+              <div className="volume-wrapper">
+                <div
+                  style={{ width: this.volumeAmount() }}
+                  className="volume-amount-color"
+                />
+                <div className="volume-color" />
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step="any"
+                  value={this.state.volume}
+                  onChange={this.setVolume}
+                />
+              </div>
             </div>
-            <div className="running-track">
-              <div
-                style={{ width: this.playedTimeColor() }}
-                className="played-color"
-              />
-              <div className="track-color" />
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step="any"
-                //ref={input => (input = this.props.playedTime)}
-                value={this.props.playedTime}
-                onMouseDown={this.onSeekMouseDown}
-                onChange={this.onSeekChange}
-                onMouseUp={this.onSeekMouseUp}
-              />
-            </div>
-
-            <div className="time-duration">
-              {(Math.round(this.state.duration) / 100).toFixed(2)}
+            <div
+              className="fullscreen"
+              onClick={e => this.requestFullScreen(e)}
+            >
+              <span className="icon">
+                <i className="fa fa-expand" aria-hidden="true" />
+              </span>
             </div>
           </div>
-
-          <div className="sound-options">
-            <span className="icon" onClick={() => this.toggleMuted()}>
-              {!this.state.muted ? (
-                <i className="fa fa-volume-up" />
-              ) : (
-                <i className="fa fa-volume-off" />
-              )}
-            </span>
-            <div className="volume-wrapper">
-              <div
-                style={{ width: this.volumeAmount() }}
-                className="volume-amount-color"
-              />
-              <div className="volume-color" />
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step="any"
-                value={this.state.volume}
-                onChange={this.setVolume}
-              />
-            </div>
-          </div>
-          <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
-            <span className="icon">
-              <i className="fa fa-expand" aria-hidden="true" />
-            </span>
-          </div>
+          <ReactPlayer
+            ref={player => {
+              this.player = player
+            }}
+            width={1}
+            height={1}
+            key={this.props.activeTrack.id}
+            playing={this.props.playing}
+            url={
+              this.props.activeTrack.preview_url
+                ? this.props.activeTrack.preview_url
+                : null
+            }
+            onError={e => console.log('error', e)}
+            onDuration={duration => this.setState({ duration })}
+            onEnded={() => this.trackEnded()}
+            onProgress={this.onProgress}
+            progressFrequency={500}
+            volume={this.state.volume}
+            muted={this.state.muted}
+          />
         </div>
-        <ReactPlayer
-          ref={player => {
-            this.player = player
-          }}
-          width={1}
-          height={1}
-          key={this.state.activeTrack.id}
-          playing={this.props.playing}
-          url={
-            this.state.activeTrack.preview_url
-              ? this.state.activeTrack.preview_url
-              : null
-          }
-          onError={e => console.log('error', e)}
-          onDuration={duration => this.setState({ duration })}
-          onEnded={() => this.trackEnded()}
-          onProgress={this.onProgress}
-          progressFrequency={500}
-          volume={this.state.volume}
-          muted={this.state.muted}
-        />
-      </div>
-    )
+      )
+    } else {
+      return <div />
+    }
   }
 }
 
-export default MusicBar
+const mapStateToProps = ({ track, player }) => {
+  return {
+    activeTrack: track.activeTrack,
+    isPlaying: player.isPlaying,
+    isSeeking: player.isSeeking,
+    playedTime: player.playedTime,
+    showMusicbar: player.showMusicbar
+  }
+}
+
+export default connect(mapStateToProps, {
+  toggleStartPauseTrack,
+  setPlayedTime,
+  startSeek,
+  stopSeek,
+  changeSeek,
+  pauseActiveTrack,
+  playActiveTrack,
+  zeroPlayedTime
+})(MusicBar)

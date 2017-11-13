@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   activeTracklist: null,
   playingTracklist: null,
   loadingTracklist: false,
-  activeTrack: {},
+  activeTrack: null,
   activeTrackIndex: '',
   latestPlayedTacks: null,
   queuedTracks: null

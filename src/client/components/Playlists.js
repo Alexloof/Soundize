@@ -29,8 +29,8 @@ class Playlists extends Component {
             <img src={playlist.images[0] ? playlist.images[0].url : null} />
 
             <span className="playlist-name">{playlist.name}</span>
-            {this.props.playing &&
-            this.props.playingPlaylist === playlist.id ? (
+            {this.props.isPlaying &&
+            this.props.playingPlaylistId === playlist.id ? (
               <i className="fa fa-volume-up" aria-hidden="true" />
             ) : null}
             <span className="tooltiptext">
@@ -78,12 +78,14 @@ Playlists.propTypes = {
   onOpenCreatePlaylistModal: PropTypes.func.isRequired
 }
 
-const mapStateToProps = ({ user, playlist }) => {
+const mapStateToProps = ({ user, playlist, track, player }) => {
   return {
     user: user.user,
     playlists: playlist.playlists,
     featuredPlaylists: playlist.featuredPlaylists,
-    activePlaylistId: playlist.activePlaylistId
+    activePlaylistId: playlist.activePlaylistId,
+    playingPlaylistId: track.playingTracklistId,
+    isPlaying: player.isPlaying
   }
 }
 

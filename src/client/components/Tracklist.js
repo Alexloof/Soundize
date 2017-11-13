@@ -100,12 +100,12 @@ class Tracklist extends Component {
   }
   playActiveTracklist = async () => {
     this.props.showMusicbar()
+    this.props.setPlayingTracklist(this.props.activeTracklist.id)
     await this.props.setActiveTrack(
       this.props.activeTracklist.tracks.items[0].track,
       0
     )
     this.props.playActiveTrack()
-    this.props.setPlayingTracklist(this.props.activeTracklist)
   }
   removeTrackFromPlaylist = spotifyURI => {
     this.props.removeTrackFromPlaylist(
@@ -114,9 +114,9 @@ class Tracklist extends Component {
       spotifyURI
     )
   }
-  setActiveTrack = (track, index) => {
-    this.props.setActiveTrack(track, this.props.activeTracklist, index)
-  }
+  // setActiveTrack = (track, index) => {
+  //   this.props.setActiveTrack(track, this.props.activeTracklist, index)
+  // }
   checkFollowStatusOnPlaylist = playlistId => {
     const status = this.props.userPlaylists.map(playlist => {
       if (playlist.id === playlistId) {
@@ -162,16 +162,15 @@ class Tracklist extends Component {
       <div className="menu ">
         <TracklistBannerScroll
           activeTracklist={this.props.activeTracklist}
-          playingTracklist={this.props.playingTracklist}
+          playingTracklistId={this.props.playingTracklistId}
           isPlaying={this.props.isPlaying}
           playActiveTracklist={this.playActiveTracklist}
           stopActiveTrack={this.props.pauseActiveTrack}
           showDeleteModal={this.showDeleteModal}
         />
-
         <TracklistBanner
           activeTracklist={this.props.activeTracklist}
-          playingTracklist={this.props.playingTracklist}
+          playingTracklistId={this.props.playingTracklistId}
           isPlaying={this.props.isPlaying}
           playActiveTracklist={this.playActiveTracklist}
           stopActiveTrack={this.props.pauseActiveTrack}
@@ -212,7 +211,7 @@ const mapStateToProps = ({ user, track, playlist, player }) => {
     activeTracklist: track.activeTracklist,
     privatePlaylists: playlist.privatePlaylists,
     activeTracklist: track.activeTracklist,
-    playingTracklist: track.playingTracklist,
+    playingTracklistId: track.playingTracklistId,
     isPlaying: player.isPlaying
   }
 }

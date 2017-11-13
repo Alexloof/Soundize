@@ -31,7 +31,8 @@ class TracklistBanner extends Component {
               </p>
             </div>
             <div className="tracklist-banner-btn-group">
-              {this.props.playingTracklist !== this.props.activeTracklist.id ||
+              {this.props.playingTracklistId !==
+                this.props.activeTracklist.id ||
               this.props.isPlaying === false ? (
                 <button
                   onClick={() => this.props.playActiveTracklist()}
@@ -94,7 +95,7 @@ class TracklistBanner extends Component {
 TracklistBanner.propTypes = {
   activeTracklist: PropTypes.object,
   isPlaying: PropTypes.bool,
-  playingTracklist: PropTypes.string,
+  playingTracklistId: PropTypes.string,
   playActiveTracklist: PropTypes.func.isRequired,
   stopActiveTrack: PropTypes.func.isRequired,
   showDeleteModal: PropTypes.func.isRequired,

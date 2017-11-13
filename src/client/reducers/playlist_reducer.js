@@ -9,8 +9,8 @@ const INITIAL_STATE = {
   playlists: [],
   privatePlaylists: [],
   featuredPlaylists: [],
-  activePlaylist: '',
-  playingPlaylist: ''
+  activePlaylistId: null,
+  playingPlaylist: null
 }
 
 export default function(state = INITIAL_STATE, action) {

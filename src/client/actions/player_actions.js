@@ -1,5 +1,3 @@
-import { ADD_TRACK_TO_LATEST_PLAYED } from './track_actions'
-
 // actions
 export const PLAY_ACTIVE_TRACK = 'play_active_track'
 export const PAUSE_ACTIVE_TRACK = 'pause_active_track'
@@ -13,7 +11,6 @@ export const ZERO_PLAYED_TIME = 'zero_played_time'
 
 export const playActiveTrack = () => async dispatch => {
   dispatch({ type: PLAY_ACTIVE_TRACK })
-  dispatch({ type: ADD_TRACK_TO_LATEST_PLAYED })
 }
 
 export const pauseActiveTrack = () => async dispatch => {

@@ -10,10 +10,10 @@ import {
 
 const INITIAL_STATE = {
   activeTracklist: null,
-  playingTracklist: null,
+  playingTracklistId: null,
   loadingTracklist: false,
   activeTrack: null,
-  activeTrackIndex: '',
+  activeTrackIndex: null,
   latestPlayedTacks: null,
   queuedTracks: null
 }
@@ -24,7 +24,7 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, activeTracklist: action.payload }
 
     case SET_PLAYING_TRACKLIST:
-      return { ...state, playingTracklist: action.payload }
+      return { ...state, playingTracklistId: action.payload }
 
     case ADD_TRACK_TO_QUEUED_LIST:
       if (state.queuedTracks) {

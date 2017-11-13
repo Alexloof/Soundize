@@ -23,8 +23,8 @@ export const setActiveTracklist = (ownerId, playlistId) => async dispatch => {
   }
 }
 
-export const setPlayingTracklist = tracklist => async dispatch => {
-  dispatch({ type: SET_PLAYING_TRACKLIST, payload: tracklist })
+export const setPlayingTracklist = tracklistId => async dispatch => {
+  dispatch({ type: SET_PLAYING_TRACKLIST, payload: tracklistId })
 }
 
 export const addTrackToQueuedList = track => async dispatch => {
@@ -61,4 +61,5 @@ export const setActiveTrack = (track, trackIndex) => async dispatch => {
   dispatch({ type: SET_ACTIVE_TRACK, payload: track })
   dispatch({ type: SET_ACTIVE_TRACKINDEX, payload: trackIndex })
   dispatch({ type: ZERO_PLAYED_TIME })
+  dispatch(addTrackToLatestPlayed(track))
 }

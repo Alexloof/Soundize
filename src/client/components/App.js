@@ -15,11 +15,6 @@ var spotifyApi = new SpotifyWebApi()
 import { Route } from 'react-router-dom'
 
 class App extends Component {
-  state = {
-    token: '',
-    loadingPlaylist: false
-  }
-
   async componentDidMount() {
     // spotifyApi.setAccessToken(localStorage.getItem('token'))
     // this.getMe()
@@ -311,15 +306,15 @@ class App extends Component {
       //featuredPlaylists: this.state.featuredPlaylists,
       //tracklist: this.state.tracklist,
       //onClickPlaylist: this.onClickPlaylist,
-      setActiveTrack: this.setActiveTrack,
+      //setActiveTrack: this.setActiveTrack,
       //stopActiveTrack: this.stopActiveTrack,
       //startActiveTrack: this.startActiveTrack,
-      activeTrack: this.state.activeTrack,
+      //activeTrack: this.state.activeTrack,
       //playing: this.state.playing,
-      playedTime: this.state.playedTime,
-      onSeekMouseDown: this.onSeekMouseDown,
-      onSeekChange: this.onSeekChange,
-      onSeekMouseUp: this.onSeekMouseUp,
+      //playedTime: this.state.playedTime,
+      //onSeekMouseDown: this.onSeekMouseDown,
+      //onSeekChange: this.onSeekChange,
+      //onSeekMouseUp: this.onSeekMouseUp,
       //activePlaylist: this.state.activePlaylist,
       //setActivePlaylist: this.setActivePlaylist,
       //latestPlayed: this.state.latestPlayed,
@@ -334,8 +329,8 @@ class App extends Component {
       //playingPlaylist: this.state.activeTracklist.id,
       //removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
       //playVisibleTracklist: this.playVisibleTracklist,
-      spotifyApi: spotifyApi,
-      loadingPlaylist: this.state.loadingPlaylist
+      spotifyApi: spotifyApi
+      //loadingPlaylist: this.state.loadingPlaylist
       //checkFollowStatusOnPlaylist: this.checkFollowStatusOnPlaylist
       // followPlaylist: this.followPlaylist
     }

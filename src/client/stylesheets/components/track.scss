@@ -60,37 +60,32 @@
         }
         .title-label {
           font-size: 14px;
-          text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.22);
+          //text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.22);
         }
       }
       .track-section-higher-right-grp {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
         .popularity {
           position: relative;
           .bg-pop-wrapper {
             display: flex;
             .bg-pop {
-              width: 3px;
+              border-right: 2px solid #949494;
               height: 10px;
-              background-color: #949494;
-              margin-right: 1px;
+              padding-right: 1px;
             }
             .color-pop {
-              width: 3px;
               height: 10px;
-              background-color: #3f3f3f;
-              margin-right: 1px;
-              position: relative;
+              padding-right: 1px;
+              border-right: 2px solid #3f3f3f;
               top: 10px;
               z-index: 7;
             }
           }
         }
         .track-open-mini-meny {
-          margin-top: 9px;
-          margin-right: 0.4rem;
           margin-left: 15px;
           display: flex;
           cursor: pointer;
@@ -177,6 +172,7 @@
       margin-bottom: 15px;
       margin-right: 2%;
       box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.361);
+      transition: 0.2s all ease-out;
       &:focus {
         border-color: #dbdbdb;
       }

@@ -53,9 +53,14 @@ class Track extends Component {
     this.toggleDropdown()
   }
   startTrack = async track => {
-    await this.props.setActiveTrack(track, this.props.index)
-    this.props.playActiveTrack()
-    this.props.showMusicbar()
+    if (track.id === this.props.activeTrack.id) {
+      this.props.playActiveTrack()
+      this.props.showMusicbar()
+    } else {
+      await this.props.setActiveTrack(track, this.props.index)
+      this.props.playActiveTrack()
+      this.props.showMusicbar()
+    }
   }
   setClassName = () => {
     if (this.props.activeTrack.id === this.props.track.id) {
@@ -69,6 +74,7 @@ class Track extends Component {
       return this.props.isPlaying &&
         this.props.activeTrack.id === this.props.track.id ? (
         <button
+          style={{ transform: `translateY(${3}px)`, boxShadow: 'none' }}
           onClick={() => this.props.pauseActiveTrack()}
           className="button play-btn"
         >
@@ -202,7 +208,12 @@ class Track extends Component {
 
             <div className="track-section-higher-right-grp">
               <div className="popularity">
-                <div className="bg-pop-wrapper">{this.renderPopularity()}</div>
+                <div
+                  className="bg-pop-wrapper"
+                  style={{ position: 'absolute' }}
+                >
+                  {this.renderPopularity()}
+                </div>
                 <div className="bg-pop-wrapper">
                   <div className="bg-pop" />
                   <div className="bg-pop" />

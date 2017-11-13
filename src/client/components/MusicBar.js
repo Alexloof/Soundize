@@ -16,13 +16,13 @@ class MusicBar extends Component {
     volume: 0.5,
     loop: false
   }
-  componentWillReceiveProps(props) {
-    if (props.activeTrack.id !== this.props.activeTrack.id) {
-      if (props.activeTrack) {
-        this.setState({ activeTrack: props.activeTrack })
-      }
-    }
-  }
+  // componentWillReceiveProps(props) {
+  //   if (props.activeTrack.id !== this.props.activeTrack.id) {
+  //     if (props.activeTrack) {
+  //       this.setState({ activeTrack: props.activeTrack })
+  //     }
+  //   }
+  // }
   renderArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
@@ -158,8 +158,8 @@ class MusicBar extends Component {
           </div>
           <div className="track-running-wrapper">
             <div className="time-counter">
-              {(Math.round(this.state.duration * this.props.playedTime) /
-                100).toFixed(2)}
+              {(Math.round(this.state.duration * this.props.playedTime) / 100
+              ).toFixed(2)}
             </div>
             <div className="running-track">
               <div
@@ -224,9 +224,9 @@ class MusicBar extends Component {
           key={this.state.activeTrack.id}
           playing={this.props.playing}
           url={
-            this.state.activeTrack.preview_url ? (
-              this.state.activeTrack.preview_url
-            ) : null
+            this.state.activeTrack.preview_url
+              ? this.state.activeTrack.preview_url
+              : null
           }
           onError={e => console.log('error', e)}
           onDuration={duration => this.setState({ duration })}

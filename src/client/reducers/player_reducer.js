@@ -1,13 +1,19 @@
 import {
   PLAY_ACTIVE_TRACK,
   PAUSE_ACTIVE_TRACK,
-  TOGGLE_ACTIVE_TRACK
+  TOGGLE_ACTIVE_TRACK,
+  SHOW_MUSICBAR,
+  SET_PLAYED_TIME,
+  START_SEEK,
+  STOP_SEEK,
+  CHANGE_SEEK,
+  ZERO_PLAYED_TIME
 } from '../actions/player_actions'
 
 const INITIAL_STATE = {
   isPlaying: false,
   playedTime: 0,
-  seeking: false,
+  isSeeking: false,
   showMusicbar: false
 }
 
@@ -24,6 +30,21 @@ export default function(state = INITIAL_STATE, action) {
 
     case SHOW_MUSICBAR:
       return { ...state, showMusicbar: true }
+
+    case SET_PLAYED_TIME:
+      return { ...state, playedTime: action.payload }
+
+    case START_SEEK:
+      return { ...state, isSeeking: true }
+
+    case STOP_SEEK:
+      return { ...state, isSeeking: false }
+
+    case CHANGE_SEEK:
+      return { ...state, playedTime: action.payload }
+
+    case ZERO_PLAYED_TIME:
+      return { ...state, playedTime: 0 }
     default:
       return state
   }

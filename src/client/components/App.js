@@ -17,14 +17,6 @@ import { Route } from 'react-router-dom'
 class App extends Component {
   state = {
     token: '',
-    tracklist: '',
-    activeTrack: '',
-    playing: false,
-    playedTime: 0,
-    seeking: false,
-    displayMusicBar: false,
-    activeTracklist: '',
-    activeTrackIndex: '',
     loadingPlaylist: false
   }
 
@@ -241,24 +233,26 @@ class App extends Component {
   // setActivePlaylist = id => {
   //   this.setState({ activePlaylist: id })
   // }
-  setActiveTrack = (track, activeTracklist, index) => {
-    let newIndex
-    if (index || index === 0) {
-      newIndex = index
-    } else {
-      newIndex = this.state.activeTrackIndex
-    }
-    if (this.state.activeTrack.id !== track.id) {
-      this.setState({
-        playedTime: 0,
-        activeTrack: track,
-        activeTrackIndex: newIndex
-      })
-    }
-    if (this.state.activeTracklist !== activeTracklist && activeTracklist) {
-      this.setState({ activeTracklist })
-    }
-  }
+
+  // setActiveTrack = (track, activeTracklist, index) => {
+  //   let newIndex
+  //   if (index || index === 0) {
+  //     newIndex = index
+  //   } else {
+  //     newIndex = this.state.activeTrackIndex
+  //   }
+  //   if (this.state.activeTrack.id !== track.id) {
+  //     this.setState({
+  //       playedTime: 0,
+  //       activeTrack: track,
+  //       activeTrackIndex: newIndex
+  //     })
+  //   }
+  //   if (this.state.activeTracklist !== activeTracklist && activeTracklist) {
+  //     this.setState({ activeTracklist })
+  //   }
+  // }
+
   // addTrackToLatestPlayed = track => {
   //   if (this.state.latestPlayed.length > 0) {
   //     if (this.state.latestPlayed[0].id !== track.id) {
@@ -289,21 +283,25 @@ class App extends Component {
     )
     this.startActiveTrack(this.state.tracklist.tracks.items[0].track)
   }
-  setPlayedTime = playedTime => {
-    this.setState({ playedTime: playedTime.played })
-  }
-  onSeekMouseDown = () => {
-    this.setState({ seeking: true })
-  }
-  onSeekChange = e => {
-    this.setState({ playedTime: e })
-  }
-  onSeekMouseUp = e => {
-    this.setState({ seeking: false, playedTime: e })
-  }
-  zeroTrack = () => {
-    this.setState({ playing: false })
-  }
+  // setPlayedTime = playedTime => {
+  //   this.setState({ playedTime: playedTime.played })
+  // }
+
+  // onSeekMouseDown = () => {
+  //   this.setState({ seeking: true })
+  // }
+
+  // onSeekChange = e => {
+  //   this.setState({ playedTime: e })
+  // }
+
+  // onSeekMouseUp = e => {
+  //   this.setState({ seeking: false, playedTime: e })
+  // }
+
+  // zeroTrack = () => {
+  //   this.setState({ playing: false })
+  // }
 
   render() {
     const extraProps = {
@@ -332,7 +330,7 @@ class App extends Component {
       //addTrackToPlaylist: this.addTrackToPlaylist,
       //addTrackToQueue: this.addTrackToQueue,
       //removeTrackFromPlaylist: this.removeTrackFromPlaylist,
-      playingPlaylist: this.state.activeTracklist.id,
+      //playingPlaylist: this.state.activeTracklist.id,
       //removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
       playVisibleTracklist: this.playVisibleTracklist,
       spotifyApi: spotifyApi,
@@ -357,18 +355,18 @@ class App extends Component {
           />
         ))}
         <MusicBar
-          activeTrack={this.state.activeTrack}
+          //activeTrack={this.state.activeTrack}
           //playing={this.state.playing}
           //startTrack={this.startActiveTrack}
           //stopTrack={this.stopActiveTrack}
-          setPlayedTime={this.setPlayedTime}
-          playedTime={this.state.playedTime}
-          seeking={this.state.seeking}
-          onSeekMouseDown={this.onSeekMouseDown}
-          onSeekChange={this.onSeekChange}
-          onSeekMouseUp={this.onSeekMouseUp}
+          //setPlayedTime={this.setPlayedTime}
+          //playedTime={this.state.playedTime}
+          //seeking={this.state.seeking}
+          //onSeekMouseDown={this.onSeekMouseDown}
+          //onSeekChange={this.onSeekChange}
+          //onSeekMouseUp={this.onSeekMouseUp}
           //zeroTrack={this.zeroTrack}
-          displayMusicBar={this.state.displayMusicBar}
+          //displayMusicBar={this.state.displayMusicBar}
           playNextTrack={this.playNextTrack}
           playPreviousTrack={this.playPreviousTrack}
         />

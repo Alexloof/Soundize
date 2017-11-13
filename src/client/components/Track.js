@@ -27,18 +27,6 @@ class Track extends Component {
       }
     }
   }
-  // onSeekMouseDown = e => {
-  //   this.setState({ seeking: true })
-  //   this.props.onSeekMouseDown()
-  // }
-  // onSeekChange = e => {
-  //   this.setState({ played: parseFloat(e.target.value) })
-  //   this.props.onSeekChange(parseFloat(e.target.value))
-  // }
-  // onSeekMouseUp = e => {
-  //   this.setState({ seeking: false })
-  //   this.props.onSeekMouseUp(parseFloat(e.target.value))
-  // }
   renderArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {

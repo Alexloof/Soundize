@@ -21,13 +21,6 @@ class MusicBar extends Component {
     volume: 0.5,
     loop: false
   }
-  // componentWillReceiveProps(props) {
-  //   if (props.activeTrack.id !== this.props.activeTrack.id) {
-  //     if (props.activeTrack) {
-  //       this.setState({ activeTrack: props.activeTrack })
-  //     }
-  //   }
-  // }
   renderArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {

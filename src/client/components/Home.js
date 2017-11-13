@@ -43,11 +43,7 @@ class Home extends Component {
       <div>
         <div className="columns">
           <div className="column playlists-menu">
-            <Playlists
-              onOpenCreatePlaylistModal={this.openModal}
-              //playing={this.props.playing}
-              //playingPlaylist={this.props.playingPlaylist}
-            />
+            <Playlists onOpenCreatePlaylistModal={this.openModal} />
           </div>
           <div className="column is-6 tracklist">
             {!this.props.activeTracklist ? (
@@ -55,26 +51,7 @@ class Home extends Component {
             ) : this.props.loadingPlaylist ? (
               <Loading />
             ) : (
-              <Tracklist
-              //setActiveTrack={this.props.setActiveTrack}
-              //activeTrack={this.props.activeTrack}
-              //stopActiveTrack={this.props.stopActiveTrack}
-              //startActiveTrack={this.props.startActiveTrack}
-              //playing={this.props.playing}
-              //playedTime={this.props.playedTime}
-              //onSeekMouseDown={this.props.onSeekMouseDown}
-              //onSeekChange={this.props.onSeekChange}
-              //onSeekMouseUp={this.props.onSeekMouseUp}
-              //privatePlaylists={this.props.privatePlaylists}
-              //addTrackToPlaylist={this.props.addTrackToPlaylist}
-              //addTrackToQueue={this.props.addTrackToQueue}
-              //removeTrackFromPlaylist={this.props.removeTrackFromPlaylist}
-              //playingPlaylist={this.props.playingPlaylist}
-              //playVisibleTracklist={this.props.playVisibleTracklist}
-              //checkFollowStatusOnPlaylist={
-              //  this.props.checkFollowStatusOnPlaylist
-              //}
-              />
+              <Tracklist />
             )}
           </div>
           <div className="column extra-infolist">

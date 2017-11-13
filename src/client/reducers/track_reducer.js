@@ -14,7 +14,9 @@ const INITIAL_STATE = {
   loadingTracklist: false,
   activeTrack: {
     id: null,
-    images: null
+    images: null,
+    artists: [],
+    name: null
   },
   activeTrackIndex: null,
   latestPlayedTracks: null,

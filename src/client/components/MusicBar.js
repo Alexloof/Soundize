@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
 import screenfull from 'screenfull'
 
+import AudioPlayer from './AudioPlayer'
+
 import {
   toggleStartPauseTrack,
   setPlayedTime,
@@ -20,6 +22,40 @@ class MusicBar extends Component {
     muted: false,
     volume: 0.5,
     loop: false
+  }
+  componentDidMount() {
+    this.createVisualization()
+  }
+
+  createVisualization = () => {
+    let context = new (window.AudioContext || window.webkitAudioContext)()
+    let analyser = context.createAnalyser()
+    let canvas = this.refs.analyzerCanvas
+    let ctx = canvas.getContext('2d')
+    var audio = document.getElementById('audioPlayer')
+    // var audio = this.player
+    console.log(audio)
+    let audioSrc = context.createMediaElementSource(audio)
+    audioSrc.connect(analyser)
+    audioSrc.connect(context.destination)
+    analyser.connect(context.destination)
+
+    function renderFrame() {
+      let freqData = new Uint8Array(analyser.frequencyBinCount)
+      requestAnimationFrame(renderFrame)
+      analyser.getByteFrequencyData(freqData)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      //console.log(freqData)
+      ctx.fillStyle = '#ff4d1c'
+      let bars = 100
+      for (var i = 0; i < bars; i++) {
+        let bar_x = i * 3
+        let bar_width = 2
+        let bar_height = -(freqData[i] / 2)
+        ctx.fillRect(bar_x, canvas.height, bar_width, bar_height)
+      }
+    }
+    renderFrame()
   }
   renderArtists(artists) {
     return artists.map((artist, index) => {
@@ -109,122 +145,140 @@ class MusicBar extends Component {
     } else {
       className = 'music-bar'
     }
-    if (this.props.activeTrack.id) {
-      return (
-        <div className={className}>
-          <div className="my-container">
-            <div className="img-info">
-              <img
-                src={
-                  this.props.activeTrack.id
-                    ? this.props.activeTrack.album.images[0].url
-                    : null
-                }
-              />
 
-              <div className="track-info">
-                <p className="artist-label">
-                  {this.renderArtists(this.props.activeTrack.artists)}
-                </p>
-                <p className="track-title">{this.props.activeTrack.name}</p>
-              </div>
-            </div>
-            <div className="track-controls">
-              <button
-                onClick={() => this.props.playPreviousTrack()}
-                className="button step-change-btn"
-              >
-                <span className="icon">
-                  <i className="fa fa-step-backward" />
-                </span>
-              </button>
+    return (
+      <div className={className}>
+        <div className="my-container">
+          <div className="img-info">
+            <img
+              src={
+                this.props.activeTrack.id
+                  ? this.props.activeTrack.album.images[0].url
+                  : null
+              }
+            />
 
-              {this.renderPlayPauseButton()}
-
-              <button
-                onClick={() => this.props.playNextTrack()}
-                className="button step-change-btn"
-              >
-                <span className="icon">
-                  <i className="fa fa-step-forward" />
-                </span>
-              </button>
-              <button
-                onClick={() => this.setState({ loop: !this.state.loop })}
-                className="button step-change-btn"
-              >
-                <span className="icon">
-                  {this.state.loop ? (
-                    <i className="fa fa-retweet active" />
-                  ) : (
-                    <i className="fa fa-retweet" />
-                  )}
-                </span>
-              </button>
-            </div>
-            <div className="track-running-wrapper">
-              <div className="time-counter">
-                {(Math.round(this.state.duration * this.props.playedTime) / 100
-                ).toFixed(2)}
-              </div>
-              <div className="running-track">
-                <div
-                  style={{ width: this.playedTimeColor() }}
-                  className="played-color"
-                />
-                <div className="track-color" />
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step="any"
-                  //ref={input => (input = this.props.playedTime)}
-                  value={this.props.playedTime}
-                  onMouseDown={this.onSeekMouseDown}
-                  onChange={this.onSeekChange}
-                  onMouseUp={this.onSeekMouseUp}
-                />
-              </div>
-
-              <div className="time-duration">
-                {(Math.round(this.state.duration) / 100).toFixed(2)}
-              </div>
-            </div>
-
-            <div className="sound-options">
-              <span className="icon" onClick={() => this.toggleMuted()}>
-                {!this.state.muted ? (
-                  <i className="fa fa-volume-up" />
-                ) : (
-                  <i className="fa fa-volume-off" />
-                )}
-              </span>
-              <div className="volume-wrapper">
-                <div
-                  style={{ width: this.volumeAmount() }}
-                  className="volume-amount-color"
-                />
-                <div className="volume-color" />
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step="any"
-                  value={this.state.volume}
-                  onChange={this.setVolume}
-                />
-              </div>
-            </div>
-            <div
-              className="fullscreen"
-              onClick={e => this.requestFullScreen(e)}
-            >
-              <span className="icon">
-                <i className="fa fa-expand" aria-hidden="true" />
-              </span>
+            <div className="track-info">
+              <p className="artist-label">
+                {this.renderArtists(this.props.activeTrack.artists)}
+              </p>
+              <p className="track-title">{this.props.activeTrack.name}</p>
             </div>
           </div>
-          <ReactPlayer
+          <div className="track-controls">
+            <button
+              onClick={() => this.props.playPreviousTrack()}
+              className="button step-change-btn"
+            >
+              <span className="icon">
+                <i className="fa fa-step-backward" />
+              </span>
+            </button>
+
+            {this.renderPlayPauseButton()}
+
+            <button
+              onClick={() => this.props.playNextTrack()}
+              className="button step-change-btn"
+            >
+              <span className="icon">
+                <i className="fa fa-step-forward" />
+              </span>
+            </button>
+            <button
+              onClick={() => this.setState({ loop: !this.state.loop })}
+              className="button step-change-btn"
+            >
+              <span className="icon">
+                {this.state.loop ? (
+                  <i className="fa fa-retweet active" />
+                ) : (
+                  <i className="fa fa-retweet" />
+                )}
+              </span>
+            </button>
+          </div>
+          <div className="track-running-wrapper">
+            <div className="time-counter">
+              {(Math.round(this.state.duration * this.props.playedTime) / 100
+              ).toFixed(2)}
+            </div>
+            <div className="running-track">
+              <div
+                style={{ width: this.playedTimeColor() }}
+                className="played-color"
+              />
+              <div className="track-color" />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                //ref={input => (input = this.props.playedTime)}
+                value={this.props.playedTime}
+                onMouseDown={this.onSeekMouseDown}
+                onChange={this.onSeekChange}
+                onMouseUp={this.onSeekMouseUp}
+              />
+            </div>
+
+            <div className="time-duration">
+              {(Math.round(this.state.duration) / 100).toFixed(2)}
+            </div>
+          </div>
+
+          <div className="sound-options">
+            <span className="icon" onClick={() => this.toggleMuted()}>
+              {!this.state.muted ? (
+                <i className="fa fa-volume-up" />
+              ) : (
+                <i className="fa fa-volume-off" />
+              )}
+            </span>
+            <div className="volume-wrapper">
+              <div
+                style={{ width: this.volumeAmount() }}
+                className="volume-amount-color"
+              />
+              <div className="volume-color" />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                value={this.state.volume}
+                onChange={this.setVolume}
+              />
+            </div>
+          </div>
+          <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
+            <span className="icon">
+              <i className="fa fa-expand" aria-hidden="true" />
+            </span>
+          </div>
+
+          {/* <audio
+              ref="audio"
+              id="audioElement"
+              autoPlay={false}
+              crossOrigin="anonymous"
+              src={
+                this.props.activeTrack.preview_url
+                  ? this.props.activeTrack.preview_url
+                  : null
+              }
+            /> */}
+
+          <AudioPlayer
+            isPlaying={this.props.isPlaying}
+            muted={this.state.muted}
+            volume={this.state.volume}
+            url={this.props.activeTrack.preview_url}
+          />
+
+          <canvas ref="analyzerCanvas" id="analyzer" />
+        </div>
+        {/* <ReactPlayer
             ref={player => {
               this.player = player
             }}
@@ -244,12 +298,9 @@ class MusicBar extends Component {
             progressFrequency={500}
             volume={this.state.volume}
             muted={this.state.muted}
-          />
-        </div>
-      )
-    } else {
-      return <div />
-    }
+          /> */}
+      </div>
+    )
   }
 }
 

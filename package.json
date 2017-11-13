@@ -12,6 +12,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist",
+    "build": "webpack",
     "dev": "webpack-dev-server --progress --colors --hot --history-api-fallback"
   },
   "dependencies": {

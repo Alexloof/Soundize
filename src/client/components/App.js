@@ -275,14 +275,15 @@ class App extends Component {
   //   this.addTrackToLatestPlayed(track)
   // }
 
-  playVisibleTracklist = () => {
-    this.setActiveTrack(
-      this.state.tracklist.tracks.items[0].track,
-      this.state.tracklist,
-      0
-    )
-    this.startActiveTrack(this.state.tracklist.tracks.items[0].track)
-  }
+  // playVisibleTracklist = () => {
+  //   this.setActiveTrack(
+  //     this.state.tracklist.tracks.items[0].track,
+  //     this.state.tracklist,
+  //     0
+  //   )
+  //   this.startActiveTrack(this.state.tracklist.tracks.items[0].track)
+  // }
+
   // setPlayedTime = playedTime => {
   //   this.setState({ playedTime: playedTime.played })
   // }
@@ -332,7 +333,7 @@ class App extends Component {
       //removeTrackFromPlaylist: this.removeTrackFromPlaylist,
       //playingPlaylist: this.state.activeTracklist.id,
       //removeTrackFromQueuedTracks: this.removeTrackFromQueuedTracks,
-      playVisibleTracklist: this.playVisibleTracklist,
+      //playVisibleTracklist: this.playVisibleTracklist,
       spotifyApi: spotifyApi,
       loadingPlaylist: this.state.loadingPlaylist
       //checkFollowStatusOnPlaylist: this.checkFollowStatusOnPlaylist
@@ -355,20 +356,20 @@ class App extends Component {
           />
         ))}
         <MusicBar
-          //activeTrack={this.state.activeTrack}
-          //playing={this.state.playing}
-          //startTrack={this.startActiveTrack}
-          //stopTrack={this.stopActiveTrack}
-          //setPlayedTime={this.setPlayedTime}
-          //playedTime={this.state.playedTime}
-          //seeking={this.state.seeking}
-          //onSeekMouseDown={this.onSeekMouseDown}
-          //onSeekChange={this.onSeekChange}
-          //onSeekMouseUp={this.onSeekMouseUp}
-          //zeroTrack={this.zeroTrack}
-          //displayMusicBar={this.state.displayMusicBar}
-          playNextTrack={this.playNextTrack}
-          playPreviousTrack={this.playPreviousTrack}
+        //activeTrack={this.state.activeTrack}
+        //playing={this.state.playing}
+        //startTrack={this.startActiveTrack}
+        //stopTrack={this.stopActiveTrack}
+        //setPlayedTime={this.setPlayedTime}
+        //playedTime={this.state.playedTime}
+        //seeking={this.state.seeking}
+        //onSeekMouseDown={this.onSeekMouseDown}
+        //onSeekChange={this.onSeekChange}
+        //onSeekMouseUp={this.onSeekMouseUp}
+        //zeroTrack={this.zeroTrack}
+        //displayMusicBar={this.state.displayMusicBar}
+        //playNextTrack={this.playNextTrack}
+        //playPreviousTrack={this.playPreviousTrack}
         />
       </div>
     )

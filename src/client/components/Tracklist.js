@@ -8,7 +8,14 @@ import {
   unfollowPlaylist,
   followPlaylist
 } from '../actions/playlist_actions'
-import { setActiveTracklist } from '../actions/track_actions'
+
+import { setActiveTracklist, setActiveTrack } from '../actions/track_actions'
+
+import {
+  playActiveTrack,
+  pauseActiveTrack,
+  showMusicbar
+} from '../actions/player_actions'
 
 import Track from './Track'
 import UnfollowPlaylistModal from './modals/UnfollowPlaylistModal'
@@ -87,7 +94,21 @@ class Tracklist extends Component {
       false
     }
   }
-
+  playActiveTracklist = async () => {
+    console.log('PLAY')
+    this.props.showMusicbar()
+    await this.props.setActiveTrack(
+      this.props.activeTracklist.tracks.items[0].track,
+      0
+    )
+    this.props.playActiveTrack()
+    // this.setActiveTrack(
+    //       this.state.tracklist.tracks.items[0].track,
+    //       this.state.tracklist,
+    //      0
+    //     )
+    //     this.startActiveTrack(this.state.tracklist.tracks.items[0].track)
+  }
   removeTrackFromPlaylist = spotifyURI => {
     this.props.removeTrackFromPlaylist(
       this.props.activeTracklist.owner.id,
@@ -113,45 +134,27 @@ class Tracklist extends Component {
   renderTracklist() {
     return this.props.activeTracklist.tracks.items.map((track, index) => {
       if (track.track !== null) {
-        if (track.track.id === this.props.activeTrack.id) {
-          return (
-            <Track
-              key={index}
-              track={track.track}
-              setActiveTrack={this.setActiveTrack}
-              stopActiveTrack={this.props.stopActiveTrack}
-              startActiveTrack={this.props.startActiveTrack}
-              activeTrack={this.props.activeTrack}
-              playing={this.props.playing}
-              playedTime={this.props.playedTime}
-              onSeekMouseDown={this.props.onSeekMouseDown}
-              onSeekChange={this.props.onSeekChange}
-              onSeekMouseUp={this.props.onSeekMouseUp}
-              privatePlaylists={this.props.privatePlaylists}
-              addTrackToPlaylist={this.props.addTrackToPlaylist}
-              addTrackToQueue={this.props.addTrackToQueue}
-              myPlaylist={this.checkPlaylistOwner()}
-              removeTrackFromPlaylist={this.removeTrackFromPlaylist}
-              index={index}
-            />
-          )
-        } else {
-          return (
-            <Track
-              key={index}
-              track={track.track}
-              setActiveTrack={this.setActiveTrack}
-              stopActiveTrack={this.props.stopActiveTrack}
-              startActiveTrack={this.props.startActiveTrack}
-              privatePlaylists={this.props.privatePlaylists}
-              addTrackToPlaylist={this.props.addTrackToPlaylist}
-              addTrackToQueue={this.props.addTrackToQueue}
-              myPlaylist={this.checkPlaylistOwner()}
-              removeTrackFromPlaylist={this.removeTrackFromPlaylist}
-              index={index}
-            />
-          )
-        }
+        return (
+          <Track
+            key={index}
+            track={track.track}
+            setActiveTrack={this.setActiveTrack}
+            stopActiveTrack={this.props.stopActiveTrack}
+            startActiveTrack={this.props.startActiveTrack}
+            activeTrack={this.props.activeTrack}
+            playing={this.props.playing}
+            playedTime={this.props.playedTime}
+            onSeekMouseDown={this.props.onSeekMouseDown}
+            onSeekChange={this.props.onSeekChange}
+            onSeekMouseUp={this.props.onSeekMouseUp}
+            privatePlaylists={this.props.privatePlaylists}
+            addTrackToPlaylist={this.props.addTrackToPlaylist}
+            addTrackToQueue={this.props.addTrackToQueue}
+            myPlaylist={this.checkPlaylistOwner()}
+            removeTrackFromPlaylist={this.removeTrackFromPlaylist}
+            index={index}
+          />
+        )
       }
     })
   }
@@ -161,19 +164,19 @@ class Tracklist extends Component {
       <div className="menu ">
         <TracklistBannerScroll
           activeTracklist={this.props.activeTracklist}
-          playingPlaylist={this.props.playingPlaylist}
-          isPlaying={this.props.playing}
-          playActiveTracklist={this.props.playVisibleTracklist}
-          stopActiveTrack={this.props.stopActiveTrack}
+          playingTracklist={this.props.playingTracklist}
+          isPlaying={this.props.isPlaying}
+          playActiveTracklist={this.playActiveTracklist}
+          stopActiveTrack={this.props.pauseActiveTrack}
           showDeleteModal={this.showDeleteModal}
         />
 
         <TracklistBanner
           activeTracklist={this.props.activeTracklist}
-          playingPlaylist={this.props.playingPlaylist}
-          isPlaying={this.props.playing}
-          playActiveTracklist={this.props.playVisibleTracklist}
-          stopActiveTrack={this.props.stopActiveTrack}
+          playingTracklist={this.props.playingTracklist}
+          isPlaying={this.props.isPlaying}
+          playActiveTracklist={this.playActiveTracklist}
+          stopActiveTrack={this.props.pauseActiveTrack}
           showDeleteModal={this.showDeleteModal}
           checkFollowStatusOnPlaylist={this.checkFollowStatusOnPlaylist}
           showUnfollowModal={this.showUnfollowModal}
@@ -181,7 +184,9 @@ class Tracklist extends Component {
           userId={this.props.user.id}
         />
 
-        <ul className="menu-list tracklist-tracks">{this.renderTracklist()}</ul>
+        <ul className="menu-list tracklist-tracks">
+          {this.props.activeTracklist ? this.renderTracklist() : null}
+        </ul>
 
         <div className={this.state.unfollowModalClassName}>
           <UnfollowPlaylistModal
@@ -202,12 +207,15 @@ class Tracklist extends Component {
 
 Tracklist.propTypes = {}
 
-const mapStateToProps = ({ user, track, playlist }) => {
+const mapStateToProps = ({ user, track, playlist, player }) => {
   return {
     user: user.user,
     userPlaylists: playlist.playlists,
     activeTracklist: track.activeTracklist,
-    privatePlaylists: playlist.privatePlaylists
+    privatePlaylists: playlist.privatePlaylists,
+    activeTracklist: track.activeTracklist,
+    playingTracklist: track.playingTracklist,
+    isPlaying: player.isPlaying
   }
 }
 
@@ -217,5 +225,9 @@ export default connect(mapStateToProps, {
   setActiveTracklist,
   setActivePlaylist,
   unfollowPlaylist,
-  followPlaylist
+  followPlaylist,
+  playActiveTrack,
+  pauseActiveTrack,
+  setActiveTrack,
+  showMusicbar
 })(Tracklist)

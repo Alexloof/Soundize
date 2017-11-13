@@ -17,7 +17,7 @@ class TracklistBannerScroll extends Component {
         </div>
         <div className="tracklist-scroll-banner-right-grp">
           <div className="tracklist-scroll-btn-grp">
-            {this.props.playingPlaylist !== this.props.activeTracklist.id ||
+            {this.props.playingTracklist !== this.props.activeTracklist.id ||
             this.props.isPlaying === false ? (
               <button
                 onClick={() => this.props.playActiveTracklist()}
@@ -62,7 +62,7 @@ class TracklistBannerScroll extends Component {
 TracklistBannerScroll.propTypes = {
   activeTracklist: PropTypes.object,
   isPlaying: PropTypes.bool,
-  playingPlaylist: PropTypes.string,
+  playingTracklist: PropTypes.string,
   playActiveTracklist: PropTypes.func.isRequired,
   stopActiveTrack: PropTypes.func.isRequired,
   showDeleteModal: PropTypes.func.isRequired

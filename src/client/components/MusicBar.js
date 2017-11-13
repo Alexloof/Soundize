@@ -16,11 +16,6 @@ import {
 
 class MusicBar extends Component {
   state = {
-    activeTrack: {
-      artists: [],
-      album: ''
-    },
-    playing: false,
     duration: 0,
     muted: false,
     volume: 0.5,
@@ -243,7 +238,7 @@ class MusicBar extends Component {
             width={1}
             height={1}
             key={this.props.activeTrack.id}
-            playing={this.props.playing}
+            playing={this.props.isPlaying}
             url={
               this.props.activeTrack.preview_url
                 ? this.props.activeTrack.preview_url

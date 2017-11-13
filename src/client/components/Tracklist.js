@@ -9,7 +9,11 @@ import {
   followPlaylist
 } from '../actions/playlist_actions'
 
-import { setActiveTracklist, setActiveTrack } from '../actions/track_actions'
+import {
+  setActiveTracklist,
+  setActiveTrack,
+  setPlayingTracklist
+} from '../actions/track_actions'
 
 import {
   playActiveTrack,
@@ -95,19 +99,13 @@ class Tracklist extends Component {
     }
   }
   playActiveTracklist = async () => {
-    console.log('PLAY')
     this.props.showMusicbar()
     await this.props.setActiveTrack(
       this.props.activeTracklist.tracks.items[0].track,
       0
     )
     this.props.playActiveTrack()
-    // this.setActiveTrack(
-    //       this.state.tracklist.tracks.items[0].track,
-    //       this.state.tracklist,
-    //      0
-    //     )
-    //     this.startActiveTrack(this.state.tracklist.tracks.items[0].track)
+    this.props.setPlayingTracklist(this.props.activeTracklist)
   }
   removeTrackFromPlaylist = spotifyURI => {
     this.props.removeTrackFromPlaylist(
@@ -229,5 +227,6 @@ export default connect(mapStateToProps, {
   playActiveTrack,
   pauseActiveTrack,
   setActiveTrack,
-  showMusicbar
+  showMusicbar,
+  setPlayingTracklist
 })(Tracklist)

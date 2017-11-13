@@ -44,9 +44,13 @@ export default function(state = INITIAL_STATE, action) {
 
     case ADD_TRACK_TO_LATEST_PLAYED:
       if (state.latestPlayedTacks) {
-        return {
-          ...state,
-          latestPlayedTacks: [action.payload, ...state.latestPlayedTacks]
+        if (state.latestPlayedTacks[0].id !== action.payload.id) {
+          return {
+            ...state,
+            latestPlayedTacks: [action.payload, ...state.latestPlayedTacks]
+          }
+        } else {
+          return { ...state }
         }
       } else {
         return { ...state, latestPlayedTacks: [action.payload] }

@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   loadingTracklist: false,
   activeTrack: null,
   activeTrackIndex: null,
-  latestPlayedTacks: null,
+  latestPlayedTracks: null,
   queuedTracks: null
 }
 
@@ -43,24 +43,32 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, queuedTracks: newQueuedTracks }
 
     case ADD_TRACK_TO_LATEST_PLAYED:
-      if (state.latestPlayedTacks) {
-        if (state.latestPlayedTacks[0].id !== action.payload.id) {
+      if (state.latestPlayedTracks) {
+        if (
+          state.latestPlayedTracks[state.latestPlayedTracks.length - 1].id !==
+          action.payload.id
+        ) {
           return {
             ...state,
-            latestPlayedTacks: [action.payload, ...state.latestPlayedTacks]
+            latestPlayedTracks: [...state.latestPlayedTracks, action.payload]
           }
         } else {
           return { ...state }
         }
       } else {
-        return { ...state, latestPlayedTacks: [action.payload] }
+        return { ...state, latestPlayedTracks: [action.payload] }
       }
 
     case SET_ACTIVE_TRACK:
       return { ...state, activeTrack: action.payload }
 
     case SET_ACTIVE_TRACKINDEX:
-      return { ...state, activeTrackIndex: action.payload }
+      if (!action.payload) {
+        console.log('Inget track index skickades med vid start')
+        return { ...state }
+      } else {
+        return { ...state, activeTrackIndex: action.payload }
+      }
 
     default:
       return state

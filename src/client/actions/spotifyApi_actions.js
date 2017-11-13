@@ -72,7 +72,7 @@ export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
 }
 
 export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  await spotifyApi.followPlaylist(userId, playlistId).then(data => {
+  await spotifyApi.followPlaylist(ownerId, playlistId).then(data => {
     console.log('Followed a playlist', data)
   },
   function(err) {

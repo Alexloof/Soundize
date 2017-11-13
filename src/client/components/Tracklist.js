@@ -63,18 +63,20 @@ class Tracklist extends Component {
   closeDeletePlaylistModal = () => {
     this.setState({ deleteModalClassName: 'modal are-you-sure' })
   }
-  followActivePlaylist = () => {
-    this.props.followPlaylist(
+  followActivePlaylist = async () => {
+    await this.props.followPlaylist(
       this.props.activeTracklist.owner.id,
       this.props.activeTracklist.id
     )
+    this.props.getPlaylists()
   }
-  unfollowActivePlaylist = () => {
+  unfollowActivePlaylist = async () => {
     this.closeUnfollowPlaylistModal()
-    this.props.unfollowPlaylist(
+    await this.props.unfollowPlaylist(
       this.props.activeTracklist.owner.id,
       this.props.activeTracklist.id
     )
+    this.props.getPlaylists()
   }
   deleteActivePlaylist = async () => {
     this.closeDeletePlaylistModal()

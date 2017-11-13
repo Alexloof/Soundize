@@ -27,6 +27,10 @@
     .latest-played {
       max-height: 220px;
       overflow-y: hidden;
+      .flip-move {
+        display: flex;
+        flex-direction: column-reverse;
+      }
       li {
         display: flex;
         flex-direction: row;

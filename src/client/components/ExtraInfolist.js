@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
 import FlipMove from 'react-flip-move'
+import { connect } from 'react-redux'
+
+import {
+  setActiveTrack,
+  removeTrackFromQueuedTracks
+} from '../actions/track_actions'
+import { playActiveTrack } from '../actions/player_actions'
 
 class ExtraInfolist extends Component {
-  startTrack = track => {
-    this.props.setActiveTrack(track)
-    this.props.startActiveTrack(track)
+  startTrack = async track => {
+    await this.props.setActiveTrack(track)
+    this.props.playActiveTrack()
   }
   renderArtists(artists) {
     return artists.map((artist, index) => {
@@ -86,9 +93,10 @@ class ExtraInfolist extends Component {
             duration={350}
             easing="ease-out"
             appearAnimation="accordionHorizontal"
+            className="flip-move"
           >
-            {this.props.latestPlayed.length > 0 ? (
-              this.renderLatestPlayed(this.props.latestPlayed)
+            {this.props.latestPlayedTracks ? (
+              this.renderLatestPlayed(this.props.latestPlayedTracks)
             ) : (
               <li style={{ marginLeft: '30px' }}>Inga spelade låtar...</li>
             )}
@@ -103,7 +111,7 @@ class ExtraInfolist extends Component {
             easing="ease-out"
             appearAnimation="accordionHorizontal"
           >
-            {this.props.queuedTracks.length > 0 ? (
+            {this.props.queuedTracks ? (
               this.renderQueuedTracks(this.props.queuedTracks)
             ) : (
               <li style={{ marginLeft: '30px' }}>Du har inga låtar på kö</li>
@@ -115,4 +123,15 @@ class ExtraInfolist extends Component {
   }
 }
 
-export default ExtraInfolist
+const mapStateToProps = ({ track }) => {
+  return {
+    queuedTracks: track.queuedTracks,
+    latestPlayedTracks: track.latestPlayedTracks
+  }
+}
+
+export default connect(mapStateToProps, {
+  setActiveTrack,
+  playActiveTrack,
+  removeTrackFromQueuedTracks
+})(ExtraInfolist)

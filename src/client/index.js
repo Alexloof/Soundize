@@ -6,6 +6,8 @@ import {
   Route,
   Redirect
 } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './store'
 
 import App from './components/App'
 import Home from './components/Home'
@@ -64,18 +66,24 @@ const RouteWithSubRoutes = route => (
 
 const Root = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route path="/app" component={RedirectLogin} />
-        {app_routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-        <Redirect from="/" to="/login" />
-        <Route component={() => <div>404</div>} />
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route path="/app" component={RedirectLogin} />
+          {app_routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
+          <Redirect from="/" to="/login" />
+          <Route component={() => <div>404</div>} />
+        </Switch>
+      </Router>
+    </Provider>
   )
+}
+
+if (module.hot) {
+  module.hot.accept()
 }
 
 ReactDOM.render(<Root />, document.querySelector('#root'))

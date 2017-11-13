@@ -116,14 +116,14 @@ class MusicBar extends Component {
     } else {
       className = 'music-bar'
     }
-    if (this.props.activeTrack) {
+    if (this.props.activeTrack.id) {
       return (
         <div className={className}>
           <div className="my-container">
             <div className="img-info">
               <img
                 src={
-                  this.props.activeTrack
+                  this.props.activeTrack.id
                     ? this.props.activeTrack.album.images[0].url
                     : null
                 }

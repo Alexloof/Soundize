@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import FlipMove from 'react-flip-move'
 import { connect } from 'react-redux'
 
-import { setActiveTrack } from '../actions/track_actions'
+import {
+  setActiveTrack,
+  removeTrackFromQueuedTracks
+} from '../actions/track_actions'
 import { playActiveTrack } from '../actions/player_actions'
 
 class ExtraInfolist extends Component {
@@ -127,6 +130,8 @@ const mapStateToProps = ({ track }) => {
   }
 }
 
-export default connect(mapStateToProps, { setActiveTrack, playActiveTrack })(
-  ExtraInfolist
-)
+export default connect(mapStateToProps, {
+  setActiveTrack,
+  playActiveTrack,
+  removeTrackFromQueuedTracks
+})(ExtraInfolist)

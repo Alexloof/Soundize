@@ -12,7 +12,10 @@ const INITIAL_STATE = {
   activeTracklist: null,
   playingTracklistId: null,
   loadingTracklist: false,
-  activeTrack: null,
+  activeTrack: {
+    id: null,
+    images: null
+  },
   activeTrackIndex: null,
   latestPlayedTracks: null,
   queuedTracks: null
@@ -38,7 +41,7 @@ export default function(state = INITIAL_STATE, action) {
 
     case REMOVE_TRACK_FROM_QUEUED_LIST:
       let newQueuedTracks = state.queuedTracks.filter((track, index) => {
-        return index !== indexToRemove
+        return index !== action.payload
       })
       return { ...state, queuedTracks: newQueuedTracks }
 

@@ -1,5 +1,20 @@
 import React, { Component } from 'react'
-import ReactPlayer from 'react-player'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import {
+  pauseActiveTrack,
+  playActiveTrack,
+  showMusicbar
+} from '../actions/player_actions'
+
+import {
+  setActiveTrack,
+  removeTrackFromPlaylist,
+  addTrackToPlaylist,
+  addTrackToQueuedList,
+  setActiveTracklist
+} from '../actions/track_actions'
 
 class Track extends Component {
   state = {
@@ -12,18 +27,18 @@ class Track extends Component {
       }
     }
   }
-  onSeekMouseDown = e => {
-    this.setState({ seeking: true })
-    this.props.onSeekMouseDown()
-  }
-  onSeekChange = e => {
-    this.setState({ played: parseFloat(e.target.value) })
-    this.props.onSeekChange(parseFloat(e.target.value))
-  }
-  onSeekMouseUp = e => {
-    this.setState({ seeking: false })
-    this.props.onSeekMouseUp(parseFloat(e.target.value))
-  }
+  // onSeekMouseDown = e => {
+  //   this.setState({ seeking: true })
+  //   this.props.onSeekMouseDown()
+  // }
+  // onSeekChange = e => {
+  //   this.setState({ played: parseFloat(e.target.value) })
+  //   this.props.onSeekChange(parseFloat(e.target.value))
+  // }
+  // onSeekMouseUp = e => {
+  //   this.setState({ seeking: false })
+  //   this.props.onSeekMouseUp(parseFloat(e.target.value))
+  // }
   renderArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
@@ -33,15 +48,17 @@ class Track extends Component {
       }
     })
   }
-  startTrack = track => {
-    this.props.setActiveTrack(track, this.props.index)
-    this.props.startActiveTrack(track)
+  addTrackToQueuedList = track => {
+    this.props.addTrackToQueuedList(track)
+    this.toggleDropdown()
   }
-  stopTrack = track => {
-    this.props.stopActiveTrack(track)
+  startTrack = async track => {
+    await this.props.setActiveTrack(track, this.props.index)
+    this.props.playActiveTrack()
+    this.props.showMusicbar()
   }
   setClassName = () => {
-    if (this.props.activeTrack) {
+    if (this.props.activeTrack.id === this.props.track.id) {
       return 'track active-track'
     } else {
       return 'track'
@@ -49,9 +66,10 @@ class Track extends Component {
   }
   renderStartStopButton = () => {
     if (this.props.track.preview_url !== null) {
-      return this.props.playing && this.props.activeTrack ? (
+      return this.props.isPlaying &&
+        this.props.activeTrack.id === this.props.track.id ? (
         <button
-          onClick={() => this.stopTrack(this.props.track)}
+          onClick={() => this.props.pauseActiveTrack()}
           className="button play-btn"
         >
           <span className="icon">
@@ -79,7 +97,7 @@ class Track extends Component {
     }
   }
   playedTimeColor = () => {
-    if (this.props.activeTrack) {
+    if (this.props.activeTrack.id === this.props.track.id) {
       return this.props.playedTime * 100 + '%'
     } else {
       return 0
@@ -108,13 +126,18 @@ class Track extends Component {
     this.props.addTrackToPlaylist(ownerId, playlistId, this.props.track.uri)
     this.toggleDropdown()
   }
-  addTrackToQueue = () => {
-    this.props.addTrackToQueue(this.props.track)
+
+  removeTrackFromPlaylist = async spotifyURI => {
+    await this.props.removeTrackFromPlaylist(
+      this.props.activeTracklist.owner.id,
+      this.props.activeTracklist.id,
+      spotifyURI
+    )
     this.toggleDropdown()
-  }
-  removeTrackFromPlaylist = spotifyURI => {
-    this.props.removeTrackFromPlaylist(spotifyURI)
-    this.toggleDropdown()
+    this.props.setActiveTracklist(
+      this.props.activeTracklist.owner.id,
+      this.props.activeTracklist.id
+    )
   }
   renderPlaylists = () => {
     if (this.props.privatePlaylists) {
@@ -140,9 +163,10 @@ class Track extends Component {
       <li className={this.setClassName()}>
         <div className="img-wrapper">
           <div className="img-click-play">
-            {this.props.playing && this.props.activeTrack ? (
+            {this.props.isPlaying &&
+            this.props.activeTrack.id === this.props.track.id ? (
               <button
-                onClick={() => this.stopTrack(this.props.track)}
+                onClick={() => this.props.pauseActiveTrack()}
                 className="button play-btn"
               >
                 <span className="icon">
@@ -175,6 +199,7 @@ class Track extends Component {
               </div>
               <div className="title-label">{this.props.track.name}</div>
             </div>
+
             <div className="track-section-higher-right-grp">
               <div className="popularity">
                 <div className="bg-pop-wrapper">{this.renderPopularity()}</div>
@@ -205,6 +230,7 @@ class Track extends Component {
                     <i className="fa fa-circle" aria-hidden="true" />
                   </div>
                 </div>
+
                 <div
                   ref={this.setWrapperRef}
                   className="dropdown-menu track-mini-meny"
@@ -226,13 +252,14 @@ class Track extends Component {
                     </div>
                     {this.props.track.preview_url !== null ? (
                       <div
-                        onClick={() => this.addTrackToQueue()}
+                        onClick={() =>
+                          this.addTrackToQueuedList(this.props.track)}
                         className="dropdown-item"
                       >
                         Lägg till i kön
                       </div>
                     ) : null}
-                    {this.props.myPlaylist ? (
+                    {this.props.isMyPlaylist ? (
                       <div
                         onClick={() =>
                           this.removeTrackFromPlaylist(this.props.track.uri)}
@@ -248,16 +275,14 @@ class Track extends Component {
           </div>
           <div className="track-section-lower">
             {this.renderStartStopButton()}
-            {!this.props.activeTrack ? (
-              <div className="time-counter hidden">
-                {(Math.round(30 * this.props.playedTime) / 100).toFixed(2)}
-              </div>
-            ) : (
+            {this.props.activeTrack.id === this.props.track.id ? (
               <div className="time-counter">
                 {(Math.round(30 * (this.props.playedTime || 0)) / 100).toFixed(
                   2
                 )}
               </div>
+            ) : (
+              <div className="time-counter hidden" />
             )}
             <div className="time-duration">
               {(Math.round(30) / 100).toFixed(2)}
@@ -268,17 +293,28 @@ class Track extends Component {
                 className="played-color"
               />
               <div className="track-color" />
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step="any"
-                value={this.props.playedTime || 0}
-                readOnly
-                /* onMouseDown={this.onSeekMouseDown}
+              {this.props.track.id === this.props.activeTrack.id ? (
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step="any"
+                  value={this.props.playedTime}
+                  readOnly
+                  /* onMouseDown={this.onSeekMouseDown}
                 onChange={this.onSeekChange}
                 onMouseUp={this.onSeekMouseUp} */
-              />
+                />
+              ) : (
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step="any"
+                  value={0}
+                  readOnly
+                />
+              )}
             </div>
           </div>
         </div>
@@ -287,4 +323,30 @@ class Track extends Component {
   }
 }
 
-export default Track
+Track.propTypes = {
+  track: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  isMyPlaylist: PropTypes.bool
+}
+
+const mapStateToProps = ({ playlist, track, player }) => {
+  return {
+    playlists: playlist.playlists,
+    isPlaying: player.isPlaying,
+    playedTime: player.playedTime,
+    activeTrack: track.activeTrack,
+    activeTracklist: track.activeTracklist,
+    privatePlaylists: playlist.privatePlaylists
+  }
+}
+
+export default connect(mapStateToProps, {
+  pauseActiveTrack,
+  playActiveTrack,
+  setActiveTrack,
+  removeTrackFromPlaylist,
+  addTrackToPlaylist,
+  addTrackToQueuedList,
+  showMusicbar,
+  setActiveTracklist
+})(Track)

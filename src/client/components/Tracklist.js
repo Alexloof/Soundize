@@ -109,13 +109,13 @@ class Tracklist extends Component {
     )
     this.props.playActiveTrack()
   }
-  removeTrackFromPlaylist = spotifyURI => {
-    this.props.removeTrackFromPlaylist(
-      this.props.activeTracklist.owner.id,
-      this.props.activeTracklist.id,
-      spotifyURI
-    )
-  }
+  // removeTrackFromPlaylist = spotifyURI => {
+  //   this.props.removeTrackFromPlaylist(
+  //     this.props.activeTracklist.owner.id,
+  //     this.props.activeTracklist.id,
+  //     spotifyURI
+  //   )
+  // }
   // setActiveTrack = (track, index) => {
   //   this.props.setActiveTrack(track, this.props.activeTracklist, index)
   // }
@@ -138,20 +138,20 @@ class Tracklist extends Component {
           <Track
             key={index}
             track={track.track}
-            setActiveTrack={this.setActiveTrack}
-            stopActiveTrack={this.props.stopActiveTrack}
-            startActiveTrack={this.props.startActiveTrack}
-            activeTrack={this.props.activeTrack}
-            playing={this.props.playing}
-            playedTime={this.props.playedTime}
-            onSeekMouseDown={this.props.onSeekMouseDown}
-            onSeekChange={this.props.onSeekChange}
-            onSeekMouseUp={this.props.onSeekMouseUp}
-            privatePlaylists={this.props.privatePlaylists}
-            addTrackToPlaylist={this.props.addTrackToPlaylist}
-            addTrackToQueue={this.props.addTrackToQueue}
-            myPlaylist={this.checkPlaylistOwner()}
-            removeTrackFromPlaylist={this.removeTrackFromPlaylist}
+            //setActiveTrack={this.setActiveTrack}
+            //stopActiveTrack={this.props.stopActiveTrack}
+            //startActiveTrack={this.props.startActiveTrack}
+            //activeTrack={this.props.activeTrack}
+            //playing={this.props.playing}
+            //playedTime={this.props.playedTime}
+            //onSeekMouseDown={this.props.onSeekMouseDown}
+            //onSeekChange={this.props.onSeekChange}
+            //onSeekMouseUp={this.props.onSeekMouseUp}
+            //privatePlaylists={this.props.privatePlaylists}
+            //addTrackToPlaylist={this.props.addTrackToPlaylist}
+            //addTrackToQueue={this.props.addTrackToQueue}
+            isMyPlaylist={this.checkPlaylistOwner()}
+            //removeTrackFromPlaylist={this.removeTrackFromPlaylist}
             index={index}
           />
         )
@@ -159,7 +159,6 @@ class Tracklist extends Component {
     })
   }
   render() {
-    console.log(this.props)
     return (
       <div className="menu ">
         <TracklistBannerScroll

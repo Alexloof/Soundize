@@ -42,8 +42,7 @@ export const addTrackToLatestPlayed = track => async dispatch => {
 export const addTrackToPlaylist = (
   ownerId,
   playlistId,
-  spotifyURI,
-  dispatch
+  spotifyURI
 ) => async dispatch => {
   await addTrackToPlaylistCall()
 }

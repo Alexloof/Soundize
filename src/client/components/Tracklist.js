@@ -40,11 +40,11 @@ class Tracklist extends Component {
       if (window.pageYOffset > 300) {
         if (scrolled === false) {
           scrolled = true
-          el[0].classList = [el[0].classList[0] + ' banner-show']
+          el[0].classList = [el[0].classList[0] + ' banner-show effect1']
         }
       } else {
         scrolled = false
-        el[0].classList = ['tracklist-scroll-banner']
+        el[0].classList = ['tracklist-scroll-banner effect1']
       }
     }, 700)
   }

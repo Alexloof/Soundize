@@ -1,25 +1,14 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
+import { connect } from 'react-redux'
+
+import { getActiveCategoryPlaylists } from '../actions/category_actions'
+
 class DiscoverCategory extends Component {
-  state = {
-    categoryPlaylists: []
-  }
   componentWillMount = () => {
     window.scroll(0, 0)
-    this.props.spotifyApi
-      .getPlaylistsForCategory(this.props.match.params.category, {
-        country: 'SE',
-        locale: 'sv_SE'
-      })
-      .then(
-        data => {
-          this.setState({ categoryPlaylists: data.body.playlists.items })
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
+    this.props.getActiveCategoryPlaylists(this.props.match.params.category)
   }
   navigateToPlaylist = (userId, playlistId) => {
     this.props.history.push(`/stream/discover/playlist/${userId}/${playlistId}`)
@@ -34,7 +23,7 @@ class DiscoverCategory extends Component {
           <i className="fa fa-chevron-left" aria-hidden="true" />
         </button>
         <ul className="menu-list discover-category-list">
-          {this.state.categoryPlaylists.map((playlist, index) => {
+          {this.props.categoryPlaylists.map((playlist, index) => {
             return (
               <li
                 onClick={() =>
@@ -55,4 +44,10 @@ class DiscoverCategory extends Component {
   }
 }
 
-export default withRouter(DiscoverCategory)
+const mapStateToProps = ({ categories }) => {
+  return { categoryPlaylists: categories.activeCategoryPlaylists }
+}
+
+export default withRouter(
+  connect(mapStateToProps, { getActiveCategoryPlaylists })(DiscoverCategory)
+)

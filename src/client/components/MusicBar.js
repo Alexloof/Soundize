@@ -48,7 +48,6 @@ class MusicBar extends Component {
       requestAnimationFrame(renderFrame)
       analyser.getByteFrequencyData(freqData)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      //console.log(freqData)
       ctx.fillStyle = '#ff4d1c'
       let bars = 100
       for (var i = 0; i < bars; i++) {
@@ -119,9 +118,7 @@ class MusicBar extends Component {
     )
   }
 
-  //TODO PLAY NEXT TRACK
   onEnded = () => {
-    console.log('ended')
     if (!this.state.loop) {
       this.playNextTrack()
     }
@@ -149,6 +146,16 @@ class MusicBar extends Component {
         )
         this.props.playActiveTrack()
       }
+    }
+  }
+  playPreviousTrack = async () => {
+    let nextTrackPlay
+    if (this.props.latestPlayedTracks.length > 1) {
+      nextTrackPlay = this.props.latestPlayedTracks[
+        this.props.latestPlayedTracks.length - 2
+      ]
+      await this.props.setActiveTrack(nextTrackPlay)
+      this.props.playActiveTrack()
     }
   }
   playedTimeColor = () => {
@@ -184,7 +191,6 @@ class MusicBar extends Component {
                   : null
               }
             />
-
             <div className="track-info">
               <p className="artist-label">
                 {this.renderArtists(this.props.activeTrack.artists)}
@@ -194,7 +200,7 @@ class MusicBar extends Component {
           </div>
           <div className="track-controls">
             <button
-              onClick={() => this.props.playPreviousTrack()}
+              onClick={() => this.playPreviousTrack()}
               className="button step-change-btn"
             >
               <span className="icon">
@@ -309,7 +315,8 @@ const mapStateToProps = ({ track, player }) => {
     showMusicbar: player.showMusicbar,
     queuedTracklist: track.queuedTracks,
     playingTracklist: track.playingTracklist,
-    activeTrackIndex: track.activeTrackIndex
+    activeTrackIndex: track.activeTrackIndex,
+    latestPlayedTracks: track.latestPlayedTracks
   }
 }
 

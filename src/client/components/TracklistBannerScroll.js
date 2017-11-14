@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 class TracklistBannerScroll extends Component {
   render() {
     return (
-      <div className="tracklist-scroll-banner">
+      <div className="tracklist-scroll-banner effect1">
         <div className="tracklist-name title">
           <div onClick={() => window.scroll(0, 0)}>
             {this.props.activeTracklist.name}

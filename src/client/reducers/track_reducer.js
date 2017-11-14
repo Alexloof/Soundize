@@ -21,7 +21,7 @@ const INITIAL_STATE = {
     name: null
   },
   activeTrackIndex: 0,
-  latestPlayedTracks: null,
+  latestPlayedTracks: [],
   queuedTracks: []
 }
 
@@ -50,7 +50,7 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, queuedTracks: newQueuedTracks }
 
     case ADD_TRACK_TO_LATEST_PLAYED:
-      if (state.latestPlayedTracks) {
+      if (state.latestPlayedTracks.length > 0) {
         if (
           state.latestPlayedTracks[state.latestPlayedTracks.length - 1].id !==
           action.payload.id

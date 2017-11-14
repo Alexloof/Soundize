@@ -137,3 +137,41 @@ export const removeTrackFromPlaylistCall = async (
       }
     )
 }
+
+// CATEGORIES
+
+export const getCategoriesCall = async dispatch => {
+  return spotifyApi
+    .getCategories({
+      offset: 0,
+      country: 'SE',
+      locale: 'sv_SE'
+    })
+    .then(
+      data => {
+        return data.body.categories.items
+      },
+      function(err) {
+        console.log('Something went wrong getting categories!', err)
+      }
+    )
+}
+
+export const getActiveCategoryPlaylistsCall = async (category, dispatch) => {
+  return spotifyApi
+    .getPlaylistsForCategory(category, {
+      country: 'SE',
+      locale: 'sv_SE'
+    })
+    .then(
+      data => {
+        return data.body.playlists.items
+      },
+      function(err) {
+        console.log(
+          'Something went wrong getting playlists for a category!',
+          err
+        )
+      }
+    )
+}

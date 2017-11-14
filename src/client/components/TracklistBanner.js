@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 class TracklistBanner extends Component {
   render() {
     return (
-      <div className={'tracklist-banner'}>
+      <div className="tracklist-banner effect8">
         <div className="tracklist-banner-info">
           <div className="large-info">
             <p className="menu-label">Spellista</p>

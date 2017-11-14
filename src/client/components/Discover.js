@@ -1,26 +1,13 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { getCategories } from '../actions/category_actions'
 
 class Discover extends Component {
-  state = {
-    categories: []
-  }
   componentWillMount = () => {
     window.scroll(0, 0)
-    this.props.spotifyApi
-      .getCategories({
-        offset: 0,
-        country: 'SE',
-        locale: 'sv_SE'
-      })
-      .then(
-        data => {
-          this.setState({ categories: data.body.categories.items })
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
+    this.props.getCategories()
   }
   navigateToCategory = id => {
     this.props.history.push('/stream/discover/' + id)
@@ -29,7 +16,7 @@ class Discover extends Component {
     return (
       <div className="discover-component">
         <ul className="menu-list discover-list">
-          {this.state.categories.map((category, index) => {
+          {this.props.categories.map((category, index) => {
             return (
               <li
                 onClick={() => this.navigateToCategory(category.id)}
@@ -47,4 +34,8 @@ class Discover extends Component {
   }
 }
 
-export default withRouter(Discover)
+const mapStateToProps = ({ categories }) => {
+  return { categories: categories.categories }
+}
+
+export default withRouter(connect(mapStateToProps, { getCategories })(Discover))

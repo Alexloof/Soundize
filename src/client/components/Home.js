@@ -55,15 +55,7 @@ class Home extends Component {
             )}
           </div>
           <div className="column extra-infolist">
-            <ExtraInfolist
-              //latestPlayed={this.props.latestPlayed}
-              startActiveTrack={this.props.startActiveTrack}
-              setActiveTrack={this.props.setActiveTrack}
-              //queuedTracks={this.props.queuedTracks}
-              removeTrackFromQueuedTracks={
-                this.props.removeTrackFromQueuedTracks
-              }
-            />
+            <ExtraInfolist />
           </div>
         </div>
         <div className={this.state.modalClassName}>

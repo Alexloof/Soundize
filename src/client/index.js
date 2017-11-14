@@ -22,31 +22,31 @@ import './stylesheets/main.scss'
 
 const app_routes = [
   {
-    path: '/stream',
+    //path: '/stream',
     component: App,
     routes: [
       {
-        path: '/stream/me',
+        path: '/me',
         component: Home,
-        exact: false
+        exact: true
       },
       {
-        path: '/stream/discover',
+        path: '/discover',
         component: Discover,
         exact: true
       },
       {
-        path: '/stream/discover/:category',
+        path: '/category/:category',
         component: DiscoverCategory,
-        exact: false
+        exact: true
       },
       {
-        path: '/stream/discover/playlist/:user/:id',
+        path: '/playlist/:user/:id',
         component: PlaylistDetail,
-        exact: false
+        exact: true
       },
       {
-        path: '/stream/search',
+        path: '/search',
         component: Search,
         exact: false
       }
@@ -71,10 +71,11 @@ const Root = () => {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route path="/app" component={RedirectLogin} />
+          <Redirect from="/" to="/login" />
           {app_routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
-          <Redirect from="/" to="/login" />
+
           <Route component={() => <div>404</div>} />
         </Switch>
       </Router>

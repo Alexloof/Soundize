@@ -8,7 +8,7 @@ class Nav extends Component {
   }
   onLogout = () => {
     localStorage.removeItem('token')
-    this.props.history.replace('/')
+    this.props.history.replace('/login')
   }
   onInputChange = e => {
     this.setState({ searchText: e.target.value })
@@ -17,7 +17,7 @@ class Nav extends Component {
     e.preventDefault()
     if (this.state.searchText.length > 0) {
       this.props.history.push({
-        pathname: '/stream/search',
+        pathname: '/search',
         search: `?q=${this.state.searchText.toLowerCase()}`,
         state: { id: this.state.searchText.toLowerCase() }
       })
@@ -63,14 +63,14 @@ class Nav extends Component {
           <div className="navbar-start">
             <NavLink
               className="navbar-item "
-              to="/stream/me"
+              to="/me"
               activeStyle={{ color: '#ff4d1c' }}
             >
               Min Musik
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/stream/discover"
+              to="/discover"
               activeStyle={{ color: '#ff4d1c' }}
             >
               Utforska

@@ -1,22 +1,29 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
+import { connect } from 'react-redux'
+
+import { setActivePlaylist } from '../actions/playlist_actions'
+import { setActiveTracklist } from '../actions/track_actions'
+
 import Tracklist from './Tracklist'
 import Loading from './general/Loading'
 
 class PlaylistDetail extends Component {
   componentWillMount() {
-    this.props.onClickPlaylist(
+    window.scroll(0, 0)
+    this.setActivePlaylist(
       this.props.match.params.user,
       this.props.match.params.id
     )
   }
-  renderTracklistWithProps = props => {
-    if (props.tracklist.id === props.match.params.id) {
-      return <Tracklist {...props} />
-    } else {
-      return <Loading />
-    }
+  setActivePlaylist = async (ownerId, playlistId) => {
+    this.props.setActivePlaylist(playlistId)
+    await this.props.setActiveTracklist(ownerId, playlistId)
+  }
+
+  renderTracklist = () => {
+    return <Tracklist />
   }
 
   render() {
@@ -28,12 +35,18 @@ class PlaylistDetail extends Component {
         >
           <i className="fa fa-chevron-left" aria-hidden="true" />
         </button>
-        <div className="column is-6 tracklist">
-          {this.renderTracklistWithProps(this.props)}
-        </div>
+        <div className="column is-6 tracklist">{this.renderTracklist()}</div>
       </div>
     )
   }
 }
 
-export default withRouter(PlaylistDetail)
+const mapStateToProps = ({ track }) => {
+  return { activeTracklist: track.activeTracklist }
+}
+
+export default withRouter(
+  connect(mapStateToProps, { setActiveTracklist, setActivePlaylist })(
+    PlaylistDetail
+  )
+)

@@ -48,8 +48,6 @@ class Home extends Component {
           <div className="column is-6 tracklist">
             {!this.props.activeTracklist ? (
               <div>Välkommen Tillbaka!</div>
-            ) : this.props.loadingPlaylist ? (
-              <Loading />
             ) : (
               <Tracklist />
             )}

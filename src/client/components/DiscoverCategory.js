@@ -11,7 +11,7 @@ class DiscoverCategory extends Component {
     this.props.getActiveCategoryPlaylists(this.props.match.params.category)
   }
   navigateToPlaylist = (userId, playlistId) => {
-    this.props.history.push(`/stream/discover/playlist/${userId}/${playlistId}`)
+    this.props.history.push(`/playlist/${userId}/${playlistId}`)
   }
   render() {
     return (

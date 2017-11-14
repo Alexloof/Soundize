@@ -15,12 +15,12 @@ class Redirect extends Component {
       if (newHash) {
         localStorage.setItem('token', newHash)
         console.log('SUCCESS!')
-        this.props.history.push('/stream/me')
+        this.props.history.push('/me')
       } else {
         this.props.history.push('/login')
       }
     } else {
-      this.props.history.push('/stream/me')
+      this.props.history.push('/me')
     }
   }
   render() {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { getCurrentUser, setupAuthToAPI } from '../actions/user_actions'
 
+import RequireAuth from './general/RequireAuth'
 import Nav from './Nav'
 import MusicBar from './MusicBar'
 import Home from './Home'
@@ -39,4 +40,6 @@ const mapStateToProps = ({ user }) => {
   return { user: user.user }
 }
 
-export default connect(mapStateToProps, { getCurrentUser, setupAuthToAPI })(App)
+export default connect(mapStateToProps, { getCurrentUser, setupAuthToAPI })(
+  RequireAuth(App)
+)

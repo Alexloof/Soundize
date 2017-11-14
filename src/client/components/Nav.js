@@ -63,7 +63,8 @@ class Nav extends Component {
           <div className="navbar-start">
             <NavLink
               className="navbar-item "
-              to="/me"
+              to="/"
+              exact
               activeStyle={{ color: '#ff4d1c' }}
             >
               Min Musik

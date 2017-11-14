@@ -22,11 +22,11 @@ import './stylesheets/main.scss'
 
 const app_routes = [
   {
-    //path: '/stream',
     component: App,
+    exact: false,
     routes: [
       {
-        path: '/me',
+        path: '/',
         component: Home,
         exact: true
       },
@@ -49,6 +49,10 @@ const app_routes = [
         path: '/search',
         component: Search,
         exact: false
+      },
+      {
+        path: '*',
+        component: () => <div>404</div>
       }
     ]
   }
@@ -57,6 +61,7 @@ const app_routes = [
 const RouteWithSubRoutes = route => (
   <Route
     path={route.path}
+    exact={route.exact}
     render={props => (
       // pass the sub-routes down to keep nesting
       <route.component {...props} routes={route.routes} />
@@ -71,11 +76,9 @@ const Root = () => {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route path="/app" component={RedirectLogin} />
-          <Redirect from="/" to="/login" />
           {app_routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
-
           <Route component={() => <div>404</div>} />
         </Switch>
       </Router>

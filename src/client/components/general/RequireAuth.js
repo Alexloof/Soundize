@@ -6,6 +6,7 @@ export default ChildComponent => {
   class RequireAuth extends Component {
     render() {
       if (!localStorage.getItem('token')) {
+        console.log('Not authorized')
         return <Redirect to="/login" />
       } else {
         return <ChildComponent {...this.props} />

@@ -24,7 +24,7 @@ class App extends Component {
         {this.props.routes.map((route, i) => (
           <Route
             key={i}
-            exact
+            exact={route.exact}
             path={route.path}
             render={props => <route.component routes={route.routes} />}
           />

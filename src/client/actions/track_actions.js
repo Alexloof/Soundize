@@ -62,3 +62,7 @@ export const setActiveTrack = (track, trackIndex) => async dispatch => {
   dispatch({ type: ZERO_PLAYED_TIME })
   dispatch(addTrackToLatestPlayed(track))
 }
+
+export const setActiveTrackindex = trackIndex => async dispatch => {
+  dispatch({ type: SET_ACTIVE_TRACKINDEX, payload: trackIndex })
+}

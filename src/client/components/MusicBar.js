@@ -6,7 +6,8 @@ import AudioPlayer from './AudioPlayer'
 
 import {
   removeTrackFromQueuedTracks,
-  setActiveTrack
+  setActiveTrack,
+  setActiveTrackindex
 } from '../actions/track_actions'
 
 import {
@@ -136,11 +137,18 @@ class MusicBar extends Component {
       nextTrack = this.props.playingTracklist.tracks.items[
         this.props.activeTrackIndex + 1
       ].track
-      await this.props.setActiveTrack(
-        nextTrack,
-        this.props.activeTrackIndex + 1
-      )
-      this.props.playActiveTrack()
+      if (!nextTrack.preview_url) {
+        await this.props.setActiveTrackindex(this.props.activeTrackIndex + 1)
+        setTimeout(() => {
+          this.playNextTrack()
+        }, 100)
+      } else {
+        await this.props.setActiveTrack(
+          nextTrack,
+          this.props.activeTrackIndex + 1
+        )
+        this.props.playActiveTrack()
+      }
     }
   }
   playedTimeColor = () => {
@@ -197,7 +205,7 @@ class MusicBar extends Component {
             {this.renderPlayPauseButton()}
 
             <button
-              onClick={() => this.props.playNextTrack()}
+              onClick={() => this.playNextTrack()}
               className="button step-change-btn"
             >
               <span className="icon">
@@ -315,5 +323,6 @@ export default connect(mapStateToProps, {
   playActiveTrack,
   zeroPlayedTime,
   removeTrackFromQueuedTracks,
-  setActiveTrack
+  setActiveTrack,
+  setActiveTrackindex
 })(MusicBar)

@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactPlayer from 'react-player'
 import screenfull from 'screenfull'
 
 import AudioPlayer from './AudioPlayer'
+
+import {
+  removeTrackFromQueuedTracks,
+  setActiveTrack
+} from '../actions/track_actions'
 
 import {
   toggleStartPauseTrack,
@@ -18,7 +22,7 @@ import {
 
 class MusicBar extends Component {
   state = {
-    duration: 0,
+    duration: 30,
     muted: false,
     volume: 0.5,
     loop: false
@@ -33,8 +37,6 @@ class MusicBar extends Component {
     let canvas = this.refs.analyzerCanvas
     let ctx = canvas.getContext('2d')
     var audio = document.getElementById('audioPlayer')
-    // var audio = this.player
-    console.log(audio)
     let audioSrc = context.createMediaElementSource(audio)
     audioSrc.connect(analyser)
     audioSrc.connect(context.destination)
@@ -66,10 +68,10 @@ class MusicBar extends Component {
       }
     })
   }
-  onProgress = state => {
+  onProgress = time => {
     // We only want to update time slider if we are not currently seeking
     if (!this.props.isSeeking) {
-      this.props.setPlayedTime(state.played)
+      this.props.setPlayedTime(time)
     }
   }
   startStopTrack = () => {
@@ -83,7 +85,8 @@ class MusicBar extends Component {
     this.props.changeSeek(parseFloat(e.target.value))
   }
   onSeekMouseUp = e => {
-    this.player.seekTo(parseFloat(e.target.value))
+    const audioPlayer = document.getElementById('audioPlayer')
+    audioPlayer.currentTime = parseFloat(e.target.value * this.state.duration)
     this.props.stopSeek()
     this.props.changeSeek(parseFloat(e.target.value))
   }
@@ -116,12 +119,28 @@ class MusicBar extends Component {
   }
 
   //TODO PLAY NEXT TRACK
-  trackEnded = () => {
-    if (this.state.loop) {
-      this.props.zeroPlayedTime()
+  onEnded = () => {
+    console.log('ended')
+    if (!this.state.loop) {
+      this.playNextTrack()
+    }
+  }
+  playNextTrack = async () => {
+    let nextTrack
+    if (this.props.queuedTracklist.length > 0) {
+      nextTrack = this.props.queuedTracklist[0]
+      this.props.removeTrackFromQueuedTracks(0)
+      await this.props.setActiveTrack(nextTrack)
       this.props.playActiveTrack()
     } else {
-      this.props.playNextTrack()
+      nextTrack = this.props.playingTracklist.tracks.items[
+        this.props.activeTrackIndex + 1
+      ].track
+      await this.props.setActiveTrack(
+        nextTrack,
+        this.props.activeTrackIndex + 1
+      )
+      this.props.playActiveTrack()
     }
   }
   playedTimeColor = () => {
@@ -198,6 +217,11 @@ class MusicBar extends Component {
               </span>
             </button>
           </div>
+          <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
+            <span className="icon">
+              <i className="fa fa-expand" aria-hidden="true" />
+            </span>
+          </div>
           <div className="track-running-wrapper">
             <div className="time-counter">
               {(Math.round(this.state.duration * this.props.playedTime) / 100
@@ -214,7 +238,6 @@ class MusicBar extends Component {
                 min={0}
                 max={1}
                 step="any"
-                //ref={input => (input = this.props.playedTime)}
                 value={this.props.playedTime}
                 onMouseDown={this.onSeekMouseDown}
                 onChange={this.onSeekChange}
@@ -251,54 +274,19 @@ class MusicBar extends Component {
               />
             </div>
           </div>
-          <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
-            <span className="icon">
-              <i className="fa fa-expand" aria-hidden="true" />
-            </span>
-          </div>
-
-          {/* <audio
-              ref="audio"
-              id="audioElement"
-              autoPlay={false}
-              crossOrigin="anonymous"
-              src={
-                this.props.activeTrack.preview_url
-                  ? this.props.activeTrack.preview_url
-                  : null
-              }
-            /> */}
 
           <AudioPlayer
             isPlaying={this.props.isPlaying}
             muted={this.state.muted}
             volume={this.state.volume}
             url={this.props.activeTrack.preview_url}
+            onEnded={this.onEnded}
+            onProgress={this.onProgress}
+            loop={this.state.loop}
           />
 
           <canvas ref="analyzerCanvas" id="analyzer" />
         </div>
-        {/* <ReactPlayer
-            ref={player => {
-              this.player = player
-            }}
-            width={1}
-            height={1}
-            key={this.props.activeTrack.id}
-            playing={this.props.isPlaying}
-            url={
-              this.props.activeTrack.preview_url
-                ? this.props.activeTrack.preview_url
-                : null
-            }
-            onError={e => console.log('error', e)}
-            onDuration={duration => this.setState({ duration })}
-            onEnded={() => this.trackEnded()}
-            onProgress={this.onProgress}
-            progressFrequency={500}
-            volume={this.state.volume}
-            muted={this.state.muted}
-          /> */}
       </div>
     )
   }
@@ -310,7 +298,10 @@ const mapStateToProps = ({ track, player }) => {
     isPlaying: player.isPlaying,
     isSeeking: player.isSeeking,
     playedTime: player.playedTime,
-    showMusicbar: player.showMusicbar
+    showMusicbar: player.showMusicbar,
+    queuedTracklist: track.queuedTracks,
+    playingTracklist: track.playingTracklist,
+    activeTrackIndex: track.activeTrackIndex
   }
 }
 
@@ -322,5 +313,7 @@ export default connect(mapStateToProps, {
   changeSeek,
   pauseActiveTrack,
   playActiveTrack,
-  zeroPlayedTime
+  zeroPlayedTime,
+  removeTrackFromQueuedTracks,
+  setActiveTrack
 })(MusicBar)

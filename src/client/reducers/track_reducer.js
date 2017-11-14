@@ -10,7 +10,9 @@ import {
 
 const INITIAL_STATE = {
   activeTracklist: null,
-  playingTracklistId: null,
+  playingTracklist: {
+    id: ''
+  },
   loadingTracklist: false,
   activeTrack: {
     id: null,
@@ -18,9 +20,9 @@ const INITIAL_STATE = {
     artists: [],
     name: null
   },
-  activeTrackIndex: null,
+  activeTrackIndex: 0,
   latestPlayedTracks: null,
-  queuedTracks: null
+  queuedTracks: []
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -29,7 +31,7 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, activeTracklist: action.payload }
 
     case SET_PLAYING_TRACKLIST:
-      return { ...state, playingTracklistId: action.payload }
+      return { ...state, playingTracklist: action.payload }
 
     case ADD_TRACK_TO_QUEUED_LIST:
       if (state.queuedTracks) {
@@ -68,7 +70,7 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, activeTrack: action.payload }
 
     case SET_ACTIVE_TRACKINDEX:
-      if (!action.payload) {
+      if (!action.payload && action.payload !== 0) {
         console.log('Inget track index skickades med vid start')
         return { ...state }
       } else {

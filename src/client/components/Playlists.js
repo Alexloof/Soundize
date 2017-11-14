@@ -30,7 +30,7 @@ class Playlists extends Component {
 
             <span className="playlist-name">{playlist.name}</span>
             {this.props.isPlaying &&
-            this.props.playingPlaylistId === playlist.id ? (
+            this.props.playingPlaylist.id === playlist.id ? (
               <i className="fa fa-volume-up" aria-hidden="true" />
             ) : null}
             <span className="tooltiptext">
@@ -84,7 +84,7 @@ const mapStateToProps = ({ user, playlist, track, player }) => {
     playlists: playlist.playlists,
     featuredPlaylists: playlist.featuredPlaylists,
     activePlaylistId: playlist.activePlaylistId,
-    playingPlaylistId: track.playingTracklistId,
+    playingPlaylist: track.playingTracklist,
     isPlaying: player.isPlaying
   }
 }

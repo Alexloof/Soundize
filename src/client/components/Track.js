@@ -13,7 +13,8 @@ import {
   removeTrackFromPlaylist,
   addTrackToPlaylist,
   addTrackToQueuedList,
-  setActiveTracklist
+  setActiveTracklist,
+  setPlayingTracklist
 } from '../actions/track_actions'
 
 class Track extends Component {
@@ -45,6 +46,7 @@ class Track extends Component {
       this.props.playActiveTrack()
       this.props.showMusicbar()
     } else {
+      this.props.setPlayingTracklist(this.props.activeTracklist)
       await this.props.setActiveTrack(track, this.props.index)
       this.props.playActiveTrack()
       this.props.showMusicbar()
@@ -347,5 +349,6 @@ export default connect(mapStateToProps, {
   addTrackToPlaylist,
   addTrackToQueuedList,
   showMusicbar,
-  setActiveTracklist
+  setActiveTracklist,
+  setPlayingTracklist
 })(Track)

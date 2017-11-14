@@ -102,7 +102,7 @@ class Tracklist extends Component {
   }
   playActiveTracklist = async () => {
     this.props.showMusicbar()
-    this.props.setPlayingTracklist(this.props.activeTracklist.id)
+    this.props.setPlayingTracklist(this.props.activeTracklist)
     await this.props.setActiveTrack(
       this.props.activeTracklist.tracks.items[0].track,
       0

@@ -11,7 +11,7 @@
   transition: 0.5s all ease;
   z-index: 9;
   .my-container {
-    padding: 0 10%;
+    padding: 0 3%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -20,8 +20,9 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-right: 3%;
-      width: 18%;
+      margin-right: 4%;
+      min-width: 20%;
+      max-width: 20%;
       img {
         width: $nav-height - 10px;
         height: $nav-height - 10px;
@@ -46,7 +47,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-right: 3%;
+      margin-right: 2%;
       .step-change-btn {
         height: 30px;
         width: 30px;
@@ -127,7 +128,7 @@
         margin-right: 10px;
       }
       .volume-wrapper {
-        width: 40%;
+        width: 50px;
         position: relative;
         .volume-amount-color {
           height: 2px;
@@ -188,13 +189,16 @@
       }
     }
     .fullscreen {
+      margin-right: 2%;
       .fa {
         font-size: 18px;
         cursor: pointer;
       }
     }
-    video {
-      display: none !important;
+    #analyzer {
+      margin-left: 2%;
+      width: 22%;
+      height: 65px;
     }
     input[type='range'] {
       -webkit-appearance: none;

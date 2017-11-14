@@ -139,7 +139,6 @@ export const removeTrackFromPlaylistCall = async (
 }
 
 // CATEGORIES
-
 export const getCategoriesCall = async dispatch => {
   return spotifyApi
     .getCategories({
@@ -174,4 +173,32 @@ export const getActiveCategoryPlaylistsCall = async (category, dispatch) => {
         )
       }
     )
+}
+
+// SEARCH
+export const getSearchedTracksCall = async (word, dispatch) => {
+  return spotifyApi.searchTracks(word).then(data => {
+    return data.body.tracks.items
+  },
+  function(err) {
+    console.log('Something went wrong when searching for', word, err)
+  })
+}
+
+export const getSearchedArtistsCall = async (word, dispatch) => {
+  return spotifyApi.searchArtists(word).then(data => {
+    return data.body.artists.items
+  },
+  function(err) {
+    console.log('Something went wrong when searching for', word, err)
+  })
+}
+
+export const getSearchedPlaylistsCall = async (word, dispatch) => {
+  return spotifyApi.searchPlaylists(word).then(data => {
+    return data.body.playlists.items
+  },
+  function(err) {
+    console.log('Something went wrong when searching for', word, err)
+  })
 }

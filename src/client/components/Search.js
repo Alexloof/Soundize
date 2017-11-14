@@ -1,116 +1,42 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import {
+  getSearchedArtists,
+  getSearchedTracks,
+  getSearchedPlaylists
+} from '../actions/search_actions'
 
 import Track from './Track'
 import Loading from './general/Loading'
 
 class Search extends Component {
   state = {
-    searchedTracks: [],
-    searchedArtists: [],
-    searchedPlaylists: [],
-    loadingTracks: true,
-    loadingArtists: true,
-    loadingPlaylists: true
+    loadingTracks: false,
+    loadingArtists: false,
+    loadingPlaylists: false
   }
+
   componentWillMount() {
     window.scroll(0, 0)
-    this.props.spotifyApi
-      .searchTracks(this.props.location.search.slice(3))
-      .then(
-        data => {
-          this.setState({
-            searchedTracks: data.body.tracks.items,
-            loadingTracks: false
-          })
-        },
-        function(err) {
-          console.error(err)
-        }
-      )
-    this.props.spotifyApi
-      .searchArtists(this.props.location.search.slice(3))
-      .then(
-        data => {
-          this.setState({
-            searchedArtists: data.body.artists.items,
-            loadingArtists: false
-          })
-        },
-        function(err) {
-          console.error(err)
-        }
-      )
-    this.props.spotifyApi
-      .searchPlaylists(this.props.location.search.slice(3))
-      .then(
-        data => {
-          this.setState({
-            searchedPlaylists: data.body.playlists.items,
-            loadingPlaylists: false
-          })
-        },
-        function(err) {
-          console.log('Something went wrong!', err)
-        }
-      )
+    this.makeSearch(this.props)
+  }
+  makeSearch = props => {
+    this.props.getSearchedArtists(props.location.search.slice(3))
+    this.props.getSearchedTracks(props.location.search.slice(3))
+    this.props.getSearchedPlaylists(props.location.search.slice(3))
   }
   componentWillUpdate(nextProps) {
     if (
       nextProps.location.search.slice(3) !== this.props.location.search.slice(3)
     ) {
-      this.setState({
-        loadingArtists: true,
-        loadingPlaylists: true,
-        loadingTracks: true
-      })
-      this.props.spotifyApi
-        .searchTracks(nextProps.location.search.slice(3))
-        .then(
-          data => {
-            this.setState({
-              searchedTracks: data.body.tracks.items,
-              loadingTracks: false
-            })
-          },
-          function(err) {
-            console.error(err)
-          }
-        )
-      this.props.spotifyApi
-        .searchArtists(nextProps.location.search.slice(3))
-        .then(
-          data => {
-            this.setState({
-              searchedArtists: data.body.artists.items,
-              loadingArtists: false
-            })
-          },
-          function(err) {
-            console.error(err)
-          }
-        )
-      this.props.spotifyApi
-        .searchPlaylists(nextProps.location.search.slice(3))
-        .then(
-          data => {
-            this.setState({
-              searchedPlaylists: data.body.playlists.items,
-              loadingPlaylists: false
-            })
-          },
-          function(err) {
-            console.log('Something went wrong!', err)
-          }
-        )
+      this.makeSearch(nextProps)
       window.scroll(0, 0)
     }
   }
-  setActiveTrack = (track, index) => {
-    this.props.setActiveTrack(track, this.state.searchedTracks, index)
-  }
   renderArtists = () => {
-    return this.state.searchedArtists.map((artist, index) => {
+    return this.props.searchedArtists.map((artist, index) => {
       return (
         <li key={index} className="artist-result">
           <img
@@ -126,52 +52,14 @@ class Search extends Component {
     })
   }
   renderTracks = () => {
-    return this.state.searchedTracks.map((track, index) => {
+    return this.props.searchedTracks.map((track, index) => {
       if (track !== null) {
-        if (track.id === this.props.activeTrack.id) {
-          return (
-            <Track
-              key={index}
-              track={track}
-              setActiveTrack={this.setActiveTrack}
-              stopActiveTrack={this.props.stopActiveTrack}
-              startActiveTrack={this.props.startActiveTrack}
-              activeTrack={this.props.activeTrack}
-              playing={this.props.playing}
-              playedTime={this.props.playedTime}
-              onSeekMouseDown={this.props.onSeekMouseDown}
-              onSeekChange={this.props.onSeekChange}
-              onSeekMouseUp={this.props.onSeekMouseUp}
-              privatePlaylists={this.props.privatePlaylists}
-              addTrackToPlaylist={this.props.addTrackToPlaylist}
-              addTrackToQueue={this.props.addTrackToQueue}
-              //myPlaylist={this.checkPlaylistOwner()}
-              removeTrackFromPlaylist={this.removeTrackFromPlaylist}
-              index={index}
-            />
-          )
-        } else {
-          return (
-            <Track
-              key={index}
-              track={track}
-              setActiveTrack={this.setActiveTrack}
-              stopActiveTrack={this.props.stopActiveTrack}
-              startActiveTrack={this.props.startActiveTrack}
-              privatePlaylists={this.props.privatePlaylists}
-              addTrackToPlaylist={this.props.addTrackToPlaylist}
-              addTrackToQueue={this.props.addTrackToQueue}
-              //myPlaylist={this.checkPlaylistOwner()}
-              removeTrackFromPlaylist={this.removeTrackFromPlaylist}
-              index={index}
-            />
-          )
-        }
+        return <Track key={index} track={track} index={index} />
       }
     })
   }
   renderPlaylists = () => {
-    return this.state.searchedPlaylists.map((playlist, index) => {
+    return this.props.searchedPlaylists.map((playlist, index) => {
       return (
         <li key={index} className="playlist-result">
           <img
@@ -202,7 +90,7 @@ class Search extends Component {
             <h2>Artister</h2>
             <ul className="menu-list artist-list">
               {!this.state.loadingArtists ? (
-                this.state.searchedArtists.length > 0 ? (
+                this.props.searchedArtists.length > 0 ? (
                   this.renderArtists()
                 ) : (
                   <li>Inga matchande artister</li>
@@ -216,7 +104,7 @@ class Search extends Component {
             <h2>Låtar</h2>
             <ul className="menu-list track-list">
               {!this.state.loadingTracks ? (
-                this.state.searchedTracks.length > 0 ? (
+                this.props.searchedTracks.length > 0 ? (
                   this.renderTracks()
                 ) : (
                   <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
@@ -230,7 +118,7 @@ class Search extends Component {
             <h2>Spellistor</h2>
             <ul className="menu-list playlist-list">
               {!this.state.loadingPlaylists ? (
-                this.state.searchedPlaylists.length > 0 ? (
+                this.props.searchedPlaylists.length > 0 ? (
                   this.renderPlaylists()
                 ) : (
                   <li>Inga matchande spellistor</li>
@@ -246,4 +134,18 @@ class Search extends Component {
   }
 }
 
-export default withRouter(Search)
+const mapStateToProps = ({ search }) => {
+  return {
+    searchedArtists: search.searchedArtists,
+    searchedPlaylists: search.searchedPlaylists,
+    searchedTracks: search.searchedTracks
+  }
+}
+
+export default withRouter(
+  connect(mapStateToProps, {
+    getSearchedArtists,
+    getSearchedTracks,
+    getSearchedPlaylists
+  })(Search)
+)

@@ -10,7 +10,7 @@ class Discover extends Component {
     this.props.getCategories()
   }
   navigateToCategory = id => {
-    this.props.history.push('/category/' + id)
+    this.props.history.push('/discover/' + id)
   }
   render() {
     return (

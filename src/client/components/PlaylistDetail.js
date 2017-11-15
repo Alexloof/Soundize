@@ -10,7 +10,7 @@ import Tracklist from './Tracklist'
 import Loading from './general/Loading'
 
 class PlaylistDetail extends Component {
-  componentWillMount() {
+  componentDidMount() {
     window.scroll(0, 0)
     this.setActivePlaylist(
       this.props.match.params.user,
@@ -23,7 +23,9 @@ class PlaylistDetail extends Component {
   }
 
   renderTracklist = () => {
-    return <Tracklist />
+    if (this.props.activeTracklist) {
+      return <Tracklist />
+    }
   }
 
   render() {

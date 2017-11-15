@@ -36,7 +36,7 @@ const app_routes = [
         exact: true
       },
       {
-        path: '/category/:category',
+        path: '/discover/:category',
         component: DiscoverCategory,
         exact: true
       },

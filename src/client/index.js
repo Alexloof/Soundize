@@ -49,10 +49,6 @@ const app_routes = [
         path: '/search',
         component: Search,
         exact: false
-      },
-      {
-        path: '*',
-        component: () => <div>404</div>
       }
     ]
   }

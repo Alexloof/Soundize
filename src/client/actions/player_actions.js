@@ -1,3 +1,9 @@
+import {
+  removeTrackFromQueuedTracks,
+  setActiveTrack,
+  setActiveTrackindex
+} from './track_actions'
+
 // actions
 export const PLAY_ACTIVE_TRACK = 'play_active_track'
 export const PAUSE_ACTIVE_TRACK = 'pause_active_track'
@@ -43,4 +49,40 @@ export const changeSeek = event => async dispatch => {
 
 export const zeroPlayedTime = () => async dispatch => {
   dispatch({ type: ZERO_PLAYED_TIME })
+}
+
+export const playNextTrack = () => async (dispatch, getState) => {
+  const queuedTracklist = getState().track.queuedTracks
+  const activeTrackIndex = getState().track.activeTrackIndex
+  const playingTracklist = getState().track.playingTracklist
+  let nextTrack
+  if (queuedTracklist.length > 0) {
+    nextTrack = queuedTracklist[0]
+    dispatch(removeTrackFromQueuedTracks(0))
+    await dispatch(setActiveTrack(nextTrack))
+    dispatch(playActiveTrack())
+  } else {
+    if (activeTrackIndex !== playingTracklist.tracks.items.length - 1) {
+      nextTrack = playingTracklist.tracks.items[activeTrackIndex + 1].track
+      if (!nextTrack.preview_url) {
+        await dispatch(setActiveTrackindex(activeTrackIndex + 1))
+        setTimeout(() => {
+          dispatch(playNextTrack())
+        }, 100)
+      } else {
+        await dispatch(setActiveTrack(nextTrack, activeTrackIndex + 1))
+        dispatch(playActiveTrack())
+      }
+    }
+  }
+}
+
+export const playPrevTrack = () => async (dispatch, getState) => {
+  const latestPlayedTracks = getState().track.latestPlayedTracks
+  let nextTrackPlay
+  if (latestPlayedTracks.length > 1) {
+    nextTrackPlay = latestPlayedTracks[latestPlayedTracks.length - 2]
+    await dispatch(setActiveTrack(nextTrackPlay))
+    dispatch(playActiveTrack())
+  }
 }

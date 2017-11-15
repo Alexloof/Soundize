@@ -18,12 +18,14 @@ import {
   startSeek,
   stopSeek,
   changeSeek,
-  zeroPlayedTime
+  zeroPlayedTime,
+  playNextTrack,
+  playPrevTrack
 } from '../actions/player_actions'
 
 class MusicBar extends Component {
   state = {
-    duration: 30,
+    duration: 30, // Placeholder just for Spotify
     muted: false,
     volume: 0.5,
     loop: false
@@ -31,7 +33,6 @@ class MusicBar extends Component {
   componentDidMount() {
     this.createVisualization()
   }
-
   createVisualization = () => {
     let context = new (window.AudioContext || window.webkitAudioContext)()
     let analyser = context.createAnalyser()
@@ -43,7 +44,7 @@ class MusicBar extends Component {
     audioSrc.connect(context.destination)
     analyser.connect(context.destination)
 
-    function renderFrame() {
+    const renderFrame = () => {
       let freqData = new Uint8Array(analyser.frequencyBinCount)
       requestAnimationFrame(renderFrame)
       analyser.getByteFrequencyData(freqData)
@@ -124,29 +125,7 @@ class MusicBar extends Component {
     }
   }
   playNextTrack = async () => {
-    let nextTrack
-    if (this.props.queuedTracklist.length > 0) {
-      nextTrack = this.props.queuedTracklist[0]
-      this.props.removeTrackFromQueuedTracks(0)
-      await this.props.setActiveTrack(nextTrack)
-      this.props.playActiveTrack()
-    } else {
-      nextTrack = this.props.playingTracklist.tracks.items[
-        this.props.activeTrackIndex + 1
-      ].track
-      if (!nextTrack.preview_url) {
-        await this.props.setActiveTrackindex(this.props.activeTrackIndex + 1)
-        setTimeout(() => {
-          this.playNextTrack()
-        }, 100)
-      } else {
-        await this.props.setActiveTrack(
-          nextTrack,
-          this.props.activeTrackIndex + 1
-        )
-        this.props.playActiveTrack()
-      }
-    }
+    this.props.playNextTrack()
   }
   playPreviousTrack = async () => {
     let nextTrackPlay
@@ -331,5 +310,7 @@ export default connect(mapStateToProps, {
   zeroPlayedTime,
   removeTrackFromQueuedTracks,
   setActiveTrack,
-  setActiveTrackindex
+  setActiveTrackindex,
+  playNextTrack,
+  playPrevTrack
 })(MusicBar)

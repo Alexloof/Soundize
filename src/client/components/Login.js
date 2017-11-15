@@ -30,17 +30,13 @@ const width = 450,
   top = screen.height / 2 - height / 2
 class Login extends Component {
   componentDidMount() {
-    window.addEventListener(
-      'message',
-      event => {
-        console.log('got postmessage', event)
-        if (event.data.type == 'access_token') {
-          console.log(this.props)
-          this.props.history.push('/')
-        }
-      },
-      false
-    )
+    window.addEventListener('message', e => this.auth(e), false)
+  }
+  auth = event => {
+    if (event.data.type == 'access_token') {
+      console.log(this.props)
+      this.props.history.push('/')
+    }
   }
   render() {
     console.log(url)

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-
 import { connect } from 'react-redux'
 
 import { setActivePlaylist } from '../actions/playlist_actions'
@@ -21,13 +20,11 @@ class PlaylistDetail extends Component {
     this.props.setActivePlaylist(playlistId)
     await this.props.setActiveTracklist(ownerId, playlistId)
   }
-
   renderTracklist = () => {
     if (this.props.activeTracklist) {
       return <Tracklist />
     }
   }
-
   render() {
     return (
       <div className="columns">

@@ -78,7 +78,6 @@ class MusicBar extends Component {
   startStopTrack = () => {
     this.props.toggleStartPauseTrack()
   }
-
   onSeekMouseDown = () => {
     this.props.startSeek()
   }

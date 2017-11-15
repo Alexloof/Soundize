@@ -58,10 +58,7 @@ const RouteWithSubRoutes = route => (
   <Route
     path={route.path}
     exact={route.exact}
-    render={props => (
-      // pass the sub-routes down to keep nesting
-      <route.component {...props} routes={route.routes} />
-    )}
+    render={props => <route.component {...props} routes={route.routes} />}
   />
 )
 
@@ -75,7 +72,6 @@ const Root = () => {
           {app_routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
-
           <Route component={() => <div>404</div>} />
         </Switch>
       </Router>

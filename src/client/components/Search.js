@@ -9,7 +9,6 @@ import {
 } from '../actions/search_actions'
 
 import Track from './Track'
-import Loading from './general/Loading'
 
 class Search extends Component {
   state = {
@@ -17,7 +16,6 @@ class Search extends Component {
     loadingArtists: false,
     loadingPlaylists: false
   }
-
   componentWillMount() {
     window.scroll(0, 0)
     this.makeSearch(this.props)
@@ -89,42 +87,30 @@ class Search extends Component {
           <div className="searched-artists">
             <h2>Artister</h2>
             <ul className="menu-list artist-list">
-              {!this.state.loadingArtists ? (
-                this.props.searchedArtists.length > 0 ? (
-                  this.renderArtists()
-                ) : (
-                  <li>Inga matchande artister</li>
-                )
+              {this.props.searchedArtists.length > 0 ? (
+                this.renderArtists()
               ) : (
-                <Loading />
+                <li>Inga matchande artister</li>
               )}
             </ul>
           </div>
           <div className="searched-tracks">
             <h2>Låtar</h2>
             <ul className="menu-list track-list">
-              {!this.state.loadingTracks ? (
-                this.props.searchedTracks.length > 0 ? (
-                  this.renderTracks()
-                ) : (
-                  <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
-                )
+              {this.props.searchedTracks.length > 0 ? (
+                this.renderTracks()
               ) : (
-                <Loading />
+                <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
               )}
             </ul>
           </div>
           <div className="searched-playlists">
             <h2>Spellistor</h2>
             <ul className="menu-list playlist-list">
-              {!this.state.loadingPlaylists ? (
-                this.props.searchedPlaylists.length > 0 ? (
-                  this.renderPlaylists()
-                ) : (
-                  <li>Inga matchande spellistor</li>
-                )
+              {this.props.searchedPlaylists.length > 0 ? (
+                this.renderPlaylists()
               ) : (
-                <Loading />
+                <li>Inga matchande spellistor</li>
               )}
             </ul>
           </div>

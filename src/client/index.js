@@ -13,7 +13,7 @@ import App from './components/App'
 import Home from './components/Home'
 import Login from './components/Login'
 import Search from './components/Search'
-import RedirectLogin from './components/Redirect'
+import Callback from './components/Callback'
 import Discover from './components/Discover'
 import DiscoverCategory from './components/DiscoverCategory'
 import PlaylistDetail from './components/PlaylistDetail'
@@ -75,10 +75,11 @@ const Root = () => {
       <Router>
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route path="/app" component={RedirectLogin} />
+          <Route path="/app" component={Callback} />
           {app_routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
+
           <Route component={() => <div>404</div>} />
         </Switch>
       </Router>

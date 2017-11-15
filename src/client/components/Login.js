@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 const scopes = [
   'user-read-private',
@@ -14,7 +15,7 @@ const scopes = [
 const client_id = '8d7cb1d087644280982de543cbb92989'
 const redirect_uri = 'http://localhost:8080/app'
 
-let url =
+const url =
   'https://accounts.spotify.com/authorize?client_id=' +
   client_id +
   '&redirect_uri=' +
@@ -23,13 +24,45 @@ let url =
   encodeURIComponent(scopes.join(' ')) +
   '&response_type=token'
 
+const width = 450,
+  height = 730,
+  left = screen.width / 2 - width / 2,
+  top = screen.height / 2 - height / 2
 class Login extends Component {
+  componentDidMount() {
+    window.addEventListener(
+      'message',
+      event => {
+        console.log('got postmessage', event)
+        if (event.data.type == 'access_token') {
+          console.log(this.props)
+          this.props.history.push('/')
+        }
+      },
+      false
+    )
+  }
   render() {
     console.log(url)
 
     return (
       <div className="login-wrapper">
-        <a href={url} className="button login-button">
+        <a
+          onClick={() =>
+            window.open(
+              url,
+              'Spotify',
+              'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
+                width +
+                ', height=' +
+                height +
+                ', top=' +
+                top +
+                ', left=' +
+                left
+            )}
+          className="button login-button"
+        >
           ENTER
         </a>
       </div>
@@ -37,4 +70,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default withRouter(Login)

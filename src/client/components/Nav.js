@@ -11,7 +11,19 @@ class Nav extends Component {
     this.props.history.replace('/login')
   }
   onInputChange = e => {
-    this.setState({ searchText: e.target.value })
+    this.setState({ searchText: e.target.value }, () => {
+      if (this.state.searchText) {
+        setTimeout(() => {
+          this.props.history.push({
+            pathname: '/search',
+            search: `?q=${this.state.searchText.toLowerCase()}`,
+            state: { id: this.state.searchText.toLowerCase() }
+          })
+        }, 500)
+      } else {
+        this.props.history.push('/')
+      }
+    })
   }
   onSearchSubmit = e => {
     e.preventDefault()

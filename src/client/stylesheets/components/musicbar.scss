@@ -43,50 +43,6 @@
         }
       }
     }
-    .track-controls {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-right: 2%;
-      .step-change-btn {
-        height: 30px;
-        width: 30px;
-        border-radius: 50%;
-        background-color: transparent;
-        border: none;
-        color: $gray-light;
-        .icon {
-          height: 1.4em;
-          width: 1.4em;
-        }
-        &:focus,
-        &:active {
-          border: none;
-        }
-        .fa {
-          font-size: 15px;
-        }
-        .fa.active {
-          color: #52de72;
-        }
-      }
-      .play-btn {
-        height: 35px;
-        width: 35px;
-        border-radius: 50%;
-        margin: 0 0.5%;
-        .icon {
-          height: 1.2em;
-          width: 1.2em;
-        }
-        &:focus {
-          border-color: #dbdbdb;
-        }
-        .fa {
-          font-size: 14px;
-        }
-      }
-    }
     .track-running-wrapper {
       display: flex;
       flex-direction: row;

@@ -15,6 +15,9 @@ class App extends Component {
     await this.props.setupAuthToAPI()
     await this.props.getCurrentUser()
     console.log(this.props.user)
+    if (!this.props.user) {
+      this.props.history.replace('/login')
+    }
   }
   render() {
     return (

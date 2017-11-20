@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import screenfull from 'screenfull'
 
 import AudioPlayer from './AudioPlayer'
+import MusicBarActions from './MusicBarActions'
 
 import {
   removeTrackFromQueuedTracks,
@@ -60,15 +61,6 @@ class MusicBar extends Component {
     }
     renderFrame()
   }
-  renderArtists(artists) {
-    return artists.map((artist, index) => {
-      if (index + 1 === artists.length) {
-        return artist.name
-      } else {
-        return artist.name + ', '
-      }
-    })
-  }
   onProgress = time => {
     // We only want to update time slider if we are not currently seeking
     if (!this.props.isSeeking) {
@@ -96,46 +88,17 @@ class MusicBar extends Component {
   toggleMuted = () => {
     this.setState({ muted: !this.state.muted })
   }
-  renderPlayPauseButton = () => {
-    return this.props.isPlaying ? (
-      <button
-        onClick={() => this.props.pauseActiveTrack()}
-        className="button play-btn"
-      >
-        <span className="icon">
-          <i className="fa fa-pause" />
-        </span>
-      </button>
-    ) : (
-      <button
-        onClick={() => this.props.playActiveTrack()}
-        className="button play-btn"
-      >
-        <span className="icon">
-          <i className="fa fa-play" />
-        </span>
-      </button>
-    )
-  }
-
   onEnded = () => {
     if (!this.state.loop) {
-      this.playNextTrack()
+      this.props.playNextTrack()
     }
   }
-  playNextTrack = async () => {
-    this.props.playNextTrack()
-  }
-  playPreviousTrack = async () => {
-    let nextTrackPlay
-    if (this.props.latestPlayedTracks.length > 1) {
-      nextTrackPlay = this.props.latestPlayedTracks[
-        this.props.latestPlayedTracks.length - 2
-      ]
-      await this.props.setActiveTrack(nextTrackPlay)
-      this.props.playActiveTrack()
-    }
-  }
+  // playNextTrack = async () => {
+  //   this.props.playNextTrack()
+  // }
+  // playPreviousTrack = async () => {
+  //   this.props.playPrevTrack()
+  // }
   playedTimeColor = () => {
     let procent = 1.11 * this.props.playedTime
     let time = this.props.playedTime * 100 * 1 - procent
@@ -150,6 +113,16 @@ class MusicBar extends Component {
       screenfull.request()
     }
   }
+  renderFormattedArtists(artists) {
+    return artists.map((artist, index) => {
+      if (index + 1 === artists.length) {
+        return artist.name
+      } else {
+        return artist.name + ', '
+      }
+    })
+  }
+
   render() {
     let className
     if (this.props.showMusicbar) {
@@ -171,44 +144,20 @@ class MusicBar extends Component {
             />
             <div className="track-info">
               <p className="artist-label">
-                {this.renderArtists(this.props.activeTrack.artists)}
+                {this.renderFormattedArtists(this.props.activeTrack.artists)}
               </p>
               <p className="track-title">{this.props.activeTrack.name}</p>
             </div>
           </div>
-          <div className="track-controls">
-            <button
-              onClick={() => this.playPreviousTrack()}
-              className="button step-change-btn"
-            >
-              <span className="icon">
-                <i className="fa fa-step-backward" />
-              </span>
-            </button>
-
-            {this.renderPlayPauseButton()}
-
-            <button
-              onClick={() => this.playNextTrack()}
-              className="button step-change-btn"
-            >
-              <span className="icon">
-                <i className="fa fa-step-forward" />
-              </span>
-            </button>
-            <button
-              onClick={() => this.setState({ loop: !this.state.loop })}
-              className="button step-change-btn"
-            >
-              <span className="icon">
-                {this.state.loop ? (
-                  <i className="fa fa-retweet active" />
-                ) : (
-                  <i className="fa fa-retweet" />
-                )}
-              </span>
-            </button>
-          </div>
+          <MusicBarActions
+            playPreviousTrack={() => this.props.playPrevTrack()}
+            playNextTrack={() => this.props.playNextTrack()}
+            toggleLoop={() => this.setState({ loop: !this.state.loop })}
+            isLooping={this.state.loop}
+            isPlaying={this.props.isPlaying}
+            pauseActiveTrack={() => this.props.pauseActiveTrack()}
+            playActiveTrack={() => this.props.playActiveTrack()}
+          />
           <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
             <span className="icon">
               <i className="fa fa-expand" aria-hidden="true" />
@@ -266,7 +215,6 @@ class MusicBar extends Component {
               />
             </div>
           </div>
-
           <AudioPlayer
             isPlaying={this.props.isPlaying}
             muted={this.state.muted}
@@ -276,7 +224,6 @@ class MusicBar extends Component {
             onProgress={this.onProgress}
             loop={this.state.loop}
           />
-
           <canvas ref="analyzerCanvas" id="analyzer" />
         </div>
       </div>

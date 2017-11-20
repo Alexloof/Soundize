@@ -55,6 +55,8 @@ export const playNextTrack = () => async (dispatch, getState) => {
   const queuedTracklist = getState().track.queuedTracks
   const activeTrackIndex = getState().track.activeTrackIndex
   const playingTracklist = getState().track.playingTracklist
+  const searchStatus = getState().search.searchStatus
+  const searchedTracks = getState().search.searchedTracks
   let nextTrack
   if (queuedTracklist.length > 0) {
     nextTrack = queuedTracklist[0]
@@ -62,16 +64,31 @@ export const playNextTrack = () => async (dispatch, getState) => {
     await dispatch(setActiveTrack(nextTrack))
     dispatch(playActiveTrack())
   } else {
-    if (activeTrackIndex !== playingTracklist.tracks.items.length - 1) {
-      nextTrack = playingTracklist.tracks.items[activeTrackIndex + 1].track
-      if (!nextTrack.preview_url) {
-        await dispatch(setActiveTrackindex(activeTrackIndex + 1))
-        setTimeout(() => {
-          dispatch(playNextTrack())
-        }, 100)
-      } else {
-        await dispatch(setActiveTrack(nextTrack, activeTrackIndex + 1))
-        dispatch(playActiveTrack())
+    if (searchStatus) {
+      if (activeTrackIndex !== searchedTracks.length - 1) {
+        nextTrack = searchedTracks[activeTrackIndex + 1]
+        if (!nextTrack.preview_url) {
+          await dispatch(setActiveTrackindex(activeTrackIndex + 1))
+          setTimeout(() => {
+            dispatch(playNextTrack())
+          }, 100)
+        } else {
+          await dispatch(setActiveTrack(nextTrack, activeTrackIndex + 1))
+          dispatch(playActiveTrack())
+        }
+      }
+    } else {
+      if (activeTrackIndex !== playingTracklist.tracks.items.length - 1) {
+        nextTrack = playingTracklist.tracks.items[activeTrackIndex + 1].track
+        if (!nextTrack.preview_url) {
+          await dispatch(setActiveTrackindex(activeTrackIndex + 1))
+          setTimeout(() => {
+            dispatch(playNextTrack())
+          }, 100)
+        } else {
+          await dispatch(setActiveTrack(nextTrack, activeTrackIndex + 1))
+          dispatch(playActiveTrack())
+        }
       }
     }
   }

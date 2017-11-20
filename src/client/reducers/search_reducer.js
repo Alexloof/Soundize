@@ -1,13 +1,15 @@
 import {
   SET_SEARCHED_ARTISTS,
   SET_SEARCHED_TRACKS,
-  SET_SEARCHED_PLAYLISTS
+  SET_SEARCHED_PLAYLISTS,
+  SET_SEARCH_STATUS
 } from '../actions/search_actions'
 
 let INITIAL_STATE = {
   searchedArtists: [],
   searchedPlaylists: [],
-  searchedTracks: []
+  searchedTracks: [],
+  searchStatus: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
     case SET_SEARCHED_PLAYLISTS:
       return { ...state, searchedPlaylists: action.payload }
 
+    case SET_SEARCH_STATUS:
+      return { ...state, searchStatus: action.payload }
     default:
       return state
   }

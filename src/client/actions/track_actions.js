@@ -44,7 +44,7 @@ export const addTrackToPlaylist = (
   playlistId,
   spotifyURI
 ) => async dispatch => {
-  await addTrackToPlaylistCall()
+  await addTrackToPlaylistCall(ownerId, playlistId, spotifyURI, dispatch)
 }
 
 export const removeTrackFromPlaylist = (

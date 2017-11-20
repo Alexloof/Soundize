@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import TrackMenu from './TrackMenu'
+
 import {
   pauseActiveTrack,
   playActiveTrack,
-  showMusicbar
+  showMusicbar,
+  changeSeek,
+  startSeek,
+  stopSeek
 } from '../actions/player_actions'
 
 import {
@@ -28,7 +33,7 @@ class Track extends Component {
       }
     }
   }
-  renderArtists(artists) {
+  renderFormattedArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
         return artist.name
@@ -44,13 +49,12 @@ class Track extends Component {
   startTrack = async track => {
     if (track.id === this.props.activeTrack.id) {
       this.props.playActiveTrack()
-      this.props.showMusicbar()
     } else {
       this.props.setPlayingTracklist(this.props.activeTracklist)
       await this.props.setActiveTrack(track, this.props.index)
       this.props.playActiveTrack()
-      this.props.showMusicbar()
     }
+    this.props.showMusicbar()
   }
   setClassName = () => {
     if (this.props.activeTrack.id === this.props.track.id) {
@@ -118,8 +122,8 @@ class Track extends Component {
       document.removeEventListener('mousedown', this.handleClick)
     }
   }
-  addTrackToPlaylist = (ownerId, playlistId) => {
-    this.props.addTrackToPlaylist(ownerId, playlistId, this.props.track.uri)
+  addTrackToPlaylist = (ownerId, playlistId, spotifyURI) => {
+    this.props.addTrackToPlaylist(ownerId, playlistId, spotifyURI)
     this.toggleDropdown()
   }
 
@@ -135,24 +139,21 @@ class Track extends Component {
       this.props.activeTracklist.id
     )
   }
-  renderPlaylists = () => {
-    if (this.props.privatePlaylists) {
-      return this.props.privatePlaylists.map((playlist, index) => {
-        return (
-          <li key={index}>
-            <a
-              onClick={() =>
-                this.addTrackToPlaylist(playlist.owner.id, playlist.id)}
-            >
-              {playlist.name}
-            </a>
-          </li>
-        )
-      })
-    }
-  }
-  setWrapperRef = node => {
+  setMenuWrapperRef = node => {
     this.wrapperRef = node
+  }
+  onSeekMouseDown = () => {
+    this.props.startSeek()
+  }
+  onSeekChange = e => {
+    this.props.changeSeek(parseFloat(e.target.value))
+  }
+  onSeekMouseUp = e => {
+    const audioPlayer = document.getElementById('audioPlayer')
+    audioPlayer.currentTime = parseFloat(e.target.value * 30)
+
+    this.props.changeSeek(parseFloat(e.target.value))
+    this.props.stopSeek()
   }
   render() {
     return (
@@ -191,7 +192,7 @@ class Track extends Component {
           <div className="track-section-higher">
             <div className="track-details">
               <div className="artist-label">
-                {this.renderArtists(this.props.track.artists)}
+                {this.renderFormattedArtists(this.props.track.artists)}
               </div>
               <div className="title-label">{this.props.track.name}</div>
             </div>
@@ -219,58 +220,19 @@ class Track extends Component {
               </div>
 
               <div className={this.state.dropdownClassName}>
-                <div className="dropdown-trigger">
-                  <div
-                    onClick={() => this.toggleDropdown()}
-                    className="track-open-mini-meny"
-                    aria-haspopup="true"
-                    aria-controls="dropdown-menu"
-                  >
-                    <i className="fa fa-circle" aria-hidden="true" />
-                    <i className="fa fa-circle" aria-hidden="true" />
-                    <i className="fa fa-circle" aria-hidden="true" />
-                  </div>
-                </div>
-
-                <div
-                  ref={this.setWrapperRef}
-                  className="dropdown-menu track-mini-meny"
-                  id="dropdown-menu"
-                  role="menu"
-                >
-                  <div className="dropdown-content">
-                    <div
-                      className="dropdown-item open-add-track"
-                      aria-haspopup="true"
-                      aria-controls="dropdown-menu4"
-                    >
-                      Lägg till i spellista<span className="icon is-small">
-                        <i className="fa fa-angle-right" aria-hidden="true" />
-                      </span>
-                      <div className="mini-meny-playlists">
-                        <ul className="menu-list">{this.renderPlaylists()}</ul>
-                      </div>
-                    </div>
-                    {this.props.track.preview_url !== null ? (
-                      <div
-                        onClick={() =>
-                          this.addTrackToQueuedList(this.props.track)}
-                        className="dropdown-item"
-                      >
-                        Lägg till i kön
-                      </div>
-                    ) : null}
-                    {this.props.isMyPlaylist ? (
-                      <div
-                        onClick={() =>
-                          this.removeTrackFromPlaylist(this.props.track.uri)}
-                        className="dropdown-item"
-                      >
-                        Ta bort från spellistan
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
+                <TrackMenu
+                  toggleDropdown={() => this.toggleDropdown()}
+                  setMenuWrapperRef={this.setMenuWrapperRef}
+                  privatePlaylists={this.props.privatePlaylists}
+                  addTrackToPlaylist={(ownerId, playlistId, uri) =>
+                    this.addTrackToPlaylist(ownerId, playlistId, uri)}
+                  removeTrackFromPlaylist={uri =>
+                    this.removeTrackFromPlaylist(uri)}
+                  addTrackToQueuedList={track =>
+                    this.addTrackToQueuedList(track)}
+                  track={this.props.track}
+                  isMyPlaylist={this.props.isMyPlaylist}
+                />
               </div>
             </div>
           </div>
@@ -301,20 +263,12 @@ class Track extends Component {
                   max={1}
                   step="any"
                   value={this.props.playedTime}
-                  readOnly
-                  /* onMouseDown={this.onSeekMouseDown}
-                onChange={this.onSeekChange}
-                onMouseUp={this.onSeekMouseUp} */
+                  onMouseDown={this.onSeekMouseDown}
+                  onChange={this.onSeekChange}
+                  onMouseUp={this.onSeekMouseUp}
                 />
               ) : (
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step="any"
-                  value={0}
-                  readOnly
-                />
+                <input type="range" min={0} max={1} step="any" value={0} />
               )}
             </div>
           </div>
@@ -350,5 +304,8 @@ export default connect(mapStateToProps, {
   addTrackToQueuedList,
   showMusicbar,
   setActiveTracklist,
-  setPlayingTracklist
+  setPlayingTracklist,
+  changeSeek,
+  startSeek,
+  stopSeek
 })(Track)

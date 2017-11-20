@@ -93,12 +93,6 @@ class MusicBar extends Component {
       this.props.playNextTrack()
     }
   }
-  // playNextTrack = async () => {
-  //   this.props.playNextTrack()
-  // }
-  // playPreviousTrack = async () => {
-  //   this.props.playPrevTrack()
-  // }
   playedTimeColor = () => {
     let procent = 1.11 * this.props.playedTime
     let time = this.props.playedTime * 100 * 1 - procent

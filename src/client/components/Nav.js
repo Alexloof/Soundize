@@ -90,7 +90,7 @@ class Nav extends Component {
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/adadad"
+              to="/new_releases"
               activeStyle={{ color: '#ff6b42' }}
             >
               Nytt

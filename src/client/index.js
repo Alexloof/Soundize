@@ -17,6 +17,7 @@ import Callback from './components/Callback'
 import Discover from './components/Discover'
 import DiscoverCategory from './components/DiscoverCategory'
 import PlaylistDetail from './components/PlaylistDetail'
+import NewReleases from './components/NewReleases'
 
 import './stylesheets/main.scss'
 
@@ -43,6 +44,11 @@ const app_routes = [
       {
         path: '/playlist/:user/:id',
         component: PlaylistDetail,
+        exact: true
+      },
+      {
+        path: '/new_releases',
+        component: NewReleases,
         exact: true
       },
       {

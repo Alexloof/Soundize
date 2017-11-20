@@ -53,6 +53,15 @@ export const fetchFeaturedPlaylists = async (timestamp, dispatch) => {
     )
 }
 
+export const fetchNewReleases = async dispatch => {
+  return spotifyApi.getNewReleases({ country: 'SE' }).then(data => {
+    return data.body.albums.items
+  },
+  function(err) {
+    console.log('Something went wrong getting new releases!', err)
+  })
+}
+
 export const createUserPlaylist = async (userId, name, desc, dispatch) => {
   await spotifyApi.createPlaylist(userId, name, { public: true }).then(data => {
     console.log('Playlist created', data)

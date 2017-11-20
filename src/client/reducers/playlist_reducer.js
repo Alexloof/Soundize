@@ -2,7 +2,8 @@ import {
   SET_PLAYLISTS,
   SET_PRIVATE_PLAYLISTS,
   SET_FEATURED_PLAYLISTS,
-  SET_ACTIVE_PLAYLIST
+  SET_ACTIVE_PLAYLIST,
+  SET_NEW_RELEASES
 } from '../actions/playlist_actions'
 
 const INITIAL_STATE = {
@@ -10,7 +11,8 @@ const INITIAL_STATE = {
   privatePlaylists: [],
   featuredPlaylists: [],
   activePlaylistId: null,
-  playingPlaylist: null
+  playingPlaylist: null,
+  newReleases: []
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -27,6 +29,8 @@ export default function(state = INITIAL_STATE, action) {
     case SET_ACTIVE_PLAYLIST:
       return { ...state, activePlaylistId: action.payload }
 
+    case SET_NEW_RELEASES:
+      return { ...state, newReleases: action.payload }
     default:
       return state
   }

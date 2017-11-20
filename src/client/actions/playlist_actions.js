@@ -4,7 +4,8 @@ import {
   createUserPlaylist,
   unfollowPlaylistCall,
   followPlaylistCall,
-  deleteUserPlaylist
+  deleteUserPlaylist,
+  fetchNewReleases
 } from './spotifyApi_actions'
 
 // actions
@@ -12,6 +13,7 @@ export const SET_PLAYLISTS = 'set_playlists'
 export const SET_PRIVATE_PLAYLISTS = 'set_private_playlists'
 export const SET_FEATURED_PLAYLISTS = 'set_featured_playlists'
 export const SET_ACTIVE_PLAYLIST = 'set_active_playlist'
+export const SET_NEW_RELEASES = 'set_new_releases'
 
 export const getPlaylists = userId => async dispatch => {
   let playlists = await fetchPlaylists(userId, dispatch)
@@ -40,6 +42,14 @@ export const getFeaturedPlaylists = () => async dispatch => {
 
   if (featuredPlaylists) {
     dispatch({ type: SET_FEATURED_PLAYLISTS, payload: featuredPlaylists })
+  }
+}
+
+export const getNewReleases = () => async dispatch => {
+  let newReleases = await fetchNewReleases()
+
+  if (newReleases) {
+    dispatch({ type: SET_NEW_RELEASES, payload: newReleases })
   }
 }
 

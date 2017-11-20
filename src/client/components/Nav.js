@@ -77,28 +77,28 @@ class Nav extends Component {
               className="navbar-item "
               to="/"
               exact
-              activeStyle={{ color: '#ff8d14' }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Min Musik
             </NavLink>
             <NavLink
               className="navbar-item "
               to="/discover"
-              activeStyle={{ color: '#ff8d14' }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Utforska
             </NavLink>
             <NavLink
               className="navbar-item "
               to="/adadad"
-              activeStyle={{ color: '#ff8d14' }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Nytt
             </NavLink>
             <NavLink
               className="navbar-item "
               to="/asass"
-              activeStyle={{ color: '#ff8d14' }}
+              activeStyle={{ color: '#ff6b42' }}
             >
               Topplistor
             </NavLink>

@@ -136,8 +136,8 @@ class Nav extends Component {
                   className="field is-grouped"
                   style={{ alignItems: 'center' }}
                 >
-                  <img src={this.props.user.images[0].url} />
                   <div className="navbar-item has-dropdown is-hoverable user-nav-dropdown">
+                    <img src={this.props.user.images[0].url} />
                     <a className="navbar-link user-nav-link">
                       {this.props.user.display_name}
                     </a>

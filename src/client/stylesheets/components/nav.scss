@@ -7,25 +7,36 @@
   top: 0;
   z-index: 30;
   box-shadow: 0px 1px 6px 0px rgba(72, 72, 72, 0.83);
-  .navbar-start {
-    margin-left: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .navbar-brand {
+    position: absolute;
+    a.navbar-item {
+      font-weight: bold;
+      letter-spacing: 4px;
+      font-size: 19px;
+
+      &:hover {
+        border-color: transparent;
+      }
+    }
   }
-  .navbar-brand a.navbar-item {
-    font-weight: bold;
-    letter-spacing: 4px;
-    font-size: 19px;
-    &:hover {
-      border-color: transparent;
+  .navbar-menu {
+    height: $nav-height;
+    .navbar-start {
+      margin-left: 24%;
     }
   }
   a.navbar-item {
     color: $nav-font-color;
     font-weight: 500;
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     border-bottom: 2px solid transparent;
     padding-bottom: 3px;
     transition: 0.3s all ease-in-out;
+    margin-right: 1rem;
     &:hover {
       border-color: white;
       background-color: transparent;
@@ -54,6 +65,7 @@
     img {
       max-height: 30px;
       border-radius: 50%;
+      cursor: pointer;
     }
     .user-nav-link {
       color: $nav-font-color;
@@ -66,10 +78,13 @@
       }
       &:after {
         border-color: white;
-        margin-top: -.55em;
+        margin-top: -0.55em;
         height: 0.7em;
         width: 0.7em;
         right: 0.725em;
+      }
+      @media only screen and (max-width: 1216px) {
+        display: none;
       }
     }
     .user-nav-dropdown {

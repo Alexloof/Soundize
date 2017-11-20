@@ -50,7 +50,7 @@ class MusicBar extends Component {
       requestAnimationFrame(renderFrame)
       analyser.getByteFrequencyData(freqData)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.fillStyle = '#ff4d1c'
+      ctx.fillStyle = '#ff8d14'
       let bars = 100
       for (var i = 0; i < bars; i++) {
         let bar_x = i * 3

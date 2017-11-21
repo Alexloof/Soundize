@@ -5,7 +5,17 @@ export const showSuccessAlert = text => dispatch => {
     position: 'top-right',
     effect: 'slide',
     beep: false,
-    timeout: 3000,
+    timeout: 4000,
+    offset: 30
+  })
+}
+
+export const showErrorAlert = text => dispatch => {
+  Alert.error(text, {
+    position: 'top-right',
+    effect: 'slide',
+    beep: false,
+    timeout: 4000,
     offset: 30
   })
 }

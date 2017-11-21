@@ -1,7 +1,7 @@
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 
-import { showSuccessAlert } from './alert_actions'
+import { showSuccessAlert, showErrorAlert } from './alert_actions'
 
 // AUTH
 export const setAccessToken = async dispatch => {
@@ -71,34 +71,40 @@ export const createUserPlaylist = async (userId, name, desc, dispatch) => {
   },
   function(err) {
     console.log('Something went wrong!', err)
+    dispatch(showErrorAlert(name + ' kunde inte skapas...'))
   })
 }
 
 export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
   await spotifyApi.unfollowPlaylist(ownerId, playlistId).then(data => {
     console.log('Unfollowed a playlist', data)
+    dispatch(showSuccessAlert('Du slutade följa en spellista!'))
   },
   function(err) {
     console.log('Something went wrong!', err)
+    dispatch(showErrorAlert('Det gick inte att sluta följa denna spellista'))
   })
 }
 
 export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
   await spotifyApi.followPlaylist(ownerId, playlistId).then(data => {
     console.log('Followed a playlist', data)
+    dispatch(showSuccessAlert('Du började följa en spellista!'))
   },
   function(err) {
     console.log('Something went wrong!', err)
+    dispatch(showErrorAlert('Det gick inte att följa denna spellista'))
   })
 }
 
 export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {
   await spotifyApi.unfollowPlaylist(userId, playlistId).then(data => {
     console.log('deleted a playlist', data)
-    dispatch(showSuccessAlert('Spellista borttagen'))
+    dispatch(showSuccessAlert('Spellistan är nu borttagen'))
   },
   function(err) {
     console.log('Something went wrong!', err)
+    dispatch(showErrorAlert('Det gick inte att deleta spellistan'))
   })
 }
 
@@ -126,9 +132,11 @@ export const addTrackToPlaylistCall = async (
     .then(
       data => {
         console.log('Added tracks to playlist!', data)
+        dispatch(showSuccessAlert('Låten lades till i spellista'))
       },
       function(err) {
         console.log('Something went wrong!', err)
+        dispatch(showErrorAlert('Det gick inte att lägga till låten'))
       }
     )
 }
@@ -144,9 +152,13 @@ export const removeTrackFromPlaylistCall = async (
     .then(
       data => {
         console.log('Track removed from playlist!', data)
+        dispatch(showSuccessAlert('Låten tog borts från spellistan'))
       },
       function(err) {
         console.log('Something went wrong!', err)
+        dispatch(
+          showErrorAlert('Det gick inte att ta bort låten från spellistan')
+        )
       }
     )
 }

@@ -16,6 +16,21 @@
     flex-direction: row;
     align-items: center;
     height: 100%;
+    .dropdown {
+      .track-open-mini-meny {
+        i {
+          padding: 1.2px;
+        }
+      }
+      .dropdown-menu {
+        top: -80px;
+        left: 20px;
+        .mini-meny-playlists {
+          bottom: 0;
+          top: auto;
+        }
+      }
+    }
     .img-info {
       display: flex;
       flex-direction: row;

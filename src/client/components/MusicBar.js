@@ -4,11 +4,14 @@ import screenfull from 'screenfull'
 
 import AudioPlayer from './AudioPlayer'
 import MusicBarActions from './MusicBarActions'
+import TrackMenu from './TrackMenu'
 
 import {
   removeTrackFromQueuedTracks,
   setActiveTrack,
-  setActiveTrackindex
+  setActiveTrackindex,
+  addTrackToPlaylist,
+  addTrackToQueuedList
 } from '../actions/track_actions'
 
 import {
@@ -29,7 +32,8 @@ class MusicBar extends Component {
     duration: 30, // Placeholder just for Spotify
     muted: false,
     volume: 0.5,
-    loop: false
+    loop: false,
+    dropdownClassName: 'dropdown'
   }
   componentDidMount() {
     this.createVisualization()
@@ -116,7 +120,33 @@ class MusicBar extends Component {
       }
     })
   }
-
+  addTrackToPlaylist = (ownerId, playlistId, spotifyURI) => {
+    this.props.addTrackToPlaylist(ownerId, playlistId, spotifyURI)
+    this.toggleDropdown()
+  }
+  addTrackToQueuedList = track => {
+    this.props.addTrackToQueuedList(track)
+    this.toggleDropdown()
+  }
+  toggleDropdown = () => {
+    if (this.state.dropdownClassName === 'dropdown') {
+      this.setState({ dropdownClassName: 'dropdown is-active' })
+      document.addEventListener('mousedown', this.handleClick)
+    } else {
+      this.setState({ dropdownClassName: 'dropdown' })
+      document.removeEventListener('mousedown', this.handleClick)
+    }
+  }
+  handleClick = event => {
+    if (this.state.dropdownClassName === 'dropdown is-active') {
+      if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+        this.setState({ dropdownClassName: 'dropdown' })
+      }
+    }
+  }
+  setMenuWrapperRef = node => {
+    this.wrapperRef = node
+  }
   render() {
     let className
     if (this.props.showMusicbar) {
@@ -141,6 +171,18 @@ class MusicBar extends Component {
                 {this.renderFormattedArtists(this.props.activeTrack.artists)}
               </p>
               <p className="track-title">{this.props.activeTrack.name}</p>
+            </div>
+            <div className={this.state.dropdownClassName}>
+              <TrackMenu
+                privatePlaylists={this.props.privatePlaylists}
+                track={this.props.activeTrack}
+                setMenuWrapperRef={this.setMenuWrapperRef}
+                toggleDropdown={() => this.toggleDropdown()}
+                addTrackToPlaylist={(ownerId, playlistId, uri) =>
+                  this.addTrackToPlaylist(ownerId, playlistId, uri)}
+                addTrackToQueuedList={track => this.addTrackToQueuedList(track)}
+                isMyPlaylist={false}
+              />
             </div>
           </div>
           <MusicBarActions
@@ -225,7 +267,7 @@ class MusicBar extends Component {
   }
 }
 
-const mapStateToProps = ({ track, player }) => {
+const mapStateToProps = ({ track, player, playlist }) => {
   return {
     activeTrack: track.activeTrack,
     isPlaying: player.isPlaying,
@@ -235,7 +277,8 @@ const mapStateToProps = ({ track, player }) => {
     queuedTracklist: track.queuedTracks,
     playingTracklist: track.playingTracklist,
     activeTrackIndex: track.activeTrackIndex,
-    latestPlayedTracks: track.latestPlayedTracks
+    latestPlayedTracks: track.latestPlayedTracks,
+    privatePlaylists: playlist.privatePlaylists
   }
 }
 
@@ -252,5 +295,7 @@ export default connect(mapStateToProps, {
   setActiveTrack,
   setActiveTrackindex,
   playNextTrack,
-  playPrevTrack
+  playPrevTrack,
+  addTrackToPlaylist,
+  addTrackToQueuedList
 })(MusicBar)

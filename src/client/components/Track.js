@@ -90,7 +90,7 @@ class Track extends Component {
       return (
         <button className="button play-btn">
           <span className="icon">
-            <i className="fa fa-stop" />
+            <i className="fa fa-remove" />
           </span>
         </button>
       )

@@ -9,6 +9,9 @@ import {
   createPlaylist
 } from '../actions/playlist_actions'
 
+import { setActivePlaylist } from '../actions/playlist_actions'
+import { setActiveTracklist } from '../actions/track_actions'
+
 import Tracklist from './Tracklist'
 import Playlists from './Playlists'
 import ExtraInfolist from './ExtraInfolist'
@@ -18,6 +21,15 @@ import Loading from './general/Loading'
 class Home extends Component {
   state = {
     modalClassName: 'modal create-playlist-modal'
+  }
+  componentDidMount() {
+    if (this.props.playlists.length > 1) {
+      this.props.setActivePlaylist(this.props.playlists[0].id)
+      this.props.setActiveTracklist(
+        this.props.playlists[0].owner.id,
+        this.props.playlists[0].id
+      )
+    }
   }
   async componentWillReceiveProps(newProps) {
     if (this.props.user !== newProps.user) {
@@ -81,5 +93,7 @@ export default connect(mapStateToProps, {
   getPlaylists,
   getPrivatePlaylists,
   getFeaturedPlaylists,
-  createPlaylist
+  createPlaylist,
+  setActivePlaylist,
+  setActiveTracklist
 })(Home)

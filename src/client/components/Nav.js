@@ -40,9 +40,9 @@ class Nav extends Component {
     return (
       <nav className="navbar ">
         <div className="navbar-brand">
-          <a className="navbar-item" href="/">
-            <p>SoundIze</p>
-          </a>
+          <NavLink className="navbar-item" to="/">
+            <p>Soundize</p>
+          </NavLink>
 
           <a
             className="navbar-item is-hidden-desktop"

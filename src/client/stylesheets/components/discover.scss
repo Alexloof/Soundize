@@ -35,6 +35,10 @@
         transition: 0.35s all ease;
         letter-spacing: 1px;
         font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        text-align: center;
       }
       &:hover h2 {
         text-decoration: underline;

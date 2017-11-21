@@ -8,6 +8,15 @@ class NewReleases extends Component {
   componentDidMount() {
     this.props.getNewReleases()
   }
+  renderFormattedArtists(artists) {
+    return artists.map((artist, index) => {
+      if (index + 1 === artists.length) {
+        return artist.name
+      } else {
+        return artist.name + ', '
+      }
+    })
+  }
   renderNewReleases = () => {
     return this.props.newReleases.map((release, index) => {
       return (
@@ -15,6 +24,7 @@ class NewReleases extends Component {
           <img src={release.images[0].url} />
           <div className="new-releases-item-name">
             <h2>{release.name}</h2>
+            <p>{this.renderFormattedArtists(release.artists)}</p>
           </div>
         </li>
       )

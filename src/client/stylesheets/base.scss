@@ -33,6 +33,15 @@ strong {
   font-weight: bold;
 }
 
+// alerts
+.s-alert-box {
+  box-shadow: $box-shadow-large;
+  min-width: 200px;
+}
+.s-alert-success {
+  background-color: rgb(67, 182, 101);
+}
+
 .hidden {
   opacity: 0 !important;
 }

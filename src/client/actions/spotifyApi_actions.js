@@ -1,6 +1,8 @@
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 
+import { showSuccessAlert } from './alert_actions'
+
 // AUTH
 export const setAccessToken = async dispatch => {
   const token = localStorage.getItem('token')
@@ -65,6 +67,7 @@ export const fetchNewReleases = async dispatch => {
 export const createUserPlaylist = async (userId, name, desc, dispatch) => {
   await spotifyApi.createPlaylist(userId, name, { public: true }).then(data => {
     console.log('Playlist created', data)
+    dispatch(showSuccessAlert(name + ' har skapats!'))
   },
   function(err) {
     console.log('Something went wrong!', err)
@@ -92,6 +95,7 @@ export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
 export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {
   await spotifyApi.unfollowPlaylist(userId, playlistId).then(data => {
     console.log('deleted a playlist', data)
+    dispatch(showSuccessAlert('Spellista borttagen'))
   },
   function(err) {
     console.log('Something went wrong!', err)

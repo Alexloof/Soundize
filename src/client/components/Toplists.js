@@ -8,11 +8,18 @@ class Toplists extends Component {
   componentDidMount() {
     this.props.getActiveCategoryPlaylists('toplists')
   }
-
+  navigateToPlaylist = (userId, playlistId) => {
+    this.props.history.push(`/playlist/${userId}/${playlistId}`)
+  }
   renderToplists = () => {
     return this.props.toplists.map((playlist, index) => {
       return (
-        <li className="toplists-item" key={index}>
+        <li
+          onClick={() =>
+            this.navigateToPlaylist(playlist.owner.id, playlist.id)}
+          className="toplists-item"
+          key={index}
+        >
           <img src={playlist.images[0].url} />
           <div className="toplists-item-name">
             <h2>{playlist.name}</h2>

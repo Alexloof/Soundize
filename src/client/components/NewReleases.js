@@ -10,13 +10,20 @@ class NewReleases extends Component {
   }
   renderNewReleases = () => {
     return this.props.newReleases.map((release, index) => {
-      return <li key={index}>{release.id}</li>
+      return (
+        <li className="new-releases-item" key={index}>
+          <img src={release.images[0].url} />
+          <div className="new-releases-item-name">
+            <h2>{release.name}</h2>
+          </div>
+        </li>
+      )
     })
   }
   render() {
     return (
       <div className="new-releases-component">
-        <h1>new releases</h1>
+        <h1>Nya releaser</h1>
         <ul className="new-releases-list">{this.renderNewReleases()}</ul>
       </div>
     )

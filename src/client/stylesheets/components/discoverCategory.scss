@@ -1,5 +1,5 @@
 .discover-category-component {
-  width: 1100px;
+  max-width: $container-large;
   background-color: $gray-light;
   min-height: 90vh;
   margin: 0 auto;
@@ -25,6 +25,7 @@
         width: 200px;
         height: 200px;
         transition: 0.3s all ease;
+        box-shadow: $box-shadow-primary;
       }
       .discovery-category-item-name {
         position: absolute;

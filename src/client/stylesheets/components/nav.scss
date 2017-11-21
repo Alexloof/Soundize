@@ -16,7 +16,9 @@
       font-weight: bold;
       letter-spacing: 4px;
       font-size: 19px;
-
+      img {
+        max-height: none;
+      }
       &:hover {
         border-color: transparent;
       }
@@ -31,7 +33,7 @@
   a.navbar-item {
     color: $nav-font-color;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 1.5px;
     border-bottom: 2px solid transparent;
     padding-bottom: 3px;

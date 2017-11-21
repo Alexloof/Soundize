@@ -57,8 +57,13 @@ module.exports = {
         loader: 'style-loader!css-loader?sourceMap'
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader']
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 25000
+          }
+        }
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,

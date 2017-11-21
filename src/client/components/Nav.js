@@ -41,7 +41,7 @@ class Nav extends Component {
       <nav className="navbar ">
         <div className="navbar-brand">
           <NavLink className="navbar-item" to="/">
-            <p>Soundize</p>
+            <img src={require('../images/Soundize-logo2.png')} alt="asasas" />
           </NavLink>
 
           <a

@@ -97,7 +97,7 @@ class Nav extends Component {
             </NavLink>
             <NavLink
               className="navbar-item "
-              to="/asass"
+              to="/toplists"
               activeStyle={{ color: '#ff6b42' }}
             >
               Topplistor

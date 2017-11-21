@@ -18,6 +18,7 @@ import Discover from './components/Discover'
 import DiscoverCategory from './components/DiscoverCategory'
 import PlaylistDetail from './components/PlaylistDetail'
 import NewReleases from './components/NewReleases'
+import Toplists from './components/Toplists'
 
 import './stylesheets/main.scss'
 
@@ -49,6 +50,11 @@ const app_routes = [
       {
         path: '/new_releases',
         component: NewReleases,
+        exact: true
+      },
+      {
+        path: '/toplists',
+        component: Toplists,
         exact: true
       },
       {

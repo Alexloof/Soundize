@@ -30,7 +30,7 @@ class Toplists extends Component {
   }
   render() {
     return (
-      <div className="toplists-component">
+      <div className="toplists-component ">
         <h1>Topplistor</h1>
         <ul className="toplists-list">{this.renderToplists()}</ul>
       </div>

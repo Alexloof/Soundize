@@ -60,7 +60,7 @@ $top-distance: $nav-height + $hang-distance;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 25%;
+    width: 200px;
     .tracklist-scroll-btn-grp {
       display: flex;
       flex-direction: row;
@@ -100,4 +100,6 @@ $top-distance: $nav-height + $hang-distance;
 }
 .tracklist-scroll-banner.banner-show {
   top: $top-distance;
+  width: 55.2vw;
+  transform: translateX(-2.5vw);
 }

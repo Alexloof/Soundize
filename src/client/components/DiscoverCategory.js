@@ -15,7 +15,7 @@ class DiscoverCategory extends Component {
   }
   render() {
     return (
-      <div className="discover-category-component">
+      <div className="discover-category-component ">
         <button
           onClick={() => this.props.history.goBack()}
           className="go-back-button"

@@ -1,13 +1,13 @@
-$hang-distance: 13px;
-$top-distance: $nav-height + $hang-distance;
+$top-distance: $nav-height;
 
 .tracklist-scroll-banner {
   height: $nav-height;
   position: fixed;
-  width: 50.2vw;
+  width: 40.2vw;
+  transform: translateX(5vw);
   background-color: rgba(0, 27, 35, 0.95);
   z-index: 25;
-  top: -$top-distance;
+  top: 0px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -16,22 +16,6 @@ $top-distance: $nav-height + $hang-distance;
   white-space: nowrap;
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4);
   transition: 0.3s all ease;
-  .left-holder {
-    position: absolute;
-    width: 3px;
-    background: $brand-secondary;
-    height: $hang-distance;
-    left: 0;
-    top: -$hang-distance;
-  }
-  .right-holder {
-    position: absolute;
-    width: 3px;
-    background: $brand-secondary;
-    height: $hang-distance;
-    right: 0;
-    top: -$hang-distance;
-  }
   .tracklist-name {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -100,6 +84,6 @@ $top-distance: $nav-height + $hang-distance;
 }
 .tracklist-scroll-banner.banner-show {
   top: $top-distance;
-  width: 55.2vw;
-  transform: translateX(-2.5vw);
+  width: 50.2vw;
+  transform: translateX(0vw);
 }

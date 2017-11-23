@@ -33,6 +33,18 @@ export default ({
   return (
     <div className="musicbar-actions">
       <button
+        onClick={() => toggleShuffle()}
+        className="button step-change-btn"
+      >
+        <span className="icon">
+          {isShuffling ? (
+            <i className="fa fa-random active" aria-hidden="true" />
+          ) : (
+            <i className="fa fa-random" aria-hidden="true" />
+          )}
+        </span>
+      </button>
+      <button
         onClick={() => playPreviousTrack()}
         className="button step-change-btn"
       >
@@ -57,18 +69,6 @@ export default ({
             <i className="fa fa-retweet active" />
           ) : (
             <i className="fa fa-retweet" />
-          )}
-        </span>
-      </button>
-      <button
-        onClick={() => toggleShuffle()}
-        className="button step-change-btn"
-      >
-        <span className="icon">
-          {isShuffling ? (
-            <i className="fa fa-random active" aria-hidden="true" />
-          ) : (
-            <i className="fa fa-random" aria-hidden="true" />
           )}
         </span>
       </button>

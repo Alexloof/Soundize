@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom'
 
 class Nav extends Component {
   state = {
-    searchText: ''
+    searchText: '',
+    navClassName: 'navbar-start'
   }
   onLogout = () => {
     localStorage.removeItem('token')
@@ -72,42 +73,52 @@ class Nav extends Component {
         </div>
 
         <div id="navMenubd-example" className="navbar-menu">
-          <div className="navbar-start">
+          <div
+            onMouseEnter={() =>
+              this.setState({ navClassName: 'navbar-start with-indicator' })}
+            onMouseLeave={() =>
+              this.setState({ navClassName: 'navbar-start ' })}
+            className={this.state.navClassName}
+          >
             <NavLink
-              className="navbar-item "
+              className="navbar-item"
               to="/"
               exact
               activeStyle={{ color: '#ff6b42' }}
             >
-              Min Musik
+              <span>Min Musik</span>
             </NavLink>
+
             <NavLink
-              className="navbar-item "
+              className="navbar-item"
               to="/discover"
               activeStyle={{ color: '#ff6b42' }}
             >
-              Utforska
+              <span>Utforska</span>
             </NavLink>
+
             <NavLink
-              className="navbar-item "
+              className="navbar-item"
               to="/new_releases"
               activeStyle={{ color: '#ff6b42' }}
             >
-              Nytt
+              <span>Nytt</span>
             </NavLink>
+
             <NavLink
-              className="navbar-item "
+              className="navbar-item"
               to="/toplists"
               activeStyle={{ color: '#ff6b42' }}
             >
-              Topplistor
+              <span>Topplistor</span>
             </NavLink>
+
             <NavLink
+              className="navbar-item"
               to="/login"
               onClick={() => this.onLogout()}
-              className="navbar-item"
             >
-              Refresh
+              <span>Refresh</span>
             </NavLink>
           </div>
 

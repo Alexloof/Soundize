@@ -1,3 +1,10 @@
+$menu-items: 5;
+$background-color: $brand-primary;
+$indicator-color: #ffffff;
+$transition-speed: 0.4s;
+$width: (100/$menu-items) * 1%;
+$menu-items-loop-offset: $menu-items - 1;
+
 .navbar {
   background-color: $nav-background-color;
   height: $nav-height;
@@ -21,28 +28,113 @@
       }
       &:hover {
         border-color: transparent;
+        background-color: transparent;
       }
     }
   }
   .navbar-menu {
     height: $nav-height;
     .navbar-start {
-      margin-left: 24%;
-    }
-  }
-  a.navbar-item {
-    color: $nav-font-color;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 3px;
-    transition: 0.3s all ease-in-out;
-    margin-right: 1rem;
-    &:hover {
-      border-color: white;
-      background-color: transparent;
-      color: $nav-font-color;
+      margin-left: 24.7%;
+      list-style: none;
+      max-width: 720px;
+      padding: 0;
+      width: 50%;
+      .navbar-item {
+        display: block;
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: $width;
+        text-align: center;
+        position: static;
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 1.5px;
+        &:first-child {
+          border-radius: 3px 0 0 3px;
+        }
+        &:last-child {
+          border-radius: 0 3px 3px 0;
+        }
+        &.active span {
+          color: $brand-secondary;
+        }
+        &:hover {
+          background-color: transparent;
+        }
+        span {
+          color: $nav-font-color;
+          display: block;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          text-decoration: none;
+        }
+      }
+      &.with-indicator {
+        position: relative;
+        z-index: 0;
+        .navbar-item {
+          &:last-child {
+            //&:before,
+            &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              pointer-events: none;
+              transition: all #{$transition-speed} cubic-bezier(0.55, 0.72, 0.35, 1.22);
+            } // Making the top CSS Triangle - learn more: https://css-tricks.com/animation-css-triangles-work/
+            // &:before {
+            //   border: 6px solid transparent;
+            //   border-top-color: $indicator-color;
+            //   width: 0;
+            //   height: 0;
+            //   top: 0;
+            //   left: ($width/2);
+            //   margin-left: -3px;
+            // }
+            &:after {
+              background: $indicator-color;
+              bottom: 0px;
+              left: 0;
+              height: 2px;
+              width: $width;
+              z-index: -1;
+            }
+          }
+        }
+        @for $i from 1 through $menu-items-loop-offset {
+          .navbar-item:nth-child(#{$i}).active ~ .navbar-item:last-child:after {
+            left: ($width*$i)-$width;
+          }
+          .navbar-item:nth-child(#{$i}).active
+            ~ .navbar-item:last-child:before {
+            left: ($width*$i)+($width/2)-$width;
+          }
+        }
+
+        @for $i from 1 through $menu-items-loop-offset {
+          .navbar-item:nth-child(#{$i}):hover ~ .navbar-item:last-child:after {
+            left: ($width*$i)-$width !important;
+          }
+          .navbar-item:nth-child(#{$i}):hover ~ .navbar-item:last-child:before {
+            left: ($width*$i)+($width/2)-$width !important;
+          }
+        }
+        .navbar-item {
+          &:last-child {
+            &:hover,
+            &.active {
+              &:before {
+                left: (100%-$width)+($width/2) !important;
+              }
+              &:after {
+                left: 100%-$width !important;
+              }
+            }
+          }
+        }
+      }
     }
   }
   input[type='text'] {
@@ -94,20 +186,26 @@
       padding-top: 10px;
     }
     .navbar-dropdown {
-      background-color: rgba(64, 64, 64, 0.87);
+      background-color: $brand-primary;
       font-size: 0.8rem;
       border: none;
       border-radius: 0px;
       margin-top: 0px;
-      box-shadow: 1px 1px 3px 0px rgba(88, 88, 88, 0.54);
+      box-shadow: $box-shadow-primary;
+      min-width: 150px;
+      right: 0;
+      left: auto;
       &:hover {
-        background-color: rgba(64, 64, 64, 0.67);
+        background-color: $brand-primary;
         display: block;
       }
       .navbar-item {
         border-bottom: none;
+        color: white;
         &:hover {
           border-bottom: none;
+          background-color: transparent;
+          text-decoration: underline;
         }
       }
     }

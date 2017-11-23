@@ -30,6 +30,7 @@ class Home extends Component {
         this.props.playlists[0].id
       )
     }
+    window.scroll(0, 0)
   }
   async componentWillReceiveProps(newProps) {
     if (this.props.user !== newProps.user) {

@@ -8,9 +8,8 @@ html {
   overflow-y: auto;
 
   background: linear-gradient(
-      transparentize($color: $brand-primary, $amount: 0.2),
-      rgba(48, 48, 48, 0.9) 50%,
-      transparentize($color: $brand-primary, $amount: 0.2)
+      rgba(255, 107, 66, 0.68),
+      rgba(0, 0, 0, 0.74) 45%
     ),
     url('https://images.pexels.com/photos/167605/pexels-photo-167605.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb');
   background-attachment: fixed;

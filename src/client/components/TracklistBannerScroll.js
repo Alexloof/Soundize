@@ -54,6 +54,8 @@ class TracklistBannerScroll extends Component {
             ) : null}
           </div>
         </div>
+        <div className="left-holder" />
+        <div className="right-holder" />
       </div>
     )
   }

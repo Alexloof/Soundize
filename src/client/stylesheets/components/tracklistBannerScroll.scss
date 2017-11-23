@@ -1,18 +1,37 @@
+$hang-distance: 13px;
+$top-distance: $nav-height + $hang-distance;
+
 .tracklist-scroll-banner {
-  height: 50px;
+  height: $nav-height;
   position: fixed;
   width: 50.2vw;
-  background-color: rgba(0, 0, 0, 0.79);
+  background-color: rgba(0, 27, 35, 0.95);
   z-index: 25;
-  top: -52px;
+  top: -$top-distance;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 5px;
   white-space: nowrap;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.36);
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4);
   transition: 0.3s all ease;
+  .left-holder {
+    position: absolute;
+    width: 3px;
+    background: $brand-secondary;
+    height: $hang-distance;
+    left: 0;
+    top: -$hang-distance;
+  }
+  .right-holder {
+    position: absolute;
+    width: 3px;
+    background: $brand-secondary;
+    height: $hang-distance;
+    right: 0;
+    top: -$hang-distance;
+  }
   .tracklist-name {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -80,5 +99,5 @@
   }
 }
 .tracklist-scroll-banner.banner-show {
-  top: 52px;
+  top: $top-distance;
 }

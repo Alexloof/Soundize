@@ -37,7 +37,7 @@ class Tracklist extends Component {
     let scrolled = false
     const el = document.getElementsByClassName('tracklist-scroll-banner')
     this.interval = setInterval(() => {
-      if (window.pageYOffset > 300) {
+      if (window.pageYOffset > 400) {
         if (scrolled === false) {
           scrolled = true
           el[0].classList = [el[0].classList[0] + ' banner-show effect1']
@@ -46,7 +46,7 @@ class Tracklist extends Component {
         scrolled = false
         el[0].classList = ['tracklist-scroll-banner effect1']
       }
-    }, 700)
+    }, 500)
   }
   componentWillUnmount() {
     clearInterval(this.interval)

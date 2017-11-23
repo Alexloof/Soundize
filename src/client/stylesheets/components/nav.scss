@@ -1,6 +1,6 @@
 $menu-items: 5;
 $background-color: $brand-primary;
-$indicator-color: #ffffff;
+$indicator-color: $brand-secondary;
 $transition-speed: 0.4s;
 $width: (100/$menu-items) * 1%;
 $menu-items-loop-offset: $menu-items - 1;
@@ -66,7 +66,7 @@ $menu-items-loop-offset: $menu-items - 1;
         span {
           color: $nav-font-color;
           display: block;
-          padding-top: 20px;
+          padding-top: 16px;
           padding-bottom: 20px;
           text-decoration: none;
         }
@@ -82,8 +82,8 @@ $menu-items-loop-offset: $menu-items - 1;
               display: block;
               position: absolute;
               pointer-events: none;
-              transition: all #{$transition-speed} cubic-bezier(0.55, 0.72, 0.35, 1.22);
-            } // Making the top CSS Triangle - learn more: https://css-tricks.com/animation-css-triangles-work/
+              transition: all #{$transition-speed} ease; //cubic-bezier(0.55, 0.72, 0.35, 1.22);
+            }
             // &:before {
             //   border: 6px solid transparent;
             //   border-top-color: $indicator-color;

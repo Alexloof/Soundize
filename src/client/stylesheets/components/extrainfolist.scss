@@ -1,3 +1,5 @@
+$max-list-height: 250px;
+
 .extra-infolist {
   position: fixed;
   top: $nav-height;
@@ -25,7 +27,7 @@
       margin-left: 30px;
     }
     .latest-played {
-      max-height: 220px;
+      max-height: $max-list-height;
       overflow-y: hidden;
       .flip-move {
         display: flex;
@@ -37,6 +39,7 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 10px;
+        padding: 3px 0px;
         .left-grp {
           display: flex;
           flex-direction: row;
@@ -83,7 +86,7 @@
       }
     }
     .queued-tracks {
-      max-height: 220px;
+      max-height: $max-list-height;
       overflow-y: hidden;
       li {
         display: flex;
@@ -91,6 +94,7 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 10px;
+        padding: 3px 0px;
         .left-grp {
           display: flex;
           flex-direction: row;

@@ -18,6 +18,8 @@
     height: 100%;
     .dropdown {
       .track-open-mini-meny {
+        margin-right: 15px;
+        margin-left: 0;
         i {
           padding: 1.2px;
         }
@@ -35,7 +37,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-right: 4%;
+      margin-right: 2%;
       min-width: 20%;
       max-width: 20%;
       img {

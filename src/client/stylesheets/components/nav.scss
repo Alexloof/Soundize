@@ -1,4 +1,4 @@
-$menu-items: 5;
+$menu-items: 4;
 $background-color: $brand-primary;
 $indicator-color: $brand-secondary;
 $transition-speed: 0.4s;
@@ -39,7 +39,8 @@ $menu-items-loop-offset: $menu-items - 1;
       list-style: none;
       max-width: 720px;
       padding: 0;
-      width: 50%;
+      width: 38%;
+      max-width: 650px;
       .navbar-item {
         display: block;
         float: left;
@@ -97,7 +98,7 @@ $menu-items-loop-offset: $menu-items - 1;
               background: $indicator-color;
               bottom: 0px;
               left: 0;
-              height: 2px;
+              height: 3px;
               width: $width;
               z-index: -1;
             }
@@ -140,20 +141,22 @@ $menu-items-loop-offset: $menu-items - 1;
   input[type='text'] {
     align-self: center;
     width: 200px;
-    border-radius: 50px;
+    border-radius: 1px;
     transition: 0.3s all ease-in-out;
-    height: 2rem;
+    height: 2.4rem;
     &:focus {
-      width: 300px;
+      width: 250px;
       border-color: transparent;
     }
   }
   .navbar-end {
     form {
+      margin-right: 5%;
       align-self: center;
       .icon.is-right {
         height: 2em;
         cursor: pointer;
+        top: 2px;
       }
     }
     .login-btn {

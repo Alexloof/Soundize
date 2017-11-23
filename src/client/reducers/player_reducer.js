@@ -7,14 +7,16 @@ import {
   START_SEEK,
   STOP_SEEK,
   CHANGE_SEEK,
-  ZERO_PLAYED_TIME
+  ZERO_PLAYED_TIME,
+  TOGGLE_SHUFFLE
 } from '../actions/player_actions'
 
 const INITIAL_STATE = {
   isPlaying: false,
   playedTime: 0,
   isSeeking: false,
-  showMusicbar: false
+  showMusicbar: false,
+  isShuffling: false
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -45,6 +47,9 @@ export default function(state = INITIAL_STATE, action) {
 
     case ZERO_PLAYED_TIME:
       return { ...state, playedTime: 0 }
+
+    case TOGGLE_SHUFFLE:
+      return { ...state, isShuffling: !state.isShuffling }
     default:
       return state
   }

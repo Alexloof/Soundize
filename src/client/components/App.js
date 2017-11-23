@@ -31,7 +31,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div style={{ marginTop: '52px' }}>
+      <div className="app" style={{ marginTop: '52px' }}>
         <Nav user={this.props.user} />
 
         {this.props.routes.map((route, i) => (

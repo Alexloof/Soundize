@@ -24,7 +24,8 @@ import {
   changeSeek,
   zeroPlayedTime,
   playNextTrack,
-  playPrevTrack
+  playPrevTrack,
+  toggleShuffle
 } from '../actions/player_actions'
 
 class MusicBar extends Component {
@@ -159,6 +160,18 @@ class MusicBar extends Component {
       <div className={className}>
         <div className="my-container">
           <div className="img-info">
+            <div className={this.state.dropdownClassName}>
+              <TrackMenu
+                privatePlaylists={this.props.privatePlaylists}
+                track={this.props.activeTrack}
+                setMenuWrapperRef={this.setMenuWrapperRef}
+                toggleDropdown={() => this.toggleDropdown()}
+                addTrackToPlaylist={(ownerId, playlistId, uri) =>
+                  this.addTrackToPlaylist(ownerId, playlistId, uri)}
+                addTrackToQueuedList={track => this.addTrackToQueuedList(track)}
+                isMyPlaylist={false}
+              />
+            </div>
             <img
               src={
                 this.props.activeTrack.id
@@ -172,18 +185,6 @@ class MusicBar extends Component {
               </p>
               <p className="track-title">{this.props.activeTrack.name}</p>
             </div>
-            <div className={this.state.dropdownClassName}>
-              <TrackMenu
-                privatePlaylists={this.props.privatePlaylists}
-                track={this.props.activeTrack}
-                setMenuWrapperRef={this.setMenuWrapperRef}
-                toggleDropdown={() => this.toggleDropdown()}
-                addTrackToPlaylist={(ownerId, playlistId, uri) =>
-                  this.addTrackToPlaylist(ownerId, playlistId, uri)}
-                addTrackToQueuedList={track => this.addTrackToQueuedList(track)}
-                isMyPlaylist={false}
-              />
-            </div>
           </div>
           <MusicBarActions
             playPreviousTrack={() => this.props.playPrevTrack()}
@@ -193,6 +194,8 @@ class MusicBar extends Component {
             isPlaying={this.props.isPlaying}
             pauseActiveTrack={() => this.props.pauseActiveTrack()}
             playActiveTrack={() => this.props.playActiveTrack()}
+            isShuffling={this.props.isShuffling}
+            toggleShuffle={() => this.props.toggleShuffle()}
           />
           <div className="fullscreen" onClick={e => this.requestFullScreen(e)}>
             <span className="icon">
@@ -278,7 +281,8 @@ const mapStateToProps = ({ track, player, playlist }) => {
     playingTracklist: track.playingTracklist,
     activeTrackIndex: track.activeTrackIndex,
     latestPlayedTracks: track.latestPlayedTracks,
-    privatePlaylists: playlist.privatePlaylists
+    privatePlaylists: playlist.privatePlaylists,
+    isShuffling: player.isShuffling
   }
 }
 
@@ -297,5 +301,6 @@ export default connect(mapStateToProps, {
   playNextTrack,
   playPrevTrack,
   addTrackToPlaylist,
-  addTrackToQueuedList
+  addTrackToQueuedList,
+  toggleShuffle
 })(MusicBar)

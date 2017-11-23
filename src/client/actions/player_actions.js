@@ -14,6 +14,7 @@ export const START_SEEK = 'start_seek'
 export const STOP_SEEK = 'stop_seek'
 export const CHANGE_SEEK = 'change_seek'
 export const ZERO_PLAYED_TIME = 'zero_played_time'
+export const TOGGLE_SHUFFLE = 'toggle_suffle'
 
 export const playActiveTrack = () => async dispatch => {
   dispatch({ type: PLAY_ACTIVE_TRACK })
@@ -51,12 +52,17 @@ export const zeroPlayedTime = () => async dispatch => {
   dispatch({ type: ZERO_PLAYED_TIME })
 }
 
+export const toggleShuffle = () => async dispatch => {
+  dispatch({ type: TOGGLE_SHUFFLE })
+}
+
 export const playNextTrack = () => async (dispatch, getState) => {
   const queuedTracklist = getState().track.queuedTracks
   const activeTrackIndex = getState().track.activeTrackIndex
   const playingTracklist = getState().track.playingTracklist
   const searchStatus = getState().search.searchStatus
   const searchedTracks = getState().search.searchedTracks
+  const isShuffling = getState().player.isShuffling
   let nextTrack
   if (queuedTracklist.length > 0) {
     nextTrack = queuedTracklist[0]
@@ -78,16 +84,37 @@ export const playNextTrack = () => async (dispatch, getState) => {
         }
       }
     } else {
-      if (activeTrackIndex !== playingTracklist.tracks.items.length - 1) {
-        nextTrack = playingTracklist.tracks.items[activeTrackIndex + 1].track
+      if (isShuffling) {
+        const randomIndex = Math.floor(
+          Math.random() * (playingTracklist.tracks.items.length - 1)
+        )
+        nextTrack = playingTracklist.tracks.items[randomIndex].track
+        let nextTrackIndex
+        playingTracklist.tracks.items.map((item, index) => {
+          if (item.track.id === nextTrack.id) {
+            nextTrackIndex = index
+          }
+        })
         if (!nextTrack.preview_url) {
-          await dispatch(setActiveTrackindex(activeTrackIndex + 1))
           setTimeout(() => {
             dispatch(playNextTrack())
           }, 100)
         } else {
-          await dispatch(setActiveTrack(nextTrack, activeTrackIndex + 1))
+          await dispatch(setActiveTrack(nextTrack, nextTrackIndex))
           dispatch(playActiveTrack())
+        }
+      } else {
+        if (activeTrackIndex !== playingTracklist.tracks.items.length - 1) {
+          nextTrack = playingTracklist.tracks.items[activeTrackIndex + 1].track
+          if (!nextTrack.preview_url) {
+            await dispatch(setActiveTrackindex(activeTrackIndex + 1))
+            setTimeout(() => {
+              dispatch(playNextTrack())
+            }, 100)
+          } else {
+            await dispatch(setActiveTrack(nextTrack, activeTrackIndex + 1))
+            dispatch(playActiveTrack())
+          }
         }
       }
     }

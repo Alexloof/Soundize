@@ -17,6 +17,13 @@ html {
   background-position: bottom;
 }
 
+.app {
+  background: linear-gradient(
+    transparentize($color: #d1dede, $amount: 0.2),
+    transparentize($color: #b5bec6, $amount: 0.2) 55%
+  );
+}
+
 * {
   margin: 0;
   padding: 0;

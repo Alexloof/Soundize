@@ -7,7 +7,9 @@ export default ({
   isLooping,
   isPlaying,
   pauseActiveTrack,
-  playActiveTrack
+  playActiveTrack,
+  isShuffling,
+  toggleShuffle
 }) => {
   const renderPlayPauseButton = (
     isPlaying,
@@ -55,6 +57,18 @@ export default ({
             <i className="fa fa-retweet active" />
           ) : (
             <i className="fa fa-retweet" />
+          )}
+        </span>
+      </button>
+      <button
+        onClick={() => toggleShuffle()}
+        className="button step-change-btn"
+      >
+        <span className="icon">
+          {isShuffling ? (
+            <i className="fa fa-random active" aria-hidden="true" />
+          ) : (
+            <i className="fa fa-random" aria-hidden="true" />
           )}
         </span>
       </button>

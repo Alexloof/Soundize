@@ -41,7 +41,11 @@ class Nav extends Component {
     return (
       <nav className="navbar ">
         <div className="navbar-brand">
-          <NavLink className="navbar-item" to="/">
+          <NavLink
+            className="navbar-item"
+            to="/login"
+            onClick={() => this.onLogout()}
+          >
             <img src={require('../images/Soundize-logo2.png')} alt="asasas" />
           </NavLink>
 
@@ -111,14 +115,6 @@ class Nav extends Component {
               activeStyle={{ color: '#ff6b42' }}
             >
               <span>Topplistor</span>
-            </NavLink>
-
-            <NavLink
-              className="navbar-item"
-              to="/login"
-              onClick={() => this.onLogout()}
-            >
-              <span>Refresh</span>
             </NavLink>
           </div>
 

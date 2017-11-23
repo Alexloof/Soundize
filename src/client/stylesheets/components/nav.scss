@@ -156,6 +156,13 @@ $menu-items-loop-offset: $menu-items - 1;
         cursor: pointer;
       }
     }
+    .login-btn {
+      color: white;
+      font-size: 16px;
+      letter-spacing: 2px;
+      align-self: center;
+      padding-right: 30px;
+    }
     img {
       max-height: 30px;
       border-radius: 50%;

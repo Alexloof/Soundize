@@ -42,9 +42,22 @@ class Login extends Component {
       this.props.history.push('/')
     }
   }
+  login = () => {
+    window.open(
+      url,
+      'Spotify',
+      'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
+        width +
+        ', height=' +
+        height +
+        ', top=' +
+        top +
+        ', left=' +
+        left
+    )
+  }
   render() {
     console.log(url)
-
     return (
       <div className="login-wrapper">
         <div>
@@ -94,7 +107,7 @@ class Login extends Component {
 
             <div id="navMenubd-example" className="navbar-menu">
               <div className="navbar-end">
-                <a className="login-btn">
+                <a onClick={() => this.login()} className="login-btn">
                   <span>Logga in</span>
                 </a>
               </div>
@@ -105,12 +118,10 @@ class Login extends Component {
               <h1>Discover a universe of music</h1>
               <h1>Login now!</h1>
               <p>
-                <a className="banner-button" href="#">
-                  LEARN MORE
-                </a>
+                <a className="banner-button">LEARN MORE</a>
               </p>
               <p>
-                <a className="scroll-down" id="mini-info" href="#">
+                <a className="scroll-down" id="mini-info">
                   Learn about Soundize
                 </a>
               </p>
@@ -147,34 +158,16 @@ class Login extends Component {
               className="fa fa-arrow-down scroll-down-two"
               aria-hidden="true"
             />
-            <div className="carousel wrapper">
-              <div>
-                <h1>Music for everyone.</h1>
-                <p>
-                  <a className="banner-button" href="#">
-                    GET MAESTRO FREE
-                  </a>
-                  <a className="banner-button" href="#">
-                    GEAT MAESTRO PREMIUM
-                  </a>
-                </p>
-              </div>
-              <div>
-                <h1>Premium for your whole family.</h1>
-                <p>
-                  <a className="banner-button" href="#">
-                    GET MAESTRO PREMIUM
-                  </a>
-                </p>
-              </div>
-              <div>
-                <h1>2017's Top 50 out now.</h1>
-                <p>
-                  <a className="banner-button" href="#">
-                    CHECK IT OUT
-                  </a>
-                </p>
-              </div>
+            <div className="wrapper">
+              <h1>Music for everyone.</h1>
+              <p>
+                <a className="banner-button" href="#">
+                  GET MAESTRO FREE
+                </a>
+                <a className="banner-button" href="#">
+                  GEAT MAESTRO PREMIUM
+                </a>
+              </p>
             </div>
           </section>
           <section className="banner-four">
@@ -209,24 +202,6 @@ class Login extends Component {
               </div>
             </div>
           </section>
-          <div>
-            <i
-              className="fa fa-arrow-down scroll-down-four"
-              aria-hidden="true"
-            />
-          </div>
-          <section className="banner-five">
-            <div className="pictures-one">
-              <img alt="" />
-              <img alt="" />
-              <img alt="" />
-            </div>
-            <div className="pictures-two">
-              <img alt="" />
-              <img alt="" />
-              <img alt="" />
-            </div>
-          </section>
           <footer>
             <div id="footer">
               <span className="slide">
@@ -244,7 +219,7 @@ class Login extends Component {
                   aria-hidden="true"
                 />
               </span>
-              <h2>Copyright - 2017 Maestro AB</h2>
+              <h2>Copyright - 2017 Soundize</h2>
             </div>
           </footer>
         </div>

@@ -1,29 +1,33 @@
 .search-component {
   margin-bottom: 52px;
+  width: 1200px;
+  background-color: $gray-light;
+  min-height: calc(100vh - #{$nav-height});
+  margin: 0 auto;
+  box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
   .search-banner {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    h1 {
+    .title {
       margin-bottom: 0 !important;
       margin-right: 10px;
       font-size: 1.6rem;
     }
-    h2 {
+    .subtitle {
       margin-top: 0 !important;
       font-size: 1.4rem;
+      &:first-letter {
+        text-transform: capitalize;
+      }
     }
   }
   .search-data-wrapper {
-    width: 1200px;
-    background-color: $gray-light;
-    min-height: 75vh;
-    margin: 0 auto;
     display: flex;
-    box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
 
+    flex-direction: row;
     h2 {
       text-align: center;
       font-size: 1.6rem;

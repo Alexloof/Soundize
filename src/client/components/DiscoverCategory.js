@@ -22,6 +22,7 @@ class DiscoverCategory extends Component {
         >
           <i className="fa fa-chevron-left" aria-hidden="true" />
         </button>
+        <h1>{this.props.match.params.category}</h1>
         <ul className="menu-list discover-category-list">
           {this.props.categoryPlaylists.map((playlist, index) => {
             return (

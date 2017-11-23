@@ -6,14 +6,16 @@ body {
 html {
   font-size: 14px;
   overflow-y: auto;
-  background-color: $body-background-color;
+
   background: linear-gradient(
-      transparentize($color: gray, $amount: 0.5),
+      transparentize($color: $brand-primary, $amount: 0.2),
+      rgba(48, 48, 48, 0.9) 50%,
       transparentize($color: $brand-primary, $amount: 0.2)
     ),
     url('https://images.pexels.com/photos/167605/pexels-photo-167605.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb');
   background-attachment: fixed;
   background-size: contain;
+  //background-position-y: -300px;
 }
 
 * {

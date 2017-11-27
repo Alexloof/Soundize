@@ -33,9 +33,6 @@ class DiscoverCategory extends Component {
                 className="discover-category-item"
               >
                 <img src={playlist.images[0].url} />
-                <div className="discovery-category-item-name">
-                  <h2>{playlist.name}</h2>
-                </div>
               </li>
             )
           })}

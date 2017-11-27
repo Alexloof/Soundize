@@ -21,9 +21,6 @@ class Toplists extends Component {
           key={index}
         >
           <img src={playlist.images[0].url} />
-          <div className="toplists-item-name">
-            <h2>{playlist.name}</h2>
-          </div>
         </li>
       )
     })

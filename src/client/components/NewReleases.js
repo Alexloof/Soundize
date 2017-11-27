@@ -22,10 +22,6 @@ class NewReleases extends Component {
       return (
         <li className="new-releases-item" key={index}>
           <img src={release.images[0].url} />
-          <div className="new-releases-item-name">
-            <h2>{release.name}</h2>
-            <p>{this.renderFormattedArtists(release.artists)}</p>
-          </div>
         </li>
       )
     })

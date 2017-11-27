@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { pauseActiveTrack } from '../actions/player_actions'
 
 class Nav extends Component {
   state = {
@@ -9,6 +12,7 @@ class Nav extends Component {
   }
   onLogout = () => {
     localStorage.removeItem('token')
+    this.props.pauseActiveTrack()
     this.props.history.replace('/login')
   }
   onInputChange = e => {
@@ -167,4 +171,4 @@ class Nav extends Component {
   }
 }
 
-export default withRouter(Nav)
+export default withRouter(connect(null, { pauseActiveTrack })(Nav))

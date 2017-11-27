@@ -162,10 +162,10 @@ class Login extends Component {
               <h1>Music for everyone.</h1>
               <p>
                 <a className="banner-button" href="#">
-                  GET MAESTRO FREE
+                  GET SOUNDIZE FREE
                 </a>
                 <a className="banner-button" href="#">
-                  GEAT MAESTRO PREMIUM
+                  GEAT SOUNDIZE PREMIUM
                 </a>
               </p>
             </div>
@@ -223,24 +223,6 @@ class Login extends Component {
             </div>
           </footer>
         </div>
-        {/* <a
-          onClick={() =>
-            window.open(
-              url,
-              'Spotify',
-              'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
-                width +
-                ', height=' +
-                height +
-                ', top=' +
-                top +
-                ', left=' +
-                left
-            )}
-          className="button login-button"
-        >
-          ENTER
-        </a> */}
       </div>
     )
   }

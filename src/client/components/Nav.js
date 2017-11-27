@@ -153,6 +153,7 @@ class Nav extends Component {
                       {this.props.user.display_name}
                     </a>
                     <div className="navbar-dropdown">
+                      <a className="navbar-item">Profil</a>
                       <a
                         onClick={() => this.onLogout()}
                         className="navbar-item"

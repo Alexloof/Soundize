@@ -23,16 +23,19 @@ class Home extends Component {
     modalClassName: 'modal create-playlist-modal'
   }
   componentDidMount() {
-    if (this.props.playlists.length > 1) {
-      this.setStandardPlaylist(this.props.playlists)
-    }
+    this.getAllPlaylists(this.props)
     window.scroll(0, 0)
   }
   async componentWillReceiveProps(newProps) {
     if (this.props.user !== newProps.user) {
-      await this.props.getPlaylists(newProps.user.id)
-      this.props.getPrivatePlaylists(this.props.playlists, newProps.user.id)
-      this.props.getFeaturedPlaylists()
+      this.getAllPlaylists(newProps)
+    }
+  }
+  getAllPlaylists = async newProps => {
+    await this.props.getPlaylists(newProps.user.id)
+    this.props.getPrivatePlaylists(this.props.playlists, newProps.user.id)
+    this.props.getFeaturedPlaylists()
+    if (this.props.playlists.length > 1) {
       this.setStandardPlaylist(this.props.playlists)
     }
   }

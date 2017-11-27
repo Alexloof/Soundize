@@ -26,6 +26,11 @@ class Track extends Component {
   state = {
     dropdownClassName: 'dropdown'
   }
+  componentWillUpdate() {
+    if (this.props.track.id !== this.props.activeTrack.id) {
+      return false
+    }
+  }
   handleClick = event => {
     if (this.state.dropdownClassName === 'dropdown is-active') {
       if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {

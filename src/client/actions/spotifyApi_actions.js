@@ -1,5 +1,6 @@
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
+import axios from 'axios'
 
 import { showSuccessAlert, showErrorAlert } from './alert_actions'
 
@@ -24,6 +25,48 @@ export const fetchUser = async dispatch => {
       console.log('Something went wrong getting user details!', err)
     }
   )
+}
+
+export const fetchTopTracks = async dispatch => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .get('https://api.spotify.com/v1/me/top/tracks', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        console.log(data.data)
+      },
+      function(err) {
+        console.log('Something went wrong getting categories!', err)
+      }
+    )
+}
+
+export const fetchTopArtists = async dispatch => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .get('https://api.spotify.com/v1/me/top/artists', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        console.log(data.data)
+      },
+      function(err) {
+        console.log('Something went wrong getting categories!', err)
+      }
+    )
 }
 
 // PLAYLISTS
@@ -165,15 +208,19 @@ export const removeTrackFromPlaylistCall = async (
 
 // CATEGORIES
 export const getCategoriesCall = async dispatch => {
-  return spotifyApi
-    .getCategories({
-      offset: 0,
-      country: 'SE',
-      locale: 'sv_SE'
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get('https://api.spotify.com/v1/browse/categories', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
     })
     .then(
       data => {
-        return data.body.categories.items
+        return data.data.categories.items
       },
       function(err) {
         console.log('Something went wrong getting categories!', err)

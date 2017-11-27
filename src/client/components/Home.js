@@ -52,6 +52,14 @@ class Home extends Component {
     this.props.getPlaylists()
     this.props.getPrivatePlaylists()
   }
+  renderTracklist = () => {
+    //console.log(this.props.activeTracklist.tracks.items.length)
+    return !this.props.activeTracklist || !this.props.activeTracklist.id ? (
+      <Loading />
+    ) : (
+      <Tracklist />
+    )
+  }
   render() {
     return (
       <div>
@@ -59,9 +67,7 @@ class Home extends Component {
           <div className="column playlists-menu">
             <Playlists onOpenCreatePlaylistModal={this.openModal} />
           </div>
-          <div className="column is-6 tracklist">
-            {!this.props.activeTracklist ? <Loading /> : <Tracklist />}
-          </div>
+          <div className="column is-6 tracklist">{this.renderTracklist()}</div>
           <div className="column extra-infolist">
             <ExtraInfolist />
           </div>

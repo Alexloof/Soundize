@@ -19,8 +19,12 @@ export const setActiveTracklist = (ownerId, playlistId) => async dispatch => {
   let tracklist = await getTracklistOfPlaylist(ownerId, playlistId, dispatch)
 
   if (tracklist) {
-    dispatch({ type: SET_ACTIVE_TRACKLIST, payload: tracklist })
+    dispatch(setActiveTracklistSolo(tracklist))
   }
+}
+
+export const setActiveTracklistSolo = tracklist => async dispatch => {
+  dispatch({ type: SET_ACTIVE_TRACKLIST, payload: tracklist })
 }
 
 export const setPlayingTracklist = tracklist => async dispatch => {

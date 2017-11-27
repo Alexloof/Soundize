@@ -8,7 +8,6 @@ import {
 export const SET_SEARCHED_ARTISTS = 'set_searched_artists'
 export const SET_SEARCHED_TRACKS = 'set_searched_tracks'
 export const SET_SEARCHED_PLAYLISTS = 'set_searched_playlists'
-export const SET_SEARCH_STATUS = 'set_search_status'
 
 export const getSearchedArtists = word => async dispatch => {
   let artists = await getSearchedArtistsCall(word)
@@ -32,8 +31,4 @@ export const getSearchedPlaylists = word => async dispatch => {
   if (playlists) {
     dispatch({ type: SET_SEARCHED_PLAYLISTS, payload: playlists })
   }
-}
-
-export const setSearchStatus = status => async dispatch => {
-  dispatch({ type: SET_SEARCH_STATUS, payload: status })
 }

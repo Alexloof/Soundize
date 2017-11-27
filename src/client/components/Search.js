@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import {
   getSearchedArtists,
   getSearchedTracks,
-  getSearchedPlaylists,
-  setSearchStatus
+  getSearchedPlaylists
 } from '../actions/search_actions'
+
+import { setActiveTracklistSolo } from '../actions/track_actions'
 
 import Track from './Track'
 
@@ -19,13 +20,21 @@ class Search extends Component {
   }
   componentWillMount() {
     window.scroll(0, 0)
-    this.props.setSearchStatus(true)
     this.makeSearch(this.props)
   }
-  makeSearch = props => {
+  makeSearch = async props => {
     this.props.getSearchedArtists(props.location.search.slice(3))
-    this.props.getSearchedTracks(props.location.search.slice(3))
     this.props.getSearchedPlaylists(props.location.search.slice(3))
+    await this.props.getSearchedTracks(props.location.search.slice(3))
+    let tracklist = {
+      tracks: {
+        items: []
+      }
+    }
+    this.props.searchedTracks.map(track => {
+      tracklist.tracks.items.push({ track: track })
+    })
+    this.props.setActiveTracklistSolo(tracklist)
   }
   componentWillUpdate(nextProps) {
     if (
@@ -36,7 +45,7 @@ class Search extends Component {
     }
   }
   componentWillUnmount() {
-    this.props.setSearchStatus(false)
+    this.props.setActiveTracklistSolo(null)
   }
   renderArtists = () => {
     return this.props.searchedArtists.map((artist, index) => {
@@ -138,6 +147,6 @@ export default withRouter(
     getSearchedArtists,
     getSearchedTracks,
     getSearchedPlaylists,
-    setSearchStatus
+    setActiveTracklistSolo
   })(Search)
 )

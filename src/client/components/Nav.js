@@ -142,7 +142,7 @@ class Nav extends Component {
             </form>
 
             <div className="navbar-item">
-              {this.props.user ? (
+              {this.props.user.id ? (
                 <div
                   className="field is-grouped"
                   style={{ alignItems: 'center' }}

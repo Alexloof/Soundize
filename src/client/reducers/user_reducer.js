@@ -1,7 +1,9 @@
 import { SET_USER } from '../actions/user_actions'
 
 let INITIAL_STATE = {
-  user: null
+  user: {
+    id: ''
+  }
 }
 
 export default (state = INITIAL_STATE, action) => {

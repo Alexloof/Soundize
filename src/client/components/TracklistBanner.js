@@ -32,8 +32,14 @@ class TracklistBanner extends Component {
             </div>
             <div className="tracklist-banner-btn-group">
               {this.props.playingTracklistId !==
-                this.props.activeTracklist.id &&
-              this.props.isPlaying === false ? (
+              this.props.activeTracklist.id ? (
+                <button
+                  onClick={() => this.props.playActiveTracklist()}
+                  className="button is-outlined"
+                >
+                  Spela Upp
+                </button>
+              ) : this.props.isPlaying === false ? (
                 <button
                   onClick={() => this.props.playActiveTracklist()}
                   className="button is-outlined"
@@ -48,7 +54,7 @@ class TracklistBanner extends Component {
                   Pausa
                 </button>
               )}
-              {}
+
               {this.props.activeTracklist.owner.id === this.props.userId ? (
                 <button
                   onClick={() => this.props.showDeleteModal()}

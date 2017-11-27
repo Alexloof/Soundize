@@ -17,8 +17,14 @@ class TracklistBannerScroll extends Component {
         </div>
         <div className="tracklist-scroll-banner-right-grp">
           <div className="tracklist-scroll-btn-grp">
-            {this.props.playingTracklistId !== this.props.activeTracklist.id &&
-            this.props.isPlaying === false ? (
+            {this.props.playingTracklistId !== this.props.activeTracklist.id ? (
+              <button
+                onClick={() => this.props.playActiveTracklist()}
+                className="button is-outlined"
+              >
+                <i className="fa fa-play" />
+              </button>
+            ) : this.props.isPlaying === false ? (
               <button
                 onClick={() => this.props.playActiveTracklist()}
                 className="button is-outlined"
@@ -33,6 +39,7 @@ class TracklistBannerScroll extends Component {
                 <i className="fa fa-pause" />
               </button>
             )}
+
             <button
               onClick={() => this.props.showDeleteModal()}
               className="button"

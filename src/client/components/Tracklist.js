@@ -189,7 +189,7 @@ const mapStateToProps = ({ user, track, playlist, player }) => {
     activeTracklist: track.activeTracklist,
     privatePlaylists: playlist.privatePlaylists,
     activeTracklist: track.activeTracklist,
-    playingTracklistId: track.playingTracklistId,
+    playingTracklistId: track.playingTracklist.id,
     isPlaying: player.isPlaying
   }
 }

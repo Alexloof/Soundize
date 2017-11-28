@@ -94,10 +94,12 @@ class Tracklist extends Component {
     this.props.setActivePlaylist(this.props.userPlaylists[0].id)
   }
   checkPlaylistOwner = () => {
-    if (this.props.activeTracklist.owner.id === this.props.user.id) {
-      return true
-    } else {
-      false
+    if (this.props.activeTracklist.owner) {
+      if (this.props.activeTracklist.owner.id === this.props.user.id) {
+        return true
+      } else {
+        false
+      }
     }
   }
   playActiveTracklist = async () => {

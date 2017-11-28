@@ -27,6 +27,8 @@ class Search extends Component {
     this.props.getSearchedPlaylists(props.location.search.slice(3))
     await this.props.getSearchedTracks(props.location.search.slice(3))
     let tracklist = {
+      owner: {},
+      name: '',
       tracks: {
         items: []
       }
@@ -47,10 +49,20 @@ class Search extends Component {
   componentWillUnmount() {
     this.props.setActiveTracklistSolo(null)
   }
+  navigateToArtistDetailPage = id => {
+    this.props.history.push(`/artists/${id}`)
+  }
+  navigateToPlaylist = (userId, playlistId) => {
+    this.props.history.push(`/playlists/${userId}/${playlistId}`)
+  }
   renderArtists = () => {
     return this.props.searchedArtists.map((artist, index) => {
       return (
-        <li key={index} className="artist-result">
+        <li
+          key={index}
+          onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          className="artist-result"
+        >
           <img
             src={
               artist.images[1]
@@ -73,7 +85,13 @@ class Search extends Component {
   renderPlaylists = () => {
     return this.props.searchedPlaylists.map((playlist, index) => {
       return (
-        <li key={index} className="playlist-result">
+        <li
+          key={index}
+          onClick={() =>
+            this.navigateToPlaylist(playlist.owner.id, playlist.id)
+          }
+          className="playlist-result"
+        >
           <img
             src={
               playlist.images

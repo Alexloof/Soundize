@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import { setupAuthToAPI } from '../actions/user_actions'
+
 class TrackDetail extends Component {
-  componentWillMount = () => {
+  async componentWillMount() {
     window.scroll(0, 0)
+    await this.props.setupAuthToAPI()
   }
   render() {
     return (
@@ -19,4 +22,6 @@ const mapStateToProps = ({ categories }) => {
   return { categories: categories.categories }
 }
 
-export default withRouter(connect(mapStateToProps, null)(TrackDetail))
+export default withRouter(
+  connect(mapStateToProps, { setupAuthToAPI })(TrackDetail)
+)

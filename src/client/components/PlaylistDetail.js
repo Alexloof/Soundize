@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import { setupAuthToAPI } from '../actions/user_actions'
 import { setActivePlaylist } from '../actions/playlist_actions'
 import { setActiveTracklist } from '../actions/track_actions'
 
@@ -9,8 +10,9 @@ import Tracklist from './Tracklist'
 import Loading from './general/Loading'
 
 class PlaylistDetail extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     window.scroll(0, 0)
+    await this.props.setupAuthToAPI()
     this.setActivePlaylist(
       this.props.match.params.user,
       this.props.match.params.id
@@ -45,7 +47,9 @@ const mapStateToProps = ({ track }) => {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { setActiveTracklist, setActivePlaylist })(
-    PlaylistDetail
-  )
+  connect(mapStateToProps, {
+    setActiveTracklist,
+    setActivePlaylist,
+    setupAuthToAPI
+  })(PlaylistDetail)
 )

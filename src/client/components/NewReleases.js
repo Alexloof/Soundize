@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import { setupAuthToAPI } from '../actions/user_actions'
 import { getNewReleases } from '../actions/playlist_actions'
 
 class NewReleases extends Component {
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.setupAuthToAPI()
     this.props.getNewReleases()
   }
   renderFormattedArtists(artists) {
@@ -43,5 +45,5 @@ const mapStateToProps = ({ playlist }) => {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { getNewReleases })(NewReleases)
+  connect(mapStateToProps, { getNewReleases, setupAuthToAPI })(NewReleases)
 )

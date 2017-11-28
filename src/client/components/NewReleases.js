@@ -10,19 +10,21 @@ class NewReleases extends Component {
     await this.props.setupAuthToAPI()
     this.props.getNewReleases()
   }
-  renderFormattedArtists(artists) {
-    return artists.map((artist, index) => {
-      if (index + 1 === artists.length) {
-        return artist.name
-      } else {
-        return artist.name + ', '
-      }
-    })
+  navigateToDetailPage = release => {
+    if (release.album_type === 'album') {
+      this.props.history.push(`/albums/${release.id}`)
+    } else {
+      console.log(release, 'single')
+    }
   }
   renderNewReleases = () => {
     return this.props.newReleases.map((release, index) => {
       return (
-        <li className="new-releases-item" key={index}>
+        <li
+          onClick={() => this.navigateToDetailPage(release)}
+          className="new-releases-item"
+          key={index}
+        >
           <img src={release.images[0].url} />
         </li>
       )

@@ -21,6 +21,7 @@ import NewReleases from './components/NewReleases'
 import Toplists from './components/Toplists'
 import AlbumDetail from './components/AlbumDetail'
 import ArtistDetail from './components/ArtistDetail'
+import TrackDetail from './components/TrackDetail'
 
 import './stylesheets/main.scss'
 
@@ -62,6 +63,11 @@ const app_routes = [
       {
         path: '/artists/:id',
         component: ArtistDetail,
+        exact: true
+      },
+      {
+        path: '/tracks/:id',
+        component: TrackDetail,
         exact: true
       },
       {

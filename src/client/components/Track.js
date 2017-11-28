@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import TrackMenu from './TrackMenu'
@@ -31,6 +32,9 @@ class Track extends Component {
       return false
     }
   }
+  navigateToTrackDetailPage = () => {
+    this.props.history.push(`/tracks/${this.props.track.id}`)
+  }
   handleClick = event => {
     if (this.state.dropdownClassName === 'dropdown is-active') {
       if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
@@ -38,12 +42,23 @@ class Track extends Component {
       }
     }
   }
+  navigateToArtistDetailPage = id => {
+    this.props.history.push(`/artists/${id}`)
+  }
   renderFormattedArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
-        return artist.name
+        return (
+          <span onClick={() => this.navigateToArtistDetailPage(artist.id)}>
+            {artist.name}
+          </span>
+        )
       } else {
-        return artist.name + ', '
+        return (
+          <span onClick={() => this.navigateToArtistDetailPage(artist.id)}>
+            {artist.name + ', '}
+          </span>
+        )
       }
     })
   }
@@ -199,7 +214,12 @@ class Track extends Component {
               <div className="artist-label">
                 {this.renderFormattedArtists(this.props.track.artists)}
               </div>
-              <div className="title-label">{this.props.track.name}</div>
+              <div
+                onClick={() => this.navigateToTrackDetailPage()}
+                className="title-label"
+              >
+                {this.props.track.name}
+              </div>
             </div>
 
             <div className="track-section-higher-right-grp">
@@ -230,11 +250,14 @@ class Track extends Component {
                   setMenuWrapperRef={this.setMenuWrapperRef}
                   privatePlaylists={this.props.privatePlaylists}
                   addTrackToPlaylist={(ownerId, playlistId, uri) =>
-                    this.addTrackToPlaylist(ownerId, playlistId, uri)}
+                    this.addTrackToPlaylist(ownerId, playlistId, uri)
+                  }
                   removeTrackFromPlaylist={uri =>
-                    this.removeTrackFromPlaylist(uri)}
+                    this.removeTrackFromPlaylist(uri)
+                  }
                   addTrackToQueuedList={track =>
-                    this.addTrackToQueuedList(track)}
+                    this.addTrackToQueuedList(track)
+                  }
                   track={this.props.track}
                   isMyPlaylist={this.props.isMyPlaylist}
                 />
@@ -300,17 +323,19 @@ const mapStateToProps = ({ playlist, track, player }) => {
   }
 }
 
-export default connect(mapStateToProps, {
-  pauseActiveTrack,
-  playActiveTrack,
-  setActiveTrack,
-  removeTrackFromPlaylist,
-  addTrackToPlaylist,
-  addTrackToQueuedList,
-  showMusicbar,
-  setActiveTracklist,
-  setPlayingTracklist,
-  changeSeek,
-  startSeek,
-  stopSeek
-})(Track)
+export default withRouter(
+  connect(mapStateToProps, {
+    pauseActiveTrack,
+    playActiveTrack,
+    setActiveTrack,
+    removeTrackFromPlaylist,
+    addTrackToPlaylist,
+    addTrackToQueuedList,
+    showMusicbar,
+    setActiveTracklist,
+    setPlayingTracklist,
+    changeSeek,
+    startSeek,
+    stopSeek
+  })(Track)
+)

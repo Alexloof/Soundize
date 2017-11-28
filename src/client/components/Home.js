@@ -56,7 +56,6 @@ class Home extends Component {
     this.props.getPrivatePlaylists()
   }
   renderTracklist = () => {
-    //console.log(this.props.activeTracklist.tracks.items.length)
     return !this.props.activeTracklist || !this.props.activeTracklist.id ? (
       <Loading />
     ) : (

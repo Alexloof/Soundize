@@ -57,10 +57,19 @@
         .artist-label {
           font-size: 11px;
           color: $gray-medium;
+          span {
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
         .title-label {
           font-size: 14px;
-          //text-shadow: 0px 2px 1px rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
       .track-section-higher-right-grp {

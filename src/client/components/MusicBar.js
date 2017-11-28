@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import screenfull from 'screenfull'
+import { withRouter } from 'react-router-dom'
 
 import AudioPlayer from './AudioPlayer'
 import MusicBarActions from './MusicBarActions'
@@ -66,6 +67,12 @@ class MusicBar extends Component {
     }
     renderFrame()
   }
+  navigateToTrackDetailPage = () => {
+    this.props.history.push(`/tracks/${this.props.activeTrack.id}`)
+  }
+  navigateToArtistDetailPage = id => {
+    this.props.history.push(`/artists/${id}`)
+  }
   onProgress = time => {
     // We only want to update time slider if we are not currently seeking
     if (!this.props.isSeeking) {
@@ -115,9 +122,23 @@ class MusicBar extends Component {
   renderFormattedArtists(artists) {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
-        return artist.name
+        return (
+          <span
+            key={index}
+            onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          >
+            {artist.name}
+          </span>
+        )
       } else {
-        return artist.name + ', '
+        return (
+          <span
+            key={index}
+            onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          >
+            {artist.name + ', '}
+          </span>
+        )
       }
     })
   }
@@ -167,7 +188,8 @@ class MusicBar extends Component {
                 setMenuWrapperRef={this.setMenuWrapperRef}
                 toggleDropdown={() => this.toggleDropdown()}
                 addTrackToPlaylist={(ownerId, playlistId, uri) =>
-                  this.addTrackToPlaylist(ownerId, playlistId, uri)}
+                  this.addTrackToPlaylist(ownerId, playlistId, uri)
+                }
                 addTrackToQueuedList={track => this.addTrackToQueuedList(track)}
                 isMyPlaylist={false}
               />
@@ -183,7 +205,12 @@ class MusicBar extends Component {
               <p className="artist-label">
                 {this.renderFormattedArtists(this.props.activeTrack.artists)}
               </p>
-              <p className="track-title">{this.props.activeTrack.name}</p>
+              <p
+                onClick={() => this.navigateToTrackDetailPage()}
+                className="track-title"
+              >
+                {this.props.activeTrack.name}
+              </p>
             </div>
           </div>
           <MusicBarActions
@@ -204,7 +231,8 @@ class MusicBar extends Component {
           </div>
           <div className="track-running-wrapper">
             <div className="time-counter">
-              {(Math.round(this.state.duration * this.props.playedTime) / 100
+              {(
+                Math.round(this.state.duration * this.props.playedTime) / 100
               ).toFixed(2)}
             </div>
             <div className="running-track">
@@ -286,21 +314,23 @@ const mapStateToProps = ({ track, player, playlist }) => {
   }
 }
 
-export default connect(mapStateToProps, {
-  toggleStartPauseTrack,
-  setPlayedTime,
-  startSeek,
-  stopSeek,
-  changeSeek,
-  pauseActiveTrack,
-  playActiveTrack,
-  zeroPlayedTime,
-  removeTrackFromQueuedTracks,
-  setActiveTrack,
-  setActiveTrackindex,
-  playNextTrack,
-  playPrevTrack,
-  addTrackToPlaylist,
-  addTrackToQueuedList,
-  toggleShuffle
-})(MusicBar)
+export default withRouter(
+  connect(mapStateToProps, {
+    toggleStartPauseTrack,
+    setPlayedTime,
+    startSeek,
+    stopSeek,
+    changeSeek,
+    pauseActiveTrack,
+    playActiveTrack,
+    zeroPlayedTime,
+    removeTrackFromQueuedTracks,
+    setActiveTrack,
+    setActiveTrackindex,
+    playNextTrack,
+    playPrevTrack,
+    addTrackToPlaylist,
+    addTrackToQueuedList,
+    toggleShuffle
+  })(MusicBar)
+)

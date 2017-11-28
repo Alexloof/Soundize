@@ -52,11 +52,21 @@
           font-size: 11px;
           overflow: hidden;
           text-overflow: ellipsis;
+          span {
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
         .track-title {
           font-size: 12px;
           overflow: hidden;
           text-overflow: ellipsis;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }

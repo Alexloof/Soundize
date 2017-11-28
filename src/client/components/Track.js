@@ -49,13 +49,19 @@ class Track extends Component {
     return artists.map((artist, index) => {
       if (index + 1 === artists.length) {
         return (
-          <span onClick={() => this.navigateToArtistDetailPage(artist.id)}>
+          <span
+            key={index}
+            onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          >
             {artist.name}
           </span>
         )
       } else {
         return (
-          <span onClick={() => this.navigateToArtistDetailPage(artist.id)}>
+          <span
+            key={index}
+            onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          >
             {artist.name + ', '}
           </span>
         )

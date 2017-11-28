@@ -166,6 +166,47 @@ export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {
 }
 
 // TRACK
+export const fetchTrack = async id => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + '/tracks/' + id, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data
+      },
+      function(err) {
+        console.log('Something went wrong getting categories!', err)
+      }
+    )
+}
+export const fetchTrackDetails = async id => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + '/audio-features/' + id, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data
+      },
+      function(err) {
+        console.log('Something went wrong getting categories!', err)
+      }
+    )
+}
+
 export const getTracklistOfPlaylist = async (userId, playlistId, dispatch) => {
   return spotifyApi.getPlaylist(userId, playlistId).then(
     data => {

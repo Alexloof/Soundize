@@ -5,10 +5,12 @@ import {
   REMOVE_TRACK_FROM_QUEUED_LIST,
   ADD_TRACK_TO_LATEST_PLAYED,
   SET_ACTIVE_TRACK,
-  SET_ACTIVE_TRACKINDEX
+  SET_ACTIVE_TRACKINDEX,
+  SET_TRACK_DETAIL
 } from '../actions/track_actions'
 
 const INITIAL_STATE = {
+  trackDetail: {},
   activeTracklist: null,
   playingTracklist: {
     id: ''
@@ -27,6 +29,10 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case SET_TRACK_DETAIL:
+      console.log(action.payload)
+      return { ...state, trackDetail: action.payload }
+
     case SET_ACTIVE_TRACKLIST:
       return { ...state, activeTracklist: action.payload }
 

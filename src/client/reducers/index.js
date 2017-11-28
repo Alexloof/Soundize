@@ -7,6 +7,7 @@ import player from './player_reducer'
 import categories from './category_reducer'
 import search from './search_reducer'
 import album from './album_reducer'
+import artist from './artist_reducer'
 
 export default combineReducers({
   playlist,
@@ -15,5 +16,6 @@ export default combineReducers({
   player,
   categories,
   search,
-  album
+  album,
+  artist
 })

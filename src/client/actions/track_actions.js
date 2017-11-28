@@ -30,7 +30,7 @@ export const setActiveTracklistSolo = tracklist => async dispatch => {
   dispatch({ type: SET_ACTIVE_TRACKLIST, payload: tracklist })
 }
 
-export const getTrackDetails = id => async dispatch => {
+export const getTrackDetail = id => async dispatch => {
   let track = await fetchTrack(id)
   let trackdetails = await fetchTrackDetails(id)
   let fullTrack = { ...trackdetails, ...track }

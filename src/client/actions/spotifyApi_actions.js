@@ -355,3 +355,88 @@ export const fetchAlbum = async id => {
       }
     )
 }
+
+//ARTIST
+export const fetchArtist = async id => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(`${BASE_URL}/artists/${id}`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data
+      },
+      function(err) {
+        console.log('Something went wrong getting album!', err)
+      }
+    )
+}
+
+export const fetchArtistAlbums = async id => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(`${BASE_URL}/artists/${id}/albums`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.items
+      },
+      function(err) {
+        console.log('Something went wrong getting album!', err)
+      }
+    )
+}
+
+export const fetchArtistTopTracks = async id => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(`${BASE_URL}/artists/${id}/top-tracks?country=SE`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.tracks
+      },
+      function(err) {
+        console.log('Something went wrong getting album!', err)
+      }
+    )
+}
+
+export const fetchRelatedArtists = async id => {
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(`${BASE_URL}/artists/${id}/related-artists`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.artists
+      },
+      function(err) {
+        console.log('Something went wrong getting album!', err)
+      }
+    )
+}

@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { getTrackDetails } from '../actions/track_actions'
+import { getTrackDetail } from '../actions/track_actions'
 import { setupAuthToAPI } from '../actions/user_actions'
 
 class TrackDetail extends Component {
   async componentWillMount() {
     window.scroll(0, 0)
     await this.props.setupAuthToAPI()
-    this.props.getTrackDetails(this.props.match.params.id)
+    this.props.getTrackDetail(this.props.match.params.id)
   }
   render() {
     return (
@@ -26,5 +26,5 @@ const mapStateToProps = ({ track }) => {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { setupAuthToAPI, getTrackDetails })(TrackDetail)
+  connect(mapStateToProps, { setupAuthToAPI, getTrackDetail })(TrackDetail)
 )

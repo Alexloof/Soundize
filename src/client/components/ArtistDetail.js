@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import Track from './Track'
+
 import { getArtistDetail } from '../actions/artist_actions'
 import { setupAuthToAPI } from '../actions/user_actions'
 
@@ -19,26 +21,35 @@ class ArtistDetail extends Component {
   renderGenres = genres => {
     if (genres) {
       return genres.map(genre => {
-        return genre
+        return <span className="genre">{genre}</span>
       })
     }
+  }
+  renderTracks = () => {
+    return this.props.artistTopTracks.map((track, index) => {
+      if (track !== null) {
+        return <Track key={index} track={track} index={index} />
+      }
+    })
   }
   render() {
     return (
       <div className="artist-detail-component">
-        <div className="artist-art-wrapper">
-          <img
-            className="artist-art"
-            src={
-              this.props.artist.images ? this.props.artist.images[0].url : null
-            }
-          />
-          {this.props.artist.images ? (
-            <div className="artist-art-fader" />
-          ) : null}
-          <h1>{this.props.artist.name}</h1>
-        </div>
         <div className="artist-info">
+          <div className="artist-art-wrapper">
+            <img
+              className="artist-art"
+              src={
+                this.props.artist.images
+                  ? this.props.artist.images[0].url
+                  : null
+              }
+            />
+            {this.props.artist.images ? (
+              <div className="artist-art-fader" />
+            ) : null}
+            <h1>{this.props.artist.name}</h1>
+          </div>
           <p className="artist-genres">
             Genres: {this.renderGenres(this.props.artist.genres)}
           </p>
@@ -51,6 +62,16 @@ class ArtistDetail extends Component {
           <p className="artist-popularity">
             Populäritet: {this.props.artist.popularity}
           </p>
+        </div>
+        <div className="artist-top-tracks">
+          <h2>Låtar</h2>
+          <ul className="menu-list track-list">
+            {this.props.artistTopTracks.length > 0 ? (
+              this.renderTracks()
+            ) : (
+              <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+            )}
+          </ul>
         </div>
       </div>
     )

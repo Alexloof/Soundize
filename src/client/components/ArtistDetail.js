@@ -11,14 +11,47 @@ class ArtistDetail extends Component {
     await this.props.setupAuthToAPI()
     this.props.getArtistDetail(this.props.match.params.id)
   }
+  componentWillReceiveProps(newProps) {
+    if (newProps.artist.id !== this.props.artist.id) {
+      this.props.getArtistDetail(this.props.match.params.id)
+    }
+  }
+  renderGenres = genres => {
+    if (genres) {
+      return genres.map(genre => {
+        return genre
+      })
+    }
+  }
   render() {
     return (
-      <div className="artist-detail-component ">
-        <h1>ArtistDetail</h1>
-        <p>{this.props.artist.name}</p>
-        <p>{this.props.artistAlbums[0].name}</p>
-        <p>{this.props.artistTopTracks[0].name}</p>
-        <p>{this.props.relatedArtists[0].name}</p>
+      <div className="artist-detail-component">
+        <div className="artist-art-wrapper">
+          <img
+            className="artist-art"
+            src={
+              this.props.artist.images ? this.props.artist.images[0].url : null
+            }
+          />
+          {this.props.artist.images ? (
+            <div className="artist-art-fader" />
+          ) : null}
+          <h1>{this.props.artist.name}</h1>
+        </div>
+        <div className="artist-info">
+          <p className="artist-genres">
+            Genres: {this.renderGenres(this.props.artist.genres)}
+          </p>
+          <p className="artist-followers">
+            Följare:{' '}
+            {this.props.artist.followers
+              ? this.props.artist.followers.total
+              : null}
+          </p>
+          <p className="artist-popularity">
+            Populäritet: {this.props.artist.popularity}
+          </p>
+        </div>
       </div>
     )
   }

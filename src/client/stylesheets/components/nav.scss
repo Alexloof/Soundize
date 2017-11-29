@@ -39,7 +39,7 @@ $menu-items-loop-offset: $menu-items - 1;
       list-style: none;
       max-width: 720px;
       padding: 0;
-      width: 38%;
+      width: 500px;
       max-width: 650px;
       .navbar-item {
         display: block;
@@ -50,7 +50,7 @@ $menu-items-loop-offset: $menu-items - 1;
         text-align: center;
         position: static;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 13px;
         letter-spacing: 1.5px;
         &:first-child {
           border-radius: 3px 0 0 3px;
@@ -67,7 +67,7 @@ $menu-items-loop-offset: $menu-items - 1;
         span {
           color: $nav-font-color;
           display: block;
-          padding-top: 16px;
+          padding-top: 18px;
           padding-bottom: 20px;
           text-decoration: none;
         }

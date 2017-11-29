@@ -1,0 +1,44 @@
+.artist-detail-component {
+  max-width: 90%; //$container-large;
+  background-color: $gray-light;
+  min-height: 90vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
+  padding: 20px;
+  padding-bottom: 52px;
+  .artist-info {
+    width: calc(100% - 440px);
+    .artist-followers {
+    }
+  }
+  .artist-art-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 440px;
+    height: 440px;
+    .artist-art {
+      width: 440px;
+      height: 440px;
+    }
+    .artist-art-fader {
+      width: 440px;
+      height: 440px;
+      background: linear-gradient(transparent, black 100%);
+      position: absolute;
+      top: 0;
+    }
+    h1 {
+      text-align: center;
+      font-weight: bold;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      position: absolute;
+      bottom: 0;
+      color: white;
+    }
+  }
+}

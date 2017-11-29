@@ -13,7 +13,7 @@ class TrackDetail extends Component {
   }
   render() {
     return (
-      <div className="album-detail-component ">
+      <div className="track-detail-component">
         <h1>TrackDetail</h1>
         <p>{this.props.trackDetail.name}</p>
       </div>

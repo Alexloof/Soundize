@@ -13,7 +13,7 @@ class AlbumDetail extends Component {
   }
   render() {
     return (
-      <div className="album-detail-component ">
+      <div className="album-detail-component">
         <h1>AlbumDetail</h1>
         <p>{this.props.album.name}</p>
       </div>

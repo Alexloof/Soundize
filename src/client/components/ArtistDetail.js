@@ -47,6 +47,9 @@ class ArtistDetail extends Component {
       this.props.getArtistDetail(this.props.match.params.id)
     }
   }
+  navigateToAlbum = id => {
+    this.props.history.push(`/albums/${id}`)
+  }
   renderGenres = genres => {
     if (genres) {
       return genres.map((genre, index) => {
@@ -65,6 +68,46 @@ class ArtistDetail extends Component {
       }
     })
   }
+  renderAlbums = () => {
+    return this.props.artistAlbums.map((album, index) => {
+      return (
+        <li
+          key={index}
+          className="artist-album"
+          onClick={() => this.navigateToAlbum(album.id)}
+        >
+          <img
+            src={
+              album.images
+                ? album.images[0].url
+                : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
+            }
+          />
+          <p>{album.name}</p>
+        </li>
+      )
+    })
+  }
+  renderRelated = () => {
+    return this.props.relatedArtists.map((artist, index) => {
+      return (
+        <li
+          key={index}
+          className="artist-related-solo"
+          onClick={() => this.navigateToArtist(artist.id)}
+        >
+          <img
+            src={
+              artist.images
+                ? artist.images[0].url
+                : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
+            }
+          />
+          <p>{artist.name}</p>
+        </li>
+      )
+    })
+  }
   render() {
     return (
       <div className="artist-detail-component">
@@ -75,7 +118,7 @@ class ArtistDetail extends Component {
               src={
                 this.props.artist.images
                   ? this.props.artist.images[0].url
-                  : null
+                  : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
               }
             />
             {this.props.artist.images ? (
@@ -83,18 +126,42 @@ class ArtistDetail extends Component {
             ) : null}
             <h1>{this.props.artist.name}</h1>
           </div>
-          <p className="artist-genres">
-            Genres: {this.renderGenres(this.props.artist.genres)}
-          </p>
-          <p className="artist-followers">
-            Följare:{' '}
-            {this.props.artist.followers
-              ? this.props.artist.followers.total
-              : null}
-          </p>
-          <p className="artist-popularity">
-            Populäritet: {this.props.artist.popularity}
-          </p>
+          <div className="artist-info-box">
+            <p className="artist-genres">
+              {this.renderGenres(this.props.artist.genres)}
+            </p>
+            <p className="artist-followers">
+              <span>Följare: </span>
+              {this.props.artist.followers
+                ? this.props.artist.followers.total.toLocaleString()
+                : null}
+            </p>
+            <p className="artist-popularity">
+              <span>Populäritet:</span> {this.props.artist.popularity}
+            </p>
+          </div>
+          <div className="artist-related">
+            <h2>Liknande artister</h2>
+            <ul className="menu-list related-list">
+              {this.props.relatedArtists.length > 0 ? (
+                this.renderRelated()
+              ) : (
+                <li style={{ textAlign: 'center' }}>
+                  Artisten har liknande artister
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+        <div className="artist-albums">
+          <h2>Album</h2>
+          <ul className="menu-list album-list">
+            {this.props.artistAlbums.length > 0 ? (
+              this.renderAlbums()
+            ) : (
+              <li style={{ textAlign: 'center' }}>Artisten har inga album</li>
+            )}
+          </ul>
         </div>
         <div className="artist-top-tracks">
           <h2>Låtar</h2>
@@ -102,7 +169,7 @@ class ArtistDetail extends Component {
             {this.props.artistTopTracks.length > 0 ? (
               this.renderTracks()
             ) : (
-              <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+              <li style={{ textAlign: 'center' }}>Artisten har inga låtar</li>
             )}
           </ul>
         </div>

@@ -50,6 +50,9 @@ class ArtistDetail extends Component {
   navigateToAlbum = id => {
     this.props.history.push(`/albums/${id}`)
   }
+  navigateToArtist = id => {
+    this.props.history.push(`/artists/${id}`)
+  }
   renderGenres = genres => {
     if (genres) {
       return genres.map((genre, index) => {

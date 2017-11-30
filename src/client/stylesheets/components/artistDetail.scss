@@ -27,7 +27,7 @@ $artist-dimension: 22vw;
       .artist-art-fader {
         width: $artist-dimension;
         height: $artist-dimension;
-        background: linear-gradient(transparent, rgb(14, 14, 14) 100%);
+        background: linear-gradient(transparent, rgb(0, 0, 0) 100%);
         position: absolute;
         top: 0;
       }
@@ -94,7 +94,7 @@ $artist-dimension: 22vw;
       .related-list {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         .artist-related-solo {
           margin-bottom: 10px;
           width: 33%;

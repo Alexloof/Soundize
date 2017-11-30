@@ -6,20 +6,37 @@ import Track from './Track'
 
 import { getArtistDetail } from '../actions/artist_actions'
 import { setupAuthToAPI } from '../actions/user_actions'
+import { setActiveTracklistSolo } from '../actions/track_actions'
 
 class ArtistDetail extends Component {
   async componentWillMount() {
     window.scroll(0, 0)
     await this.props.setupAuthToAPI()
-    this.props.getArtistDetail(this.props.match.params.id)
+    this.getArtistDetail(this.props.match.params.id)
     this.unlisten = this.props.history.listen((location, action) => {
       let incID = location.pathname.slice(9)
-      if (incID) {
+      let artists = location.pathname.slice(1, 8)
+      if (incID && artists == 'artists') {
         if (incID !== this.props.match.params.id) {
-          this.props.getArtistDetail(incID)
+          this.getArtistDetail(incID)
         }
       }
     })
+  }
+  getArtistDetail = async id => {
+    await this.props.getArtistDetail(id)
+
+    let tracklist = {
+      owner: {},
+      name: '',
+      tracks: {
+        items: []
+      }
+    }
+    this.props.artistTopTracks.map(track => {
+      tracklist.tracks.items.push({ track: track })
+    })
+    this.props.setActiveTracklistSolo(tracklist)
   }
   componentWillUnmount() {
     this.unlisten()
@@ -104,5 +121,9 @@ const mapStateToProps = ({ artist }) => {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { setupAuthToAPI, getArtistDetail })(ArtistDetail)
+  connect(mapStateToProps, {
+    setupAuthToAPI,
+    getArtistDetail,
+    setActiveTracklistSolo
+  })(ArtistDetail)
 )

@@ -12,7 +12,19 @@ class ArtistDetail extends Component {
     window.scroll(0, 0)
     await this.props.setupAuthToAPI()
     this.props.getArtistDetail(this.props.match.params.id)
+    this.unlisten = this.props.history.listen((location, action) => {
+      let incID = location.pathname.slice(9)
+      if (incID) {
+        if (incID !== this.props.match.params.id) {
+          this.props.getArtistDetail(incID)
+        }
+      }
+    })
   }
+  componentWillUnmount() {
+    this.unlisten()
+  }
+
   componentWillReceiveProps(newProps) {
     if (newProps.artist.id !== this.props.artist.id) {
       this.props.getArtistDetail(this.props.match.params.id)
@@ -20,8 +32,12 @@ class ArtistDetail extends Component {
   }
   renderGenres = genres => {
     if (genres) {
-      return genres.map(genre => {
-        return <span className="genre">{genre}</span>
+      return genres.map((genre, index) => {
+        return (
+          <span key={index} className="genre">
+            {genre}
+          </span>
+        )
       })
     }
   }

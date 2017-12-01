@@ -62,8 +62,12 @@ class TrackDetail extends Component {
               <h1>{trackDetail.name}</h1>
             </div>
             <div className="track-character">
-              <p>BPM: {Math.round(trackDetail.tempo)}</p>
-              <p>Key: {trackDetail.key}</p>
+              <p>
+                BPM: <span>{Math.round(trackDetail.tempo)}</span>
+              </p>
+              <p>
+                Key: <span>{trackDetail.key}</span>
+              </p>
             </div>
             <div className="track-measurements">
               <div>acousticness</div>

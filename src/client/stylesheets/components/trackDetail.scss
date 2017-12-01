@@ -64,6 +64,20 @@ $artist-dimension: 36vh;
         margin-bottom: 20px;
         p {
           font-size: 1.2rem;
+          &:first-child {
+            margin-bottom: 10px;
+          }
+          span {
+            background-color: $brand-secondary;
+            color: white;
+            padding: 1px 10px;
+            border-radius: 50px;
+            margin: 3px;
+            box-shadow: $box-shadow-small;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            white-space: nowrap;
+          }
         }
       }
       .track-measurements {

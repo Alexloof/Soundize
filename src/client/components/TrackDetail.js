@@ -38,6 +38,7 @@ class TrackDetail extends Component {
     })
   }
   render() {
+    const { trackDetail } = this.props
     return (
       <div className="track-detail-component">
         <div className="track-header">
@@ -45,8 +46,8 @@ class TrackDetail extends Component {
             <img
               className="track-art"
               src={
-                this.props.trackDetail.album.images
-                  ? this.props.trackDetail.album.images[0].url
+                trackDetail.album.images
+                  ? trackDetail.album.images[0].url
                   : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
               }
             />
@@ -54,11 +55,23 @@ class TrackDetail extends Component {
           <div className="track-info-details">
             <div className="track-names">
               <div className="track-artists">
-                {this.props.trackDetail.artists
-                  ? this.renderFormattedArtists(this.props.trackDetail.artists)
+                {trackDetail.artists
+                  ? this.renderFormattedArtists(trackDetail.artists)
                   : null}
               </div>
-              <h1>{this.props.trackDetail.name}</h1>
+              <h1>{trackDetail.name}</h1>
+            </div>
+            <div className="track-character">
+              <p>BPM: {Math.round(trackDetail.tempo)}</p>
+              <p>Key: {trackDetail.key}</p>
+            </div>
+            <div className="track-measurements">
+              <div>acousticness</div>
+              <div>danceability</div>
+              <div>energy</div>
+              <div>instrumentalness</div>
+              <div>speechiness</div>
+              <div>valence</div>
             </div>
           </div>
         </div>

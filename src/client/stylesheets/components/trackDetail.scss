@@ -31,8 +31,10 @@ $artist-dimension: 36vh;
     }
     .track-info-details {
       width: calc(100% - #{$artist-dimension});
+      padding-left: 30px;
       .track-names {
-        margin-left: 30px;
+        display: flex;
+        flex-direction: column;
         h1 {
           font-size: 2.2rem;
           letter-spacing: 1px;
@@ -43,7 +45,7 @@ $artist-dimension: 36vh;
           margin-top: 30px;
           display: flex;
           h2 {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             letter-spacing: 1px;
             color: $gray-medium;
             line-height: 15px;
@@ -55,6 +57,24 @@ $artist-dimension: 36vh;
             &:hover {
               text-decoration: underline;
             }
+          }
+        }
+      }
+      .track-character {
+        margin-bottom: 20px;
+        p {
+          font-size: 1.2rem;
+        }
+      }
+      .track-measurements {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20%;
+        div {
+          &:first-letter {
+            text-transform: capitalize;
           }
         }
       }

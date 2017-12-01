@@ -11,11 +11,57 @@ class TrackDetail extends Component {
     await this.props.setupAuthToAPI()
     this.props.getTrackDetail(this.props.match.params.id)
   }
+  navigateToArtistDetailPage = id => {
+    this.props.history.push(`/artists/${id}`)
+  }
+  renderFormattedArtists = artists => {
+    return artists.map((artist, index) => {
+      if (index + 1 === artists.length) {
+        return (
+          <h2
+            key={index}
+            onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          >
+            {artist.name}
+          </h2>
+        )
+      } else {
+        return (
+          <h2
+            key={index}
+            onClick={() => this.navigateToArtistDetailPage(artist.id)}
+          >
+            {artist.name + ', '}
+          </h2>
+        )
+      }
+    })
+  }
   render() {
     return (
       <div className="track-detail-component">
-        <h1>TrackDetail</h1>
-        <p>{this.props.trackDetail.name}</p>
+        <div className="track-header">
+          <div className="track-art-wrapper">
+            <img
+              className="track-art"
+              src={
+                this.props.trackDetail.album.images
+                  ? this.props.trackDetail.album.images[0].url
+                  : 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif'
+              }
+            />
+          </div>
+          <div className="track-info-details">
+            <div className="track-names">
+              <div className="track-artists">
+                {this.props.trackDetail.artists
+                  ? this.renderFormattedArtists(this.props.trackDetail.artists)
+                  : null}
+              </div>
+              <h1>{this.props.trackDetail.name}</h1>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

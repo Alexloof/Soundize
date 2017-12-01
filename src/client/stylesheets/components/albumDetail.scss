@@ -1,2 +1,3 @@
 .album-detail-component {
+  min-height: calc(100vh - #{$nav-height});
 }

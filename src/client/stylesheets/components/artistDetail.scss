@@ -3,7 +3,7 @@ $artist-dimension: 22vw;
 .artist-detail-component {
   max-width: $container-large;
   background-color: $gray-light;
-  min-height: 90vh;
+  min-height: calc(100vh - #{$nav-height});
   margin: 0 auto;
   display: flex;
   flex-direction: row;

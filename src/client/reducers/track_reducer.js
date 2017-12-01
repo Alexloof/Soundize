@@ -10,7 +10,11 @@ import {
 } from '../actions/track_actions'
 
 const INITIAL_STATE = {
-  trackDetail: {},
+  trackDetail: {
+    album: {
+      images: null
+    }
+  },
   activeTracklist: null,
   playingTracklist: {
     id: ''

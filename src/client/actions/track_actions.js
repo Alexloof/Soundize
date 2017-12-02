@@ -6,6 +6,8 @@ import {
   fetchTrack
 } from './spotifyApi_actions'
 
+import { showSuccessAlert } from './alert_actions'
+
 import { ZERO_PLAYED_TIME } from './player_actions'
 
 // actions
@@ -46,6 +48,7 @@ export const setPlayingTracklist = tracklist => async dispatch => {
 
 export const addTrackToQueuedList = track => async dispatch => {
   dispatch({ type: ADD_TRACK_TO_QUEUED_LIST, payload: track })
+  dispatch(showSuccessAlert('Track was queued'))
 }
 
 export const removeTrackFromQueuedTracks = indexToRemove => async dispatch => {

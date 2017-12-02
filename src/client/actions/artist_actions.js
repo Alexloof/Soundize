@@ -16,11 +16,6 @@ export const getArtistDetail = id => async dispatch => {
   let artistTopTracks = await fetchArtistTopTracks(id)
   let relatedArtists = await fetchRelatedArtists(id)
 
-  console.log(artist)
-  console.log(artistAlbums)
-  console.log(artistTopTracks)
-  console.log(relatedArtists)
-
   if (artist) {
     dispatch({ type: SET_ARTIST, payload: artist })
   }

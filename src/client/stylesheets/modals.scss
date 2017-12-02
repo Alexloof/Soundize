@@ -6,10 +6,27 @@
     background-color: $gray-light;
     padding: 10px 30px;
     width: 440px;
+    max-height: 400px;
     box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.17);
     .title {
       text-align: center;
       margin-bottom: 10px;
+    }
+    ul {
+      li {
+        display: block;
+        border-bottom: 1px solid #d2d2d2;
+        padding: 10px 0px;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
     }
     .field {
       margin-bottom: 10px;

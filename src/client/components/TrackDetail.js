@@ -3,9 +3,17 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import PieChart from './PieChart'
+import AddTrackToPlaylistModal from './modals/AddTrackToPlaylistModal'
 
-import { getTrackDetail, setActiveTrack } from '../actions/track_actions'
 import { setupAuthToAPI } from '../actions/user_actions'
+
+import {
+  getTrackDetail,
+  setActiveTrack,
+  addTrackToQueuedList,
+  addTrackToPlaylist
+} from '../actions/track_actions'
+
 import {
   pauseActiveTrack,
   playActiveTrack,
@@ -13,6 +21,9 @@ import {
 } from '../actions/player_actions'
 
 class TrackDetail extends Component {
+  state = {
+    modalClassName: 'modal create-playlist-modal'
+  }
   async componentWillMount() {
     window.scroll(0, 0)
     await this.props.setupAuthToAPI()
@@ -50,6 +61,12 @@ class TrackDetail extends Component {
   }
   componentWillUnmount() {
     this.unlisten()
+  }
+  closeModal = () => {
+    this.setState({ modalClassName: 'modal create-playlist-modal' })
+  }
+  openModal = () => {
+    this.setState({ modalClassName: 'modal create-playlist-modal is-active' })
   }
   navigateToArtistDetailPage = id => {
     this.props.history.push(`/artists/${id}`)
@@ -109,11 +126,19 @@ class TrackDetail extends Component {
     if (track.id === this.props.activeTrack.id) {
       this.props.playActiveTrack()
     } else {
-      //this.props.setPlayingTracklist(this.props.activeTracklist)
       await this.props.setActiveTrack(track)
       this.props.playActiveTrack()
     }
     this.props.showMusicbar()
+  }
+  addTrackToPlaylists = playlists => {
+    playlists.map(playlist => {
+      this.props.addTrackToPlaylist(
+        playlist.ownerId,
+        playlist.playlistId,
+        this.props.trackDetail.uri
+      )
+    })
   }
   renderStartStopButton = track => {
     if (track.preview_url !== null) {
@@ -224,26 +249,41 @@ class TrackDetail extends Component {
         <div className="track-player-view">
           <div className="track-player-options">
             {this.renderStartStopButton(trackDetail)}
-            <button className="button">Add to playlist</button>
-            <button className="button">Queue</button>
+            <button className="button" onClick={() => this.openModal()}>
+              Add to playlist
+            </button>
+            <button
+              className="button"
+              onClick={() => this.props.addTrackToQueuedList(trackDetail)}
+            >
+              Queue
+            </button>
           </div>
 
           {/* {this.props.activeTrack.id === trackDetail.id ? (
             <canvas ref="analyzerCanvasTwo" id="analyzerTwo" />
           ) : null} */}
           <div id="waveform" />
+          <div className={this.state.modalClassName}>
+            <AddTrackToPlaylistModal
+              addTrackToPlaylists={this.addTrackToPlaylists}
+              closeModal={this.closeModal}
+              privatePlaylists={this.props.privatePlaylists}
+            />
+          </div>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ track, player }) => {
+const mapStateToProps = ({ track, player, playlist }) => {
   return {
     trackDetail: track.trackDetail,
     isPlaying: player.isPlaying,
     activeTrack: track.activeTrack,
-    playedTime: player.playedTime
+    playedTime: player.playedTime,
+    privatePlaylists: playlist.privatePlaylists || []
   }
 }
 
@@ -254,6 +294,8 @@ export default withRouter(
     setActiveTrack,
     pauseActiveTrack,
     playActiveTrack,
-    showMusicbar
+    showMusicbar,
+    addTrackToQueuedList,
+    addTrackToPlaylist
   })(TrackDetail)
 )

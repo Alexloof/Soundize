@@ -12,7 +12,8 @@
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "webpack --config ./webpack.prod.config.js --progress --colors",
+    "build":
+      "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "dev":
       "webpack-dev-server --config ./webpack.dev.config.js --progress --colors --hot --history-api-fallback"
   },

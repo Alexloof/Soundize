@@ -15,7 +15,7 @@ class PieChart extends Component {
 
     function animate() {
       if (offset > stopLength) {
-        offset -= 5
+        offset -= 10
         textValue = Math.floor((1 - offset / strokeLength) * 400)
 
         graph.style.strokeDashoffset = offset
@@ -58,7 +58,7 @@ class PieChart extends Component {
             cy="100"
             cx="100"
             fill="none"
-            stroke="#afafaf"
+            stroke="#444444"
             strokeWidth="20"
           />
           <circle
@@ -77,17 +77,17 @@ class PieChart extends Component {
             r="90"
             cy="100"
             cx="100"
-            fill="rgba(255,255,255,0.5)"
+            fill="none"
             stroke="none"
           />
-          <g className="innerText" transform="translate(0 13)">
-            <text className={this.props.cnt} x="50" y="95">
-              0
-            </text>
-            <text x="110" y="95">
-              %
-            </text>
-          </g>
+        </g>
+        <g className="innerText" transform="translate(0 13)">
+          <text fill="white" className={this.props.cnt} x="50" y="95">
+            0
+          </text>
+          <text fill="white" x="110" y="95">
+            %
+          </text>
         </g>
       </svg>
     )

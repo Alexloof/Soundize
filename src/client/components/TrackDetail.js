@@ -39,6 +39,34 @@ class TrackDetail extends Component {
       }
     })
   }
+  renderKey = key => {
+    switch (key) {
+      case 0:
+        return 'C'
+      case 1:
+        return 'C#'
+      case 2:
+        return 'D'
+      case 3:
+        return 'D#'
+      case 4:
+        return 'E'
+      case 5:
+        return 'F'
+      case 6:
+        return 'F#'
+      case 7:
+        return 'G'
+      case 8:
+        return 'G#'
+      case 9:
+        return 'A'
+      case 10:
+        return 'A#'
+      case 11:
+        return 'B'
+    }
+  }
   render() {
     const { trackDetail } = this.props
     return (
@@ -65,10 +93,14 @@ class TrackDetail extends Component {
             </div>
             <div className="track-character">
               <p>
-                BPM: <span>{Math.round(trackDetail.tempo)}</span>
+                BPM: <span>{Math.round(trackDetail.tempo || 0)}</span>
               </p>
               <p>
-                Key: <span>{trackDetail.key}</span>
+                Key:{' '}
+                <span>
+                  {this.renderKey(trackDetail.key)}{' '}
+                  {trackDetail.mode == 0 ? 'minor' : 'major'}
+                </span>
               </p>
             </div>
             <div className="track-measurements">

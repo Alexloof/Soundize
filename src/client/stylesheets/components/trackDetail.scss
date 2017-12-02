@@ -14,7 +14,7 @@ $artist-dimension: 36vh;
     height: 40vh;
     display: flex;
     flex-direction: row;
-    background: radial-gradient(#ffffff, rgba(29, 29, 29, 0.32));
+    background: $brand-primary;
     .track-art-wrapper {
       display: flex;
       justify-content: center;
@@ -40,16 +40,15 @@ $artist-dimension: 36vh;
         h1 {
           font-size: 2.2rem;
           letter-spacing: 1px;
-          margin-bottom: 20px;
-          color: $gray-dark;
+          color: white;
         }
         .track-artists {
-          margin-top: 20px;
+          margin-top: 10px;
           display: flex;
           h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             letter-spacing: 1px;
-            color: $gray-medium;
+            color: $gray-medium-light;
             line-height: 15px;
             margin-left: 10px;
             cursor: pointer;
@@ -66,6 +65,7 @@ $artist-dimension: 36vh;
         margin-bottom: 20px;
         p {
           font-size: 1.2rem;
+          color: $gray-medium-light;
           &:first-child {
             margin-bottom: 10px;
           }
@@ -96,10 +96,13 @@ $artist-dimension: 36vh;
           align-items: center;
           p {
             margin-bottom: 10px;
+            color: $gray-medium-light;
           }
           .pieChart {
-            text {
-              font-size: 3.5rem;
+            .innerText {
+              text {
+                font-size: 3.5rem;
+              }
             }
           }
           #graph {

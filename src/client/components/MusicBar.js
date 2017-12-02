@@ -45,15 +45,14 @@ class MusicBar extends Component {
     let context = new (window.AudioContext || window.webkitAudioContext)()
     let analyser = context.createAnalyser()
     let canvas = this.refs.analyzerCanvas
-    let canvasTwo = document.getElementById('analyzerTwo')
+    //let canvasTwo = document.getElementById('analyzerTwo')
     let ctx = canvas.getContext('2d')
-    let ctx2 = canvasTwo ? canvasTwo.getContext('2d') : null
+    // let ctx2 = canvasTwo ? canvasTwo.getContext('2d') : null
     var audio = document.getElementById('audioPlayer')
     this.audioSrc = context.createMediaElementSource(audio)
     this.audioSrc.connect(analyser)
     this.audioSrc.connect(context.destination)
     analyser.connect(context.destination)
-    console.log(canvas, canvasTwo)
 
     const renderFrame = () => {
       if (document.getElementById('analyzerTwo')) {
@@ -65,8 +64,8 @@ class MusicBar extends Component {
       analyser.getByteFrequencyData(freqData)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.fillStyle = '#ff6b42'
-      ctx2 ? ctx2.clearRect(0, 0, canvasTwo.width, canvasTwo.height) : null
-      ctx2 ? (ctx2.fillStyle = '#ff6b42') : null
+      // ctx2 ? ctx2.clearRect(0, 0, canvasTwo.width, canvasTwo.height) : null
+      // ctx2 ? (ctx2.fillStyle = '#ff6b42') : null
 
       let bars = 100
       for (var i = 0; i < analyser.frequencyBinCount; i++) {
@@ -77,13 +76,6 @@ class MusicBar extends Component {
         // ctx2
         //   ? ctx2.fillRect(bar_x, canvasTwo.height, bar_width, bar_height)
         //   : null
-        if (ctx2) {
-          ctx2.beginPath()
-          ctx2.moveTo(i, 255)
-          ctx2.lineTo(i, 255 - freqData[i])
-          ctx2.closePath()
-          ctx2.stroke()
-        }
       }
       requestAnimationFrame(renderFrame)
     }

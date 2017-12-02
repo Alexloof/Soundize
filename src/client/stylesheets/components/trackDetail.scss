@@ -121,17 +121,26 @@ $artist-dimension: 36vh;
     }
   }
   .track-player-view {
-    .play-btn {
-      height: 80px;
-      width: 80px;
-      border-radius: 50%;
-      box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.21);
-      transition: 0.15s all ease-out;
-      &:focus {
-        border-color: #dbdbdb;
-      }
-      .fa {
-        font-size: 24px;
+    .track-player-options {
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      width: 45%;
+      justify-content: space-between;
+      margin-bottom: 3%;
+      .button {
+        width: 150px;
+        height: 40px;
+        font-size: 0.8rem;
+        background-color: transparent;
+        text-transform: uppercase;
+        border: 1px solid black;
+        letter-spacing: 2px;
+        border-radius: 0px;
+        &:hover {
+          background-color: $gray-light;
+          color: $gray-lightdark;
+        }
       }
     }
   }

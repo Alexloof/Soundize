@@ -19,20 +19,37 @@ class TrackDetail extends Component {
     this.props.getTrackDetail(this.props.match.params.id)
   }
   componentDidMount() {
-    var wavesurfer = WaveSurfer.create({
+    const wavesurfer = WaveSurfer.create({
       container: '#waveform',
       height: 200,
       interact: false,
-      waveColor: '#444444'
+      waveColor: '#444444',
+      hideScrollbar: true
     })
+    this.unlisten = this.props.history.listen(async (location, action) => {
+      let incID = location.pathname.slice(8)
+      let word = location.pathname.slice(1, 7)
+      if (incID && word == 'tracks') {
+        if (incID !== this.props.match.params.id) {
+          await this.props.getTrackDetail(incID)
+          this.createVisuals(wavesurfer)
+        }
+      }
+    })
+    this.createVisuals(wavesurfer)
+  }
+  createVisuals = wavesurfer => {
     wavesurfer.load(this.props.trackDetail.preview_url)
     wavesurfer.on('ready', () => {
       let canvasWave = document.getElementById('waveform').childNodes[0]
         .childNodes[1]
       let width = '1300px'
-      canvasWave.style.width = width
+      canvasWave.style.maxWidth = width
       var ctx = canvasWave.getContext('2d')
     })
+  }
+  componentWillUnmount() {
+    this.unlisten()
   }
   navigateToArtistDetailPage = id => {
     this.props.history.push(`/artists/${id}`)
@@ -102,32 +119,18 @@ class TrackDetail extends Component {
     if (track.preview_url !== null) {
       return this.props.isPlaying && this.props.activeTrack.id === track.id ? (
         <button
-          style={{ transform: `translateY(${3}px)`, boxShadow: 'none' }}
           onClick={() => this.props.pauseActiveTrack()}
-          className="button play-btn"
+          className="button"
         >
-          <span className="icon">
-            <i className="fa fa-pause" />
-          </span>
+          Pause
         </button>
       ) : (
-        <button
-          onClick={() => this.startTrack(track)}
-          className="button play-btn"
-        >
-          <span className="icon">
-            <i className="fa fa-play" />
-          </span>
+        <button onClick={() => this.startTrack(track)} className="button">
+          Play
         </button>
       )
     } else {
-      return (
-        <button className="button play-btn">
-          <span className="icon">
-            <i className="fa fa-remove" />
-          </span>
-        </button>
-      )
+      return <button className="button">Broken link :(</button>
     }
   }
   render() {
@@ -219,10 +222,15 @@ class TrackDetail extends Component {
           </div>
         </div>
         <div className="track-player-view">
-          {this.renderStartStopButton(trackDetail)}
-          {this.props.activeTrack.id === trackDetail.id ? (
+          <div className="track-player-options">
+            {this.renderStartStopButton(trackDetail)}
+            <button className="button">Add to playlist</button>
+            <button className="button">Queue</button>
+          </div>
+
+          {/* {this.props.activeTrack.id === trackDetail.id ? (
             <canvas ref="analyzerCanvasTwo" id="analyzerTwo" />
-          ) : null}
+          ) : null} */}
           <div id="waveform" />
         </div>
       </div>

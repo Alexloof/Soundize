@@ -34,7 +34,6 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SET_TRACK_DETAIL:
-      console.log(action.payload)
       return { ...state, trackDetail: action.payload }
 
     case SET_ACTIVE_TRACKLIST:

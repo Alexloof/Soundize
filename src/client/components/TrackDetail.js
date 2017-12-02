@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import PieChart from './PieChart'
+
 import { getTrackDetail } from '../actions/track_actions'
 import { setupAuthToAPI } from '../actions/user_actions'
 
@@ -70,12 +72,54 @@ class TrackDetail extends Component {
               </p>
             </div>
             <div className="track-measurements">
-              <div>acousticness</div>
-              <div>danceability</div>
-              <div>energy</div>
-              <div>instrumentalness</div>
-              <div>speechiness</div>
-              <div>valence</div>
+              <div>
+                <p>Acousticness</p>
+                <PieChart
+                  measure={trackDetail.acousticness}
+                  cn={'graph-one'}
+                  cnt={'updated-text-one'}
+                />
+              </div>
+              <div>
+                <p>Danceability</p>
+                <PieChart
+                  measure={trackDetail.danceability}
+                  cn={'graph-two'}
+                  cnt={'updated-text-two'}
+                />
+              </div>
+              <div>
+                <p>Energy</p>
+                <PieChart
+                  measure={trackDetail.energy}
+                  cn={'graph-three'}
+                  cnt={'updated-text-three'}
+                />
+              </div>
+              <div>
+                <p>Instrumentalness</p>
+                <PieChart
+                  measure={trackDetail.instrumentalness}
+                  cn={'graph-four'}
+                  cnt={'updated-text-four'}
+                />
+              </div>
+              <div>
+                <p>Speechiness</p>
+                <PieChart
+                  measure={trackDetail.speechiness}
+                  cn={'graph-five'}
+                  cnt={'updated-text-five'}
+                />
+              </div>
+              <div>
+                <p>Valence</p>
+                <PieChart
+                  measure={trackDetail.valence}
+                  cn={'graph-six'}
+                  cnt={'updated-text-six'}
+                />
+              </div>
             </div>
           </div>
         </div>

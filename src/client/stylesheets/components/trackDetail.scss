@@ -1,5 +1,4 @@
 $artist-dimension: 36vh;
-
 .track-detail-component {
   max-width: $container-large;
   background-color: $gray-light;
@@ -15,7 +14,7 @@ $artist-dimension: 36vh;
     height: 40vh;
     display: flex;
     flex-direction: row;
-    background: radial-gradient(#ffffff, rgba(255, 107, 66, 0.32));
+    background: radial-gradient(#ffffff, rgba(29, 29, 29, 0.32));
     .track-art-wrapper {
       display: flex;
       justify-content: center;
@@ -32,6 +31,9 @@ $artist-dimension: 36vh;
     .track-info-details {
       width: calc(100% - #{$artist-dimension});
       padding-left: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
       .track-names {
         display: flex;
         flex-direction: column;
@@ -42,10 +44,10 @@ $artist-dimension: 36vh;
           color: $gray-dark;
         }
         .track-artists {
-          margin-top: 30px;
+          margin-top: 20px;
           display: flex;
           h2 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             letter-spacing: 1px;
             color: $gray-medium;
             line-height: 15px;
@@ -86,9 +88,27 @@ $artist-dimension: 36vh;
         justify-content: space-between;
         align-items: center;
         padding-right: 20%;
+        margin-bottom: 20px;
         div {
-          &:first-letter {
-            text-transform: capitalize;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          p {
+            margin-bottom: 10px;
+          }
+          .pieChart {
+            text {
+              font-size: 3.5rem;
+            }
+          }
+          #graph {
+            stroke-dasharray: 630px;
+            stroke-dashoffset: 630px;
+            -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
           }
         }
       }

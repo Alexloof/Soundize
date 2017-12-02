@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class PieChart extends Component {
   componentWillReceiveProps(newProps) {
-    this.animateGraph(newProps)
+    if (newProps.measure !== this.props.measure) {
+      this.animateGraph(newProps)
+    }
   }
   animateGraph = props => {
     var graph = document.querySelector(`.${props.cn}`),
@@ -92,6 +95,12 @@ class PieChart extends Component {
       </svg>
     )
   }
+}
+
+PieChart.propTypes = {
+  cnt: PropTypes.string.isRequired,
+  cn: PropTypes.string.isRequired,
+  measure: PropTypes.number
 }
 
 export default PieChart

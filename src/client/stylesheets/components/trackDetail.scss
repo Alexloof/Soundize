@@ -5,7 +5,7 @@ $artist-dimension: 36vh;
   min-height: calc(100vh - #{$nav-height});
   margin: 0 auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
   padding: 20px 0px;
   padding-bottom: 52px;
@@ -15,6 +15,7 @@ $artist-dimension: 36vh;
     display: flex;
     flex-direction: row;
     background: $brand-primary;
+    margin-bottom: 5%;
     .track-art-wrapper {
       display: flex;
       justify-content: center;
@@ -64,7 +65,7 @@ $artist-dimension: 36vh;
       .track-character {
         margin-bottom: 20px;
         p {
-          font-size: 1.2rem;
+          font-size: 1.3rem;
           color: $gray-medium-light;
           &:first-child {
             margin-bottom: 10px;
@@ -96,6 +97,8 @@ $artist-dimension: 36vh;
           align-items: center;
           p {
             margin-bottom: 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
             color: $gray-medium-light;
           }
           .pieChart {
@@ -114,6 +117,21 @@ $artist-dimension: 36vh;
             transform: rotate(-90deg);
           }
         }
+      }
+    }
+  }
+  .track-player-view {
+    .play-btn {
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      box-shadow: 0px 3px 1px 0px rgba(0, 0, 0, 0.21);
+      transition: 0.15s all ease-out;
+      &:focus {
+        border-color: #dbdbdb;
+      }
+      .fa {
+        font-size: 24px;
       }
     }
   }

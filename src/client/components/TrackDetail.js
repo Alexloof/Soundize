@@ -4,14 +4,22 @@ import { connect } from 'react-redux'
 
 import PieChart from './PieChart'
 
-import { getTrackDetail } from '../actions/track_actions'
+import { getTrackDetail, setActiveTrack } from '../actions/track_actions'
 import { setupAuthToAPI } from '../actions/user_actions'
+import {
+  pauseActiveTrack,
+  playActiveTrack,
+  showMusicbar
+} from '../actions/player_actions'
 
 class TrackDetail extends Component {
   async componentWillMount() {
     window.scroll(0, 0)
     await this.props.setupAuthToAPI()
     this.props.getTrackDetail(this.props.match.params.id)
+  }
+  componentDidMount() {
+    this.createVisualization()
   }
   navigateToArtistDetailPage = id => {
     this.props.history.push(`/artists/${id}`)
@@ -39,6 +47,33 @@ class TrackDetail extends Component {
       }
     })
   }
+
+  createVisualization = () => {
+    // let context = new (window.AudioContext || window.webkitAudioContext)()
+    // let analyser = context.createAnalyser()
+    // let canvas = this.refs.analyzerCanvasTwo
+    // let ctx = canvas.getContext('2d')
+    // var audio = document.getElementById('audioPlayer')
+    // let audioSrc = context.createMediaElementSource(audio)
+    // audioSrc.connect(analyser)
+    // audioSrc.connect(context.destination)
+    // analyser.connect(context.destination)
+    // const renderFrame = () => {
+    //   let freqData = new Uint8Array(analyser.frequencyBinCount)
+    //   requestAnimationFrame(renderFrame)
+    //   analyser.getByteFrequencyData(freqData)
+    //   ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //   ctx.fillStyle = '#ff6b42'
+    //   let bars = 100
+    //   for (var i = 0; i < bars; i++) {
+    //     let bar_x = i * 3
+    //     let bar_width = 2
+    //     let bar_height = -(freqData[i] / 2)
+    //     ctx.fillRect(bar_x, canvas.height, bar_width, bar_height)
+    //   }
+    // }
+    // renderFrame()
+  }
   renderKey = key => {
     switch (key) {
       case 0:
@@ -65,6 +100,48 @@ class TrackDetail extends Component {
         return 'A#'
       case 11:
         return 'B'
+    }
+  }
+  startTrack = async track => {
+    if (track.id === this.props.activeTrack.id) {
+      this.props.playActiveTrack()
+    } else {
+      //this.props.setPlayingTracklist(this.props.activeTracklist)
+      await this.props.setActiveTrack(track)
+      this.props.playActiveTrack()
+    }
+    this.props.showMusicbar()
+  }
+  renderStartStopButton = track => {
+    if (track.preview_url !== null) {
+      return this.props.isPlaying && this.props.activeTrack.id === track.id ? (
+        <button
+          style={{ transform: `translateY(${3}px)`, boxShadow: 'none' }}
+          onClick={() => this.props.pauseActiveTrack()}
+          className="button play-btn"
+        >
+          <span className="icon">
+            <i className="fa fa-pause" />
+          </span>
+        </button>
+      ) : (
+        <button
+          onClick={() => this.startTrack(track)}
+          className="button play-btn"
+        >
+          <span className="icon">
+            <i className="fa fa-play" />
+          </span>
+        </button>
+      )
+    } else {
+      return (
+        <button className="button play-btn">
+          <span className="icon">
+            <i className="fa fa-remove" />
+          </span>
+        </button>
+      )
     }
   }
   render() {
@@ -155,15 +232,30 @@ class TrackDetail extends Component {
             </div>
           </div>
         </div>
+        <div className="track-player-view">
+          {this.renderStartStopButton(trackDetail)}
+          <canvas ref="analyzerCanvasTwo" id="analyzerTwo" />
+        </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ track }) => {
-  return { trackDetail: track.trackDetail }
+const mapStateToProps = ({ track, player }) => {
+  return {
+    trackDetail: track.trackDetail,
+    isPlaying: player.isPlaying,
+    activeTrack: track.activeTrack
+  }
 }
 
 export default withRouter(
-  connect(mapStateToProps, { setupAuthToAPI, getTrackDetail })(TrackDetail)
+  connect(mapStateToProps, {
+    setupAuthToAPI,
+    getTrackDetail,
+    setActiveTrack,
+    pauseActiveTrack,
+    playActiveTrack,
+    showMusicbar
+  })(TrackDetail)
 )

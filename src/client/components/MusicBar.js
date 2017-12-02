@@ -40,29 +40,46 @@ class MusicBar extends Component {
   componentDidMount() {
     this.createVisualization()
   }
+
   createVisualization = () => {
     let context = new (window.AudioContext || window.webkitAudioContext)()
     let analyser = context.createAnalyser()
     let canvas = this.refs.analyzerCanvas
+    let canvasTwo = document.getElementById('analyzerTwo')
     let ctx = canvas.getContext('2d')
+    let ctx2 = canvasTwo ? canvasTwo.getContext('2d') : null
     var audio = document.getElementById('audioPlayer')
     let audioSrc = context.createMediaElementSource(audio)
     audioSrc.connect(analyser)
     audioSrc.connect(context.destination)
     analyser.connect(context.destination)
+    console.log(canvas, canvasTwo)
 
     const renderFrame = () => {
+      let canvasThree
+      let ctx3
+      if (document.getElementById('analyzerTwo') && !ctx2) {
+        canvasThree = document.getElementById('analyzerTwo')
+        ctx3 = canvasThree.getContext('2d')
+        console.log('yes')
+      }
       let freqData = new Uint8Array(analyser.frequencyBinCount)
       requestAnimationFrame(renderFrame)
       analyser.getByteFrequencyData(freqData)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.fillStyle = '#ff6b42'
+      ctx2 ? ctx2.clearRect(0, 0, canvas.width, canvas.height) : null
+      ctx2 ? (ctx2.fillStyle = '#ff6b42') : null
+      ctx3 ? ctx3.clearRect(0, 0, canvas.width, canvas.height) : null
+      ctx3 ? (ctx3.fillStyle = '#ff6b42') : null
       let bars = 100
       for (var i = 0; i < bars; i++) {
         let bar_x = i * 3
         let bar_width = 2
         let bar_height = -(freqData[i] / 2)
         ctx.fillRect(bar_x, canvas.height, bar_width, bar_height)
+        ctx2 ? ctx2.fillRect(bar_x, canvas.height, bar_width, bar_height) : null
+        ctx3 ? ctx3.fillRect(bar_x, canvas.height, bar_width, bar_height) : null
       }
     }
     renderFrame()

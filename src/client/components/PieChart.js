@@ -22,7 +22,7 @@ class PieChart extends Component {
         textValue = Math.floor((1 - offset / strokeLength) * 400)
 
         graph.style.strokeDashoffset = offset
-        text.textContent = Math.floor(textValue / 3.6)
+        text.textContent = Math.floor(textValue / 4)
 
         requestAnimationFrame(animate)
       }

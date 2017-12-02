@@ -19,7 +19,20 @@ class TrackDetail extends Component {
     this.props.getTrackDetail(this.props.match.params.id)
   }
   componentDidMount() {
-    this.createVisualization()
+    var wavesurfer = WaveSurfer.create({
+      container: '#waveform',
+      height: 200,
+      interact: false,
+      waveColor: '#444444'
+    })
+    wavesurfer.load(this.props.trackDetail.preview_url)
+    wavesurfer.on('ready', () => {
+      let canvasWave = document.getElementById('waveform').childNodes[0]
+        .childNodes[1]
+      let width = '1300px'
+      canvasWave.style.width = width
+      var ctx = canvasWave.getContext('2d')
+    })
   }
   navigateToArtistDetailPage = id => {
     this.props.history.push(`/artists/${id}`)
@@ -46,33 +59,6 @@ class TrackDetail extends Component {
         )
       }
     })
-  }
-
-  createVisualization = () => {
-    // let context = new (window.AudioContext || window.webkitAudioContext)()
-    // let analyser = context.createAnalyser()
-    // let canvas = this.refs.analyzerCanvasTwo
-    // let ctx = canvas.getContext('2d')
-    // var audio = document.getElementById('audioPlayer')
-    // let audioSrc = context.createMediaElementSource(audio)
-    // audioSrc.connect(analyser)
-    // audioSrc.connect(context.destination)
-    // analyser.connect(context.destination)
-    // const renderFrame = () => {
-    //   let freqData = new Uint8Array(analyser.frequencyBinCount)
-    //   requestAnimationFrame(renderFrame)
-    //   analyser.getByteFrequencyData(freqData)
-    //   ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //   ctx.fillStyle = '#ff6b42'
-    //   let bars = 100
-    //   for (var i = 0; i < bars; i++) {
-    //     let bar_x = i * 3
-    //     let bar_width = 2
-    //     let bar_height = -(freqData[i] / 2)
-    //     ctx.fillRect(bar_x, canvas.height, bar_width, bar_height)
-    //   }
-    // }
-    // renderFrame()
   }
   renderKey = key => {
     switch (key) {
@@ -234,7 +220,10 @@ class TrackDetail extends Component {
         </div>
         <div className="track-player-view">
           {this.renderStartStopButton(trackDetail)}
-          <canvas ref="analyzerCanvasTwo" id="analyzerTwo" />
+          {this.props.activeTrack.id === trackDetail.id ? (
+            <canvas ref="analyzerCanvasTwo" id="analyzerTwo" />
+          ) : null}
+          <div id="waveform" />
         </div>
       </div>
     )
@@ -245,7 +234,8 @@ const mapStateToProps = ({ track, player }) => {
   return {
     trackDetail: track.trackDetail,
     isPlaying: player.isPlaying,
-    activeTrack: track.activeTrack
+    activeTrack: track.activeTrack,
+    playedTime: player.playedTime
   }
 }
 

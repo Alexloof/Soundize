@@ -15,7 +15,7 @@ const scopes = [
   'user-follow-modify'
 ]
 const client_id = '8d7cb1d087644280982de543cbb92989'
-const redirect_uri = 'https://webshare.mah.se/app' //'http://localhost:8080/app'
+const redirect_uri = 'http://localhost:8080/app'
 
 const url =
   'https://accounts.spotify.com/authorize?client_id=' +

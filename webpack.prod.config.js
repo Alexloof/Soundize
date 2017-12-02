@@ -5,15 +5,30 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-  entry: ['babel-polyfill', './src/client/index.js'],
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
-    publicPath: '/',
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.js',
+    publicPath: '/public/'
   },
   resolve: {
     extensions: ['.jsx', '.json', '.js']
   },
+  plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    })
+  ],
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -72,11 +87,10 @@ module.exports = {
         loader: 'json-loader'
       }
     ]
-  },
-  devtool: 'inline-source-map',
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/client/index.html'
-    })
-  ]
+  }
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: './src/client/index.html'
+  //   })
+  // ]
 }

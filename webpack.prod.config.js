@@ -15,7 +15,6 @@ module.exports = {
     extensions: ['.jsx', '.json', '.js']
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       compress: {

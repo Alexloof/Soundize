@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
+
+import { getCurrentUser, setupAuthToAPI } from '../actions/user_actions'
 
 const scopes = [
   'user-read-private',
@@ -37,9 +40,11 @@ class Login extends Component {
   componentDidMount() {
     window.addEventListener('message', e => this.auth(e), false)
   }
-  auth = event => {
+  auth = async event => {
     if (event.data.type == 'access_token') {
       console.log(this.props)
+      await this.props.setupAuthToAPI()
+      await this.props.getCurrentUser()
       this.props.history.push('/')
     }
   }
@@ -224,4 +229,6 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login)
+export default withRouter(
+  connect(null, { getCurrentUser, setupAuthToAPI })(Login)
+)

@@ -10,8 +10,8 @@ module.exports = {
   entry: ['babel-polyfill', './server.js'],
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js'
-    //publicPath: '/'
+    filename: 'bundle.js',
+    publicPath: '/build/'
   },
   externals: [webpackNodeExternals()],
   resolve: {

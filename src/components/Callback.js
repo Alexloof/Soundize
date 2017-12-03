@@ -3,28 +3,29 @@ import { withRouter } from 'react-router-dom'
 
 class Redirect extends Component {
   componentWillMount = () => {
-    console.log(localStorage.getItem('token'))
+    //console.log(localStorage.getItem('token'))
     if (
-      !localStorage.getItem('token') ||
-      (localStorage.getItem('token') !==
-        this.props.location.hash.slice(14, -34) &&
-        this.props.location.hash)
+      // !localStorage.getItem('token') ||
+      // (localStorage.getItem('token') !==
+      //   this.props.location.hash.slice(14, -34) &&
+      //   this.props.location.hash)
+      true
     ) {
       console.log('Ny token')
       let newHash = this.props.location.hash.slice(14, -34)
       if (newHash) {
-        localStorage.setItem('token', newHash)
+        //localStorage.setItem('token', newHash)
         console.log('SUCCESS!')
-        window.opener.postMessage(
-          {
-            type: 'access_token',
-            access_token: newHash
-          },
-          '*'
-        )
+        // window.opener.postMessage(
+        //   {
+        //     type: 'access_token',
+        //     access_token: newHash
+        //   },
+        //   '*'
+        // )
       }
     }
-    window.close()
+    //window.close()
   }
   render() {
     return <div />

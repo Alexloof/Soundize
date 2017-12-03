@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 export default ChildComponent => {
   class RequireAuth extends Component {
     render() {
-      if (!localStorage.getItem('token')) {
+      if (true) {
         console.log('Not authorized')
         return <Redirect to="/login" />
       } else {

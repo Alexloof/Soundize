@@ -4,14 +4,7 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 
 import reducers from '../reducers'
 
-const store = createStore(
-  reducers,
-  {},
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-)
+const store = createStore(reducers, {}, compose(applyMiddleware(thunk)))
 
 // autoRehydrate() into compose if you want to save store
 

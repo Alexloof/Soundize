@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link, Redirect, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Alert from 'react-s-alert'
+//import Alert from 'react-s-alert'
 
 import { getCurrentUser, setupAuthToAPI } from '../actions/user_actions'
 
@@ -11,14 +11,14 @@ import MusicBar from './MusicBar'
 import Home from './Home'
 import Search from './Search'
 
-import 'react-s-alert/dist/s-alert-default.css'
-import 'react-s-alert/dist/s-alert-css-effects/slide.css'
-import 'react-s-alert/dist/s-alert-css-effects/scale.css'
-import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css'
-import 'react-s-alert/dist/s-alert-css-effects/flip.css'
-import 'react-s-alert/dist/s-alert-css-effects/genie.css'
-import 'react-s-alert/dist/s-alert-css-effects/jelly.css'
-import 'react-s-alert/dist/s-alert-css-effects/stackslide.css'
+// import 'react-s-alert/dist/s-alert-default.css'
+// import 'react-s-alert/dist/s-alert-css-effects/slide.css'
+// import 'react-s-alert/dist/s-alert-css-effects/scale.css'
+// import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css'
+// import 'react-s-alert/dist/s-alert-css-effects/flip.css'
+// import 'react-s-alert/dist/s-alert-css-effects/genie.css'
+// import 'react-s-alert/dist/s-alert-css-effects/jelly.css'
+// import 'react-s-alert/dist/s-alert-css-effects/stackslide.css'
 
 class App extends Component {
   async componentDidMount() {

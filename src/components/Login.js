@@ -15,7 +15,7 @@ const scopes = [
   'user-follow-modify'
 ]
 const client_id = '8d7cb1d087644280982de543cbb92989'
-const redirect_uri = 'https://soundize.herokuapp.com/app'
+const redirect_uri = 'http://localhost:8080/app' //'https://soundize.herokuapp.com/app'
 
 const url =
   'https://accounts.spotify.com/authorize?client_id=' +
@@ -28,8 +28,8 @@ const url =
 
 const width = 450,
   height = 730,
-  left = screen.width / 2 - width / 2,
-  top = screen.height / 2 - height / 2
+  left = width / 2 - width / 2,
+  top = height / 2 - height / 2
 class Login extends Component {
   state = {
     navClassName: 'navbar-start'

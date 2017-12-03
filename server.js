@@ -20,9 +20,9 @@ app.use(express.static('public'))
 
 app.get('*', (req, res) => {
   const store = createStore(req)
-  const context = {}
-  const content = renderer(req, store, context)
-  res.send(content)
+  // const context = {}
+  // const content = renderer(req, store, context)
+  // res.send(content)
 
   const promises = matchRoutes(Routes, req.path)
     .map(({ route }) => {

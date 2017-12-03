@@ -14,14 +14,14 @@ import TrackDetail from './components/TrackDetail'
 
 export default [
   {
-    path: '/login',
-    component: Login,
-    exact: true
-  },
-  {
     path: '/app',
     component: Callback,
     exact: false
+  },
+  {
+    path: '/login',
+    component: Login,
+    exact: true
   },
   {
     component: App,

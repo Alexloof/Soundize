@@ -31,52 +31,52 @@ const app_routes = [
     exact: false,
     routes: [
       {
-        path: '/',
+        path: process.env.PUBLIC_URL + '/',
         component: Home,
         exact: true
       },
       {
-        path: '/discover',
+        path: process.env.PUBLIC_URL + '/discover',
         component: Discover,
         exact: true
       },
       {
-        path: '/discover/:category',
+        path: process.env.PUBLIC_URL + '/discover/:category',
         component: DiscoverCategory,
         exact: true
       },
       {
-        path: '/new_releases',
+        path: process.env.PUBLIC_URL + '/new_releases',
         component: NewReleases,
         exact: true
       },
       {
-        path: '/toplists',
+        path: process.env.PUBLIC_URL + '/toplists',
         component: Toplists,
         exact: true
       },
       {
-        path: '/albums/:id',
+        path: process.env.PUBLIC_URL + '/albums/:id',
         component: AlbumDetail,
         exact: true
       },
       {
-        path: '/artists/:id',
+        path: process.env.PUBLIC_URL + '/artists/:id',
         component: ArtistDetail,
         exact: true
       },
       {
-        path: '/tracks/:id',
+        path: process.env.PUBLIC_URL + '/tracks/:id',
         component: TrackDetail,
         exact: true
       },
       {
-        path: '/playlists/:user/:id',
+        path: process.env.PUBLIC_URL + '/playlists/:user/:id',
         component: PlaylistDetail,
         exact: true
       },
       {
-        path: '/search',
+        path: process.env.PUBLIC_URL + '/search',
         component: Search,
         exact: false
       }
@@ -95,10 +95,14 @@ const RouteWithSubRoutes = route => (
 const Root = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route path="/app" component={Callback} />
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + '/login'}
+            component={Login}
+          />
+          <Route path={process.env.PUBLIC_URL + '/app'} component={Callback} />
           {app_routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}

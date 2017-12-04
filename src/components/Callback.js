@@ -18,7 +18,6 @@ class Redirect extends Component {
         '*'
       )
     }
-
     window.close()
   }
   render() {

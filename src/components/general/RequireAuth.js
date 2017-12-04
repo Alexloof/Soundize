@@ -13,7 +13,7 @@ export default ChildComponent => {
     }
     render() {
       if (this.props.user === false) {
-        console.log('Not authorized')
+        console.log('Not authorized', false)
         return <Redirect to="/login" />
       } else if (typeof this.props.user === 'string') {
         return <div>Loading...</div>

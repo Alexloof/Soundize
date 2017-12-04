@@ -12,12 +12,10 @@
   },
   "scripts": {
     "start": "node ./dist/server.js",
-    "clean": "rm -rf ./dist",
-    "build": "webpack --config ./webpack.prod.config.js --progress --colors",
     "dev": "npm-run-all --parallel dev:*",
     "dev:build-server": "webpack --config webpack.devserver.config.js --watch",
     "dev:build-client": "webpack --config webpack.dev.config.js --watch",
-    "dev:server": "nodemon --exec node dist/server.js",
+    "dev:server": "nodemon --exec node dist/server.js --watch",
     "prod:build-server": "webpack --config webpack.devserver.config.js",
     "prod:build-client": "webpack --config webpack.dev.config.js"
   },

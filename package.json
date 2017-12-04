@@ -11,7 +11,7 @@
     "url": "https://github.com/Alexloof/Soundize.git"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node ./build/bundle.js",
     "clean": "rm -rf ./dist",
     "build": "webpack --config ./webpack.prod.config.js --progress --colors",
     "dev": "npm-run-all --parallel dev:*",

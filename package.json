@@ -5,7 +5,7 @@
   "description": "A client-side webapp powered by Spotify API",
   "author": "Alex Lööf",
   "license": "ISC",
-  "main": "index.js",
+  "main": "build/bundle.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alexloof/Soundize.git"

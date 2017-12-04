@@ -80,11 +80,3 @@ export default [
     ]
   }
 ]
-
-// const RouteWithSubRoutes = route => (
-//   <Route
-//     path={route.path}
-//     exact={route.exact}
-//     render={props => <route.component {...props} routes={route.routes} />}
-//   />
-// )

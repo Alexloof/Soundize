@@ -83,9 +83,11 @@ class Nav extends Component {
         <div id="navMenubd-example" className="navbar-menu">
           <div
             onMouseEnter={() =>
-              this.setState({ navClassName: 'navbar-start with-indicator' })}
+              this.setState({ navClassName: 'navbar-start with-indicator' })
+            }
             onMouseLeave={() =>
-              this.setState({ navClassName: 'navbar-start ' })}
+              this.setState({ navClassName: 'navbar-start ' })
+            }
             className={this.state.navClassName}
           >
             <NavLink
@@ -148,7 +150,13 @@ class Nav extends Component {
                   style={{ alignItems: 'center' }}
                 >
                   <div className="navbar-item has-dropdown is-hoverable user-nav-dropdown">
-                    <img src={this.props.user.images[0].url} />
+                    <img
+                      src={
+                        this.props.user.images[0]
+                          ? this.props.user.images[0].url
+                          : null
+                      }
+                    />
                     <a className="navbar-link user-nav-link">
                       {this.props.user.display_name}
                     </a>

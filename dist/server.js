@@ -6436,7 +6436,9 @@ var Nav = function (_Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'navbar-item has-dropdown is-hoverable user-nav-dropdown' },
-                  _react2.default.createElement('img', { src: this.props.user.images[0].url }),
+                  _react2.default.createElement('img', {
+                    src: this.props.user.images[0] ? this.props.user.images[0].url : null
+                  }),
                   _react2.default.createElement(
                     'a',
                     { className: 'navbar-link user-nav-link' },

@@ -7,13 +7,10 @@ import createStore from './src/helpers/serverStore'
 
 const app = express()
 
-app.use(express.static('public'))
+app.use(express.static('dist'))
 
 app.get('*', (req, res) => {
   const store = createStore(req)
-  const context = {}
-  const content = renderer(req, store, context)
-  res.send(content)
 
   const promises = matchRoutes(Routes, req.path)
     .map(({ route }) => {

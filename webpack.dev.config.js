@@ -7,9 +7,9 @@ const autoprefixer = require('autoprefixer')
 module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js',
-    publicPath: '/public/'
+    path: path.join(__dirname, 'dist'),
+    filename: 'client.js',
+    publicPath: '/dist/'
   },
   resolve: {
     extensions: ['.jsx', '.json', '.js']

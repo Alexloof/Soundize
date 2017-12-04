@@ -5,19 +5,19 @@
   "description": "A client-side webapp powered by Spotify API",
   "author": "Alex Lööf",
   "license": "ISC",
-  "main": "build/bundle.js",
+  "main": "dist/server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alexloof/Soundize.git"
   },
   "scripts": {
-    "start": "node ./build/bundle.js",
+    "start": "node ./dist/server.js",
     "clean": "rm -rf ./dist",
     "build": "webpack --config ./webpack.prod.config.js --progress --colors",
     "dev": "npm-run-all --parallel dev:*",
     "dev:build-server": "webpack --config webpack.devserver.config.js --watch",
     "dev:build-client": "webpack --config webpack.dev.config.js --watch",
-    "dev:server": "nodemon --watch build --exec node build/bundle.js",
+    "dev:server": "nodemon --exec node dist/server.js",
     "prod:build-server": "webpack --config webpack.devserver.config.js",
     "prod:build-client": "webpack --config webpack.dev.config.js"
   },

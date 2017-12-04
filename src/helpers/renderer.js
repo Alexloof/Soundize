@@ -33,7 +33,7 @@ export default (req, store, context) => {
         <script>
           window.INITIAL_STATE = ${serialize(store.getState())}
         </script>
-        <script src="bundle.js"></script>
+        <script src="client.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
       </body>
     </html>

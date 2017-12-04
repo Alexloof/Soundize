@@ -9,9 +9,9 @@ module.exports = {
   target: 'node',
   entry: ['babel-polyfill', './server.js'],
   output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
-    publicPath: '/public/'
+    path: path.join(__dirname, 'dist'),
+    filename: 'server.js',
+    publicPath: '/dist/'
   },
   externals: [webpackNodeExternals()],
   resolve: {

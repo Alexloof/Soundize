@@ -5,7 +5,7 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-  entry: ['babel-polyfill', './src/index.js'],
+  entry: ['babel-polyfill', 'react-hot-loader/patch', './src/index.js'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'client.js',
@@ -76,7 +76,7 @@ module.exports = {
   devtool: 'inline-source-map'
   // plugins: [
   //   new HtmlWebpackPlugin({
-  //     template: './public/index.html'
+  //     template: './src/index.html'
   //   })
   // ]
 }

@@ -3,8 +3,8 @@
   background-color: $gray-light;
   padding: 0;
   box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
-  padding-bottom: 52px;
-  min-height: calc(100vh - 52px);
+  padding-bottom: $nav-height;
+  min-height: calc(100vh - #{$nav-height});
   .tracklist-tracks {
     margin-top: 1.5%;
   }

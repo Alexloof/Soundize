@@ -8,6 +8,10 @@
   padding-top: 1.5%;
   padding-bottom: 0;
   height: 100%;
+  transition: 0.35s all ease;
+  @media screen and (max-width: $break-mobile) {
+    transform: translateX(-250px);
+  }
   .menu {
     .top-label {
       display: flex;

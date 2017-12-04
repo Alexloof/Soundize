@@ -10,6 +10,9 @@
   width: 52vw;
   right: 1vw;
   transition: 0.3s all;
+  @media screen and (max-width: $break-mobile) {
+    width: 100vw;
+  }
   .tracklist-banner-info {
     display: flex;
     flex-direction: column;
@@ -22,6 +25,9 @@
     .tracklist-name {
       font-size: 2.5rem;
       color: $gray-light;
+      @media screen and (max-width: $break-mobile) {
+        font-size: 1.7rem;
+      }
     }
     .tracklist-banner-info-lower {
       display: flex;
@@ -32,6 +38,9 @@
         width: 220px;
         justify-content: space-between;
         margin-right: 5%;
+        @media screen and (max-width: $break-mobile) {
+          width: 10%;
+        }
         button {
           border: 1px solid $gray-light;
           background-color: $brand-primary;
@@ -42,6 +51,10 @@
           letter-spacing: 2px;
           height: 30px;
           border-radius: 0px;
+          @media screen and (max-width: $break-mobile) {
+            display: none;
+          }
+
           &:hover {
             background-color: $gray-light;
             color: $gray-lightdark;
@@ -54,10 +67,18 @@
     height: 200px;
     min-width: 200px !important;
     width: 200px;
+    @media screen and (max-width: $break-mobile) {
+      width: 100px;
+      height: 100px;
+      min-width: 100px !important;
+    }
     img {
       object-fit: cover;
       height: 200px;
       box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.14);
+      @media screen and (max-width: $break-mobile) {
+        height: 100px;
+      }
     }
   }
 }

@@ -11,6 +11,9 @@ $max-list-height: 250px;
   padding-top: 1.5%;
   padding-bottom: 0;
   height: 100%;
+  @media screen and (max-width: $break-mobile) {
+    display: none;
+  }
   .menu {
     .top-label {
       display: flex;

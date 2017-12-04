@@ -15,6 +15,9 @@ $top-distance: $nav-height;
   white-space: nowrap;
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.4);
   transition: 0.3s all ease;
+  @media screen and (max-width: $break-mobile) {
+    width: 100vw;
+  }
   .tracklist-name {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -26,6 +29,10 @@ $top-distance: $nav-height;
     letter-spacing: 1px;
     display: flex;
     align-items: center;
+    @media screen and (max-width: $break-mobile) {
+      font-size: 1.1rem;
+      max-width: 50%;
+    }
 
     div {
       cursor: pointer;
@@ -85,4 +92,7 @@ $top-distance: $nav-height;
   top: $top-distance;
   width: 50.2vw;
   transform: translateX(0vw);
+  @media screen and (max-width: $break-mobile) {
+    width: 100vw;
+  }
 }

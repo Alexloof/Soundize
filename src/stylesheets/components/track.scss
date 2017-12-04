@@ -8,11 +8,22 @@
   border-left: 3px solid rgba(255, 107, 66, 0);
   padding-left: 3%;
   padding-right: 3%;
+  @media screen and (max-width: $break-mobile) {
+    padding-bottom: 0px;
+  }
   .img-wrapper {
     min-width: 100px;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.363);
+    @media screen and (max-width: $break-mobile) {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+    }
     img {
       height: 100px;
+      @media screen and (max-width: $break-mobile) {
+        height: 60px;
+      }
     }
     .img-click-play {
       height: 100px;
@@ -24,6 +35,10 @@
       align-items: center;
       opacity: 0;
       transition: 0.3s all ease;
+      @media screen and (max-width: $break-mobile) {
+        height: 60px;
+        width: 60px;
+      }
       .button {
         border-radius: 50px;
         height: 40px;

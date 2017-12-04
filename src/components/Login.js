@@ -77,33 +77,12 @@ class Login extends Component {
               </NavLink>
 
               <a
-                className="navbar-item is-hidden-desktop"
-                href="https://github.com/jgthms/bulma"
-                target="_blank"
+                className="navbar-item is-hidden-desktop login-btn"
+                onClick={() => this.login()}
+                style={{ color: 'white' }}
               >
-                <span className="icon">
-                  <i className="fa fa-github" />
-                </span>
+                <span>Logga in</span>
               </a>
-
-              <a
-                className="navbar-item is-hidden-desktop"
-                href="https://twitter.com/jgthms"
-                target="_blank"
-              >
-                <span className="icon">
-                  <i className="fa fa-twitter" />
-                </span>
-              </a>
-
-              <div
-                className="navbar-burger burger"
-                data-target="navMenubd-example"
-              >
-                <span />
-                <span />
-                <span />
-              </div>
             </div>
 
             <div id="navMenubd-example" className="navbar-menu">

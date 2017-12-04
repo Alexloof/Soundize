@@ -11,11 +11,7 @@ class NewReleases extends Component {
     this.props.getNewReleases()
   }
   navigateToDetailPage = release => {
-    if (release.album_type === 'album') {
-      this.props.history.push(`/albums/${release.id}`)
-    } else {
-      console.log(release, 'single')
-    }
+    this.props.history.push(`/albums/${release.id}`)
   }
   renderNewReleases = () => {
     return this.props.newReleases.map((release, index) => {

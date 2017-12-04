@@ -5248,7 +5248,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var scopes = ['user-read-private', 'playlist-read-private', 'playlist-read-collaborative', 'playlist-modify-public', 'playlist-modify-private', 'user-top-read', 'user-library-read', 'user-library-modify', 'user-follow-read', 'user-follow-modify'];
 var client_id = '8d7cb1d087644280982de543cbb92989';
-var redirect_uri = 'http://localhost:8080/app'; //'https://soundize.herokuapp.com/app'
+var redirect_uri = 'https://soundize.herokuapp.com/app'; // 'http://localhost:8080/app'
 
 var url = 'https://accounts.spotify.com/authorize?client_id=' + client_id + '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=' + encodeURIComponent(scopes.join(' ')) + '&response_type=token';
 

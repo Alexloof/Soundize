@@ -22,20 +22,41 @@ class AlbumDetail extends Component {
     }
     if (this.props.album.tracks) {
       this.props.album.tracks.items.map(track => {
-        tracklist.tracks.items.push({ track: track })
+        const extraAttribut = {
+          album: {
+            images: [
+              {
+                url: this.props.album.images[0]
+                  ? this.props.album.images[0].url
+                  : null
+              }
+            ]
+          }
+        }
+        const newTrack = { ...track, ...extraAttribut }
+        tracklist.tracks.items.push({ track: newTrack })
       })
       this.props.setActiveTracklistSolo(tracklist)
     }
   }
   renderTracks = tracks => {
     return tracks.map((track, index) => {
+      const extraAttribut = {
+        album: {
+          images: [
+            {
+              url: this.props.album.images[0]
+                ? this.props.album.images[0].url
+                : null
+            }
+          ]
+        }
+      }
+      const newTrack = { ...track, ...extraAttribut }
       return (
         <Track
           key={index}
-          imgAlbum={
-            this.props.album.images[0] ? this.props.album.images[0] : null
-          }
-          track={track}
+          track={newTrack}
           isMyPlaylist={false}
           index={index}
         />
@@ -53,8 +74,7 @@ class AlbumDetail extends Component {
             </div>
             <div className="tracklist-banner-info-lower">
               <div className="small-info">
-                <p>Följare: 0</p>
-                <p>Skapad av: Alex</p>
+                <p>Releas date: {this.props.album.release_date}</p>
               </div>
             </div>
           </div>

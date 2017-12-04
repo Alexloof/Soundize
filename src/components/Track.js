@@ -77,21 +77,8 @@ class Track extends Component {
       this.props.playActiveTrack()
     } else {
       this.props.setPlayingTracklist(this.props.activeTracklist)
-
-      if (!track.album) {
-        //if track is coming is rendered from an album (missing images)
-        const extraAttribut = {
-          album: {
-            images: [{ url: this.props.imgAlbum.url }]
-          }
-        }
-        const newTrack = { ...track, ...extraAttribut }
-        await this.props.setActiveTrack(newTrack, this.props.index)
-        this.props.playActiveTrack()
-      } else {
-        await this.props.setActiveTrack(track, this.props.index)
-        this.props.playActiveTrack()
-      }
+      await this.props.setActiveTrack(track, this.props.index)
+      this.props.playActiveTrack()
     }
     this.props.showMusicbar()
   }
@@ -220,9 +207,7 @@ class Track extends Component {
               </button>
             )}
           </div>
-          {this.props.imgAlbum ? (
-            <img src={this.props.imgAlbum.url} />
-          ) : this.props.track.album.images.length !== 0 ? (
+          {this.props.track.album.images.length !== 0 ? (
             <img src={this.props.track.album.images[0].url} />
           ) : (
             <img />

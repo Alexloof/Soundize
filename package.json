@@ -17,7 +17,9 @@
     "dev": "npm-run-all --parallel dev:*",
     "dev:build-server": "webpack --config webpack.devserver.config.js --watch",
     "dev:build-client": "webpack --config webpack.dev.config.js --watch",
-    "dev:server": "nodemon --watch build --exec node build/bundle.js"
+    "dev:server": "nodemon --watch build --exec node build/bundle.js",
+    "prod:build-server": "webpack --config webpack.devserver.config.js",
+    "prod:build-client": "webpack --config webpack.dev.config.js"
   },
   "dependencies": {
     "autoprefixer": "^6.4.1",

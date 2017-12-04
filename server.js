@@ -37,6 +37,8 @@ app.get('*', (req, res) => {
   })
 })
 
-app.listen(8080, () => {
+var port = process.env.PORT || 8080
+
+app.listen(port, () => {
   console.log('Listning on port 8080')
 })

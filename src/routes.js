@@ -1,14 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from './store'
-
 import App from './components/App'
 import Home from './components/Home'
 import Login from './components/Login'
@@ -23,9 +12,17 @@ import AlbumDetail from './components/AlbumDetail'
 import ArtistDetail from './components/ArtistDetail'
 import TrackDetail from './components/TrackDetail'
 
-import './stylesheets/main.scss'
-
-const app_routes = [
+export default [
+  {
+    path: '/app',
+    component: Callback,
+    exact: false
+  },
+  {
+    path: '/login',
+    component: Login,
+    exact: true
+  },
   {
     component: App,
     exact: false,
@@ -83,34 +80,3 @@ const app_routes = [
     ]
   }
 ]
-
-const RouteWithSubRoutes = route => (
-  <Route
-    path={route.path}
-    exact={route.exact}
-    render={props => <route.component {...props} routes={route.routes} />}
-  />
-)
-
-const Root = () => {
-  return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route path="/app" component={Callback} />
-          {app_routes.map((route, i) => (
-            <RouteWithSubRoutes key={i} {...route} />
-          ))}
-          <Route component={() => <div>404</div>} />
-        </Switch>
-      </Router>
-    </Provider>
-  )
-}
-
-if (module.hot) {
-  module.hot.accept()
-}
-
-ReactDOM.render(<Root />, document.querySelector('#root'))

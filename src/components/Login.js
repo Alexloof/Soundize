@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
+
+import { getCurrentUser, setupAuthToAPI } from '../actions/user_actions'
 
 const scopes = [
   'user-read-private',
@@ -15,7 +18,7 @@ const scopes = [
   'user-follow-modify'
 ]
 const client_id = '8d7cb1d087644280982de543cbb92989'
-const redirect_uri = 'https://webshare.mah.se/app' //'http://localhost:8080/app'
+const redirect_uri = 'https://soundize.herokuapp.com/app' // 'http://localhost:8080/app'
 
 const url =
   'https://accounts.spotify.com/authorize?client_id=' +
@@ -28,8 +31,8 @@ const url =
 
 const width = 450,
   height = 730,
-  left = screen.width / 2 - width / 2,
-  top = screen.height / 2 - height / 2
+  left = width / 2 - width / 2,
+  top = height / 2 - height / 2
 class Login extends Component {
   state = {
     navClassName: 'navbar-start'
@@ -37,9 +40,11 @@ class Login extends Component {
   componentDidMount() {
     window.addEventListener('message', e => this.auth(e), false)
   }
-  auth = event => {
+  auth = async event => {
     if (event.data.type == 'access_token') {
       console.log(this.props)
+      await this.props.setupAuthToAPI()
+      await this.props.getCurrentUser()
       this.props.history.push('/')
     }
   }
@@ -224,4 +229,6 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login)
+export default withRouter(
+  connect(null, { getCurrentUser, setupAuthToAPI })(Login)
+)

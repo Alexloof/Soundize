@@ -1,16 +1,19 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const webpackNodeExternals = require('webpack-node-externals')
 
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-  entry: ['babel-polyfill', './src/client/index.js'],
+  target: 'node',
+  entry: ['babel-polyfill', './server.js'],
   output: {
-    publicPath: '/',
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'server.js',
+    publicPath: '/dist/'
   },
+  externals: [webpackNodeExternals()],
   resolve: {
     extensions: ['.jsx', '.json', '.js']
   },
@@ -72,11 +75,11 @@ module.exports = {
         loader: 'json-loader'
       }
     ]
-  },
-  devtool: 'inline-source-map',
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/client/index.html'
-    })
-  ]
+  }
+  //devtool: 'inline-source-map'
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: './public/index.html'
+  //   })
+  // ]
 }

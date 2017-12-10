@@ -50,10 +50,10 @@ class Search extends Component {
     this.props.setActiveTracklistSolo(null)
   }
   navigateToArtistDetailPage = id => {
-    this.props.history.push(`/artists/${id}`)
+    this.props.history.push(`/app/artists/${id}`)
   }
   navigateToPlaylist = (userId, playlistId) => {
-    this.props.history.push(`/playlists/${userId}/${playlistId}`)
+    this.props.history.push(`/app/playlists/${userId}/${playlistId}`)
   }
   renderArtists = () => {
     return this.props.searchedArtists.map((artist, index) => {

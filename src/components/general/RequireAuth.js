@@ -14,12 +14,12 @@ export default ChildComponent => {
     render() {
       if (this.props.user === false) {
         console.log('Not authorized', false)
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
       } else if (typeof this.props.user === 'string') {
         return <div>Loading...</div>
       } else if (!this.props.user) {
         console.log('Not authorized')
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
       } else {
         return <ChildComponent {...this.props} />
       }

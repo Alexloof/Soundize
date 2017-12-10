@@ -11,7 +11,7 @@ class DiscoverCategory extends Component {
     this.props.getActiveCategoryPlaylists(this.props.match.params.category)
   }
   navigateToPlaylist = (userId, playlistId) => {
-    this.props.history.push(`/playlists/${userId}/${playlistId}`)
+    this.props.history.push(`/app/playlists/${userId}/${playlistId}`)
   }
   render() {
     return (
@@ -28,7 +28,8 @@ class DiscoverCategory extends Component {
             return (
               <li
                 onClick={() =>
-                  this.navigateToPlaylist(playlist.owner.id, playlist.id)}
+                  this.navigateToPlaylist(playlist.owner.id, playlist.id)
+                }
                 key={index}
                 className="discover-category-item"
               >

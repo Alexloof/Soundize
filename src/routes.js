@@ -12,71 +12,79 @@ import AlbumDetail from './components/AlbumDetail'
 import ArtistDetail from './components/ArtistDetail'
 import TrackDetail from './components/TrackDetail'
 
+import React from 'react'
+
+import { Redirect } from 'react-router'
+
 export default [
   {
-    path: '/app',
+    path: '/callback',
     component: Callback,
     exact: false
   },
   {
-    path: '/login',
+    path: '/',
     component: Login,
     exact: true
   },
   {
+    path: '/app',
     component: App,
     exact: false,
     routes: [
       {
-        path: '/',
+        path: '/app',
         component: Home,
         exact: true
       },
       {
-        path: '/discover',
+        path: '/app/discover',
         component: Discover,
         exact: true
       },
       {
-        path: '/discover/:category',
+        path: '/app/discover/:category',
         component: DiscoverCategory,
         exact: true
       },
       {
-        path: '/new_releases',
+        path: '/app/new_releases',
         component: NewReleases,
         exact: true
       },
       {
-        path: '/toplists',
+        path: '/app/toplists',
         component: Toplists,
         exact: true
       },
       {
-        path: '/albums/:id',
+        path: '/app/albums/:id',
         component: AlbumDetail,
         exact: true
       },
       {
-        path: '/artists/:id',
+        path: '/app/artists/:id',
         component: ArtistDetail,
         exact: true
       },
       {
-        path: '/tracks/:id',
+        path: '/app/tracks/:id',
         component: TrackDetail,
         exact: true
       },
       {
-        path: '/playlists/:user/:id',
+        path: '/app/playlists/:user/:id',
         component: PlaylistDetail,
         exact: true
       },
       {
-        path: '/search',
+        path: '/app/search',
         component: Search,
         exact: false
       }
     ]
+  },
+  {
+    component: () => <Redirect from="*" to="/" />
   }
 ]

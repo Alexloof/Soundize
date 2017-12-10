@@ -13,20 +13,20 @@ class Nav extends Component {
   onLogout = () => {
     localStorage.removeItem('token')
     this.props.pauseActiveTrack()
-    this.props.history.replace('/login')
+    this.props.history.replace('/')
   }
   onInputChange = e => {
     this.setState({ searchText: e.target.value }, () => {
       if (this.state.searchText) {
         setTimeout(() => {
           this.props.history.push({
-            pathname: '/search',
+            pathname: '/app/search',
             search: `?q=${this.state.searchText.toLowerCase()}`,
             state: { id: this.state.searchText.toLowerCase() }
           })
         }, 500)
       } else {
-        this.props.history.push('/')
+        this.props.history.push('/app')
       }
     })
   }
@@ -34,7 +34,7 @@ class Nav extends Component {
     e.preventDefault()
     if (this.state.searchText.length > 0) {
       this.props.history.push({
-        pathname: '/search',
+        pathname: '/app/search',
         search: `?q=${this.state.searchText.toLowerCase()}`,
         state: { id: this.state.searchText.toLowerCase() }
       })
@@ -92,7 +92,7 @@ class Nav extends Component {
           >
             <NavLink
               className="navbar-item"
-              to="/"
+              to="/app"
               exact
               activeStyle={{ color: '#ff6b42' }}
             >
@@ -101,7 +101,7 @@ class Nav extends Component {
 
             <NavLink
               className="navbar-item"
-              to="/discover"
+              to="/app/discover"
               activeStyle={{ color: '#ff6b42' }}
             >
               <span>Utforska</span>
@@ -109,7 +109,7 @@ class Nav extends Component {
 
             <NavLink
               className="navbar-item"
-              to="/new_releases"
+              to="/app/new_releases"
               activeStyle={{ color: '#ff6b42' }}
             >
               <span>Nytt</span>
@@ -117,7 +117,7 @@ class Nav extends Component {
 
             <NavLink
               className="navbar-item"
-              to="/toplists"
+              to="/app/toplists"
               activeStyle={{ color: '#ff6b42' }}
             >
               <span>Topplistor</span>

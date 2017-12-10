@@ -18,7 +18,7 @@ const scopes = [
   'user-follow-modify'
 ]
 const client_id = '8d7cb1d087644280982de543cbb92989'
-const redirect_uri = 'http://localhost:8080/app' // 'https://soundize.herokuapp.com/app'
+const redirect_uri = 'http://localhost:8080/callback' // 'https://soundize.herokuapp.com/app'
 
 const url =
   'https://accounts.spotify.com/authorize?client_id=' +
@@ -45,7 +45,7 @@ class Login extends Component {
       console.log(this.props)
       await this.props.setupAuthToAPI()
       await this.props.getCurrentUser()
-      this.props.history.push('/')
+      this.props.history.push('/app')
     }
   }
   login = () => {

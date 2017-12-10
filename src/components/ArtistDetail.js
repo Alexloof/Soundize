@@ -14,8 +14,8 @@ class ArtistDetail extends Component {
     await this.props.setupAuthToAPI()
     this.getArtistDetail(this.props.match.params.id)
     this.unlisten = this.props.history.listen((location, action) => {
-      let incID = location.pathname.slice(9)
-      let artists = location.pathname.slice(1, 8)
+      let incID = location.pathname.slice(13)
+      let artists = location.pathname.slice(5, 12)
       if (incID && artists == 'artists') {
         if (incID !== this.props.match.params.id) {
           this.getArtistDetail(incID)
@@ -48,10 +48,10 @@ class ArtistDetail extends Component {
     }
   }
   navigateToAlbum = id => {
-    this.props.history.push(`/albums/${id}`)
+    this.props.history.push(`/app/albums/${id}`)
   }
   navigateToArtist = id => {
-    this.props.history.push(`/artists/${id}`)
+    this.props.history.push(`/app/artists/${id}`)
   }
   renderGenres = genres => {
     if (genres) {

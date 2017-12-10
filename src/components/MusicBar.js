@@ -116,10 +116,10 @@ class MusicBar extends Component {
   }
 
   navigateToTrackDetailPage = () => {
-    this.props.history.push(`/tracks/${this.props.activeTrack.id}`)
+    this.props.history.push(`/app/tracks/${this.props.activeTrack.id}`)
   }
   navigateToArtistDetailPage = id => {
-    this.props.history.push(`/artists/${id}`)
+    this.props.history.push(`/app/artists/${id}`)
   }
   onProgress = time => {
     // We only want to update time slider if we are not currently seeking

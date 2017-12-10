@@ -33,7 +33,7 @@ class Track extends Component {
     }
   }
   navigateToTrackDetailPage = () => {
-    this.props.history.push(`/tracks/${this.props.track.id}`)
+    this.props.history.push(`/app/tracks/${this.props.track.id}`)
   }
   handleClick = event => {
     if (this.state.dropdownClassName === 'dropdown is-active') {
@@ -43,7 +43,7 @@ class Track extends Component {
     }
   }
   navigateToArtistDetailPage = id => {
-    this.props.history.push(`/artists/${id}`)
+    this.props.history.push(`/app/artists/${id}`)
   }
   renderFormattedArtists(artists) {
     return artists.map((artist, index) => {

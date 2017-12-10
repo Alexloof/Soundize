@@ -11,7 +11,7 @@ class NewReleases extends Component {
     this.props.getNewReleases()
   }
   navigateToDetailPage = release => {
-    this.props.history.push(`/albums/${release.id}`)
+    this.props.history.push(`/app/albums/${release.id}`)
   }
   renderNewReleases = () => {
     return this.props.newReleases.map((release, index) => {

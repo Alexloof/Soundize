@@ -37,9 +37,15 @@ class TrackDetail extends Component {
       waveColor: '#444444',
       hideScrollbar: true
     })
+
+    // time issue with wavesurfer module
+    setTimeout(() => {
+      this.createVisuals(wavesurfer)
+    }, 200)
+
     this.unlisten = this.props.history.listen(async (location, action) => {
-      let incID = location.pathname.slice(8)
-      let word = location.pathname.slice(1, 7)
+      let incID = location.pathname.slice(12)
+      let word = location.pathname.slice(5, 11)
       if (incID && word == 'tracks') {
         if (incID !== this.props.match.params.id) {
           await this.props.getTrackDetail(incID)
@@ -47,8 +53,8 @@ class TrackDetail extends Component {
         }
       }
     })
-    this.createVisuals(wavesurfer)
   }
+
   createVisuals = wavesurfer => {
     wavesurfer.load(this.props.trackDetail.preview_url)
     wavesurfer.on('ready', () => {
@@ -69,7 +75,7 @@ class TrackDetail extends Component {
     this.setState({ modalClassName: 'modal create-playlist-modal is-active' })
   }
   navigateToArtistDetailPage = id => {
-    this.props.history.push(`/artists/${id}`)
+    this.props.history.push(`/app/artists/${id}`)
   }
   renderFormattedArtists = artists => {
     return artists.map((artist, index) => {

@@ -9,14 +9,15 @@ class Toplists extends Component {
     this.props.getActiveCategoryPlaylists('toplists')
   }
   navigateToPlaylist = (userId, playlistId) => {
-    this.props.history.push(`/playlists/${userId}/${playlistId}`)
+    this.props.history.push(`/app/playlists/${userId}/${playlistId}`)
   }
   renderToplists = () => {
     return this.props.toplists.map((playlist, index) => {
       return (
         <li
           onClick={() =>
-            this.navigateToPlaylist(playlist.owner.id, playlist.id)}
+            this.navigateToPlaylist(playlist.owner.id, playlist.id)
+          }
           className="toplists-item"
           key={index}
         >

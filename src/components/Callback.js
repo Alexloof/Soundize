@@ -7,6 +7,7 @@ class Redirect extends Component {
 
     console.log('Ny token')
     let newHash = this.props.location.hash.slice(14, -34)
+    console.log(newHash)
     if (newHash) {
       localStorage.setItem('token', newHash)
       console.log('SUCCESS!')

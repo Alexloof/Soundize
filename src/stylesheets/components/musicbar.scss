@@ -32,6 +32,9 @@
           top: auto;
         }
       }
+      @media screen and (max-width: $break-mobile) {
+        display: none;
+      }
     }
     .img-info {
       display: flex;
@@ -40,6 +43,11 @@
       margin-right: 2%;
       min-width: 20%;
       max-width: 20%;
+      @media screen and (max-width: $break-mobile) {
+        width: 40%;
+        max-width: none;
+        min-width: 40%;
+      }
       img {
         width: $nav-height - 10px;
         height: $nav-height - 10px;
@@ -76,6 +84,9 @@
       align-items: center;
       width: 40%;
       margin-right: 3%;
+      @media screen and (max-width: $break-mobile) {
+        display: none;
+      }
       .time-counter {
         font-size: 11px;
         margin-right: 5px;
@@ -105,6 +116,9 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      @media screen and (max-width: $break-mobile) {
+        display: none;
+      }
       .fa {
         font-size: 18px;
         cursor: pointer;
@@ -177,11 +191,17 @@
         font-size: 18px;
         cursor: pointer;
       }
+      @media screen and (max-width: $break-mobile) {
+        display: none;
+      }
     }
     #analyzer {
       margin-left: 2%;
       width: 22%;
       height: 65px;
+      @media screen and (max-width: $break-mobile) {
+        display: none;
+      }
     }
     input[type='range'] {
       -webkit-appearance: none;

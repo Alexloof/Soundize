@@ -16,6 +16,10 @@ $menu-items-loop-offset: $menu-items - 1;
   display: flex;
   flex-direction: row;
   align-items: center;
+  @media screen and (max-width: $break-mobile) {
+    display: flex;
+    justify-content: center;
+  }
   .navbar-brand {
     position: absolute;
     a.navbar-item {
@@ -32,6 +36,14 @@ $menu-items-loop-offset: $menu-items - 1;
         border-color: transparent;
         background-color: transparent;
       }
+    }
+  }
+  .burge-menu {
+    display: none;
+    @media screen and (max-width: $break-mobile) {
+      display: block;
+      position: absolute;
+      right: 25px;
     }
   }
   .navbar-menu {

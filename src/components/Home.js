@@ -91,7 +91,7 @@ class Home extends Component {
         <div
           onClick={() => this.togglePlaylist()}
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: '15px',
             left: '15px',
             zIndex: 999,

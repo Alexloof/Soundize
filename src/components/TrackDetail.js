@@ -40,7 +40,7 @@ class TrackDetail extends Component {
     // time issue with wavesurfer module
     setTimeout(() => {
       this.createVisuals(wavesurfer)
-    }, 200)
+    }, 1000)
 
     this.unlisten = this.props.history.listen(async (location, action) => {
       let incID = location.pathname.slice(12)

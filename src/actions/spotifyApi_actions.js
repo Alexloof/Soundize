@@ -1,5 +1,3 @@
-const SpotifyWebApi = require('spotify-web-api-node')
-const spotifyApi = new SpotifyWebApi()
 import axios from 'axios'
 
 import { showSuccessAlert, showErrorAlert } from './alert_actions'
@@ -8,27 +6,12 @@ const BASE_URL = 'https://api.spotify.com/v1'
 
 // AUTH
 export const setAccessToken = async (token, dispatch) => {
-  console.log(token)
   localStorage.setItem('token', token)
   const a_token = localStorage.getItem('token')
-
-  if (a_token) {
-    spotifyApi.setAccessToken(token)
-  } else {
-    console.log('Missing token - Could not set access token to spotifyApi')
-  }
 }
 
 // USER
 export const fetchUser = async dispatch => {
-  // return spotifyApi.getMe().then(
-  //   data => {
-  //     return data.body
-  //   },
-  //   err => {
-  //     console.log('Something went wrong getting user details!', err)
-  //   }
-  // )
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -93,14 +76,6 @@ export const fetchTopArtists = async dispatch => {
 
 // PLAYLISTS
 export const fetchPlaylists = async (userId, dispatch) => {
-  // return spotifyApi.getUserPlaylists(userId).then(
-  //   data => {
-  //     return data.body.items
-  //   },
-  //   function(err) {
-  //     console.log('Something went wrong getting playlists!', err)
-  //   }
-  // )
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -122,22 +97,6 @@ export const fetchPlaylists = async (userId, dispatch) => {
 }
 
 export const fetchFeaturedPlaylists = async (timestamp, dispatch) => {
-  // return spotifyApi
-  //   .getFeaturedPlaylists({
-  //     limit: 5,
-  //     offset: 0,
-  //     country: 'SE',
-  //     locale: 'sv_SE',
-  //     timestamp: timestamp
-  //   })
-  //   .then(
-  //     data => {
-  //       return data.body.playlists.items
-  //     },
-  //     function(err) {
-  //       console.log('Something went wrong getting featured playlists!', err)
-  //     }
-  //   )
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -162,15 +121,6 @@ export const fetchFeaturedPlaylists = async (timestamp, dispatch) => {
 }
 
 export const fetchNewReleases = async dispatch => {
-  // return spotifyApi.getNewReleases({ country: 'SE' }).then(
-  //   data => {
-  //     return data.body.albums.items
-  //   },
-  //   function(err) {
-  //     console.log('Something went wrong getting new releases!', err)
-  //   }
-  // )
-
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -192,17 +142,6 @@ export const fetchNewReleases = async dispatch => {
 }
 
 export const createUserPlaylist = async (userId, name, desc, dispatch) => {
-  // await spotifyApi.createPlaylist(userId, name, { public: true }).then(
-  //   data => {
-  //     console.log('Playlist created', data)
-  //     dispatch(showSuccessAlert(name + ' har skapats!'))
-  //   },
-  //   function(err) {
-  //     console.log('Something went wrong!', err)
-  //     dispatch(showErrorAlert(name + ' kunde inte skapas...'))
-  //   }
-  // )
-
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -233,17 +172,6 @@ export const createUserPlaylist = async (userId, name, desc, dispatch) => {
 }
 
 export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  // await spotifyApi.unfollowPlaylist(ownerId, playlistId).then(
-  //   data => {
-  //     console.log('Unfollowed a playlist', data)
-  //     dispatch(showSuccessAlert('Du slutade följa en spellista!'))
-  //   },
-  //   function(err) {
-  //     console.log('Something went wrong!', err)
-  //     dispatch(showErrorAlert('Det gick inte att sluta följa denna spellista'))
-  //   }
-  // )
-
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -269,17 +197,6 @@ export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
 }
 
 export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  // await spotifyApi.followPlaylist(ownerId, playlistId).then(
-  //   data => {
-  //     console.log('Followed a playlist', data)
-  //     dispatch(showSuccessAlert('Du började följa en spellista!'))
-  //   },
-  //   function(err) {
-  //     console.log('Something went wrong!', err)
-  //     dispatch(showErrorAlert('Det gick inte att följa denna spellista'))
-  //   }
-  // )
-
   const token = localStorage.getItem('token')
   const authString = 'Bearer ' + token
 
@@ -303,16 +220,26 @@ export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
 }
 
 export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {
-  await spotifyApi.unfollowPlaylist(userId, playlistId).then(
-    data => {
-      console.log('deleted a playlist', data)
-      dispatch(showSuccessAlert('Spellistan är nu borttagen'))
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-      dispatch(showErrorAlert('Det gick inte att deleta spellistan'))
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .delete(BASE_URL + `/users/${userId}/playlists/${playlistId}/followers`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        console.log('deleted a playlist', data)
+        dispatch(showSuccessAlert('Spellistan är nu borttagen'))
+      },
+      err => {
+        console.log('Something went wrong!', err)
+        dispatch(showErrorAlert('Det gick inte att deleta spellistan'))
+      }
+    )
 }
 
 // TRACK
@@ -358,17 +285,27 @@ export const fetchTrackDetails = async id => {
 }
 
 export const getTracklistOfPlaylist = async (userId, playlistId, dispatch) => {
-  return spotifyApi.getPlaylist(userId, playlistId).then(
-    data => {
-      return data.body
-    },
-    function(err) {
-      console.log(
-        'Something went wrong getting tracklist for a specific playlist!',
-        err
-      )
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + `/users/${userId}/playlists/${playlistId}`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data
+      },
+      err => {
+        console.log(
+          'Something went wrong getting tracklist for a specific playlist!',
+          err
+        )
+      }
+    )
 }
 
 export const addTrackToPlaylistCall = async (
@@ -377,36 +314,64 @@ export const addTrackToPlaylistCall = async (
   spotifyURI,
   dispatch
 ) => {
-  await spotifyApi.addTracksToPlaylist(ownerId, playlistId, [spotifyURI]).then(
-    data => {
-      console.log('Added tracks to playlist!', data)
-      dispatch(showSuccessAlert('Låten lades till i spellista'))
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-      dispatch(showErrorAlert('Det gick inte att lägga till låten'))
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .post(
+      BASE_URL + `/users/${ownerId}/playlists/${playlistId}/tracks`,
+      {
+        uris: [spotifyURI]
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: authString
+        }
+      }
+    )
+    .then(
+      data => {
+        console.log('Added tracks to playlist!', data)
+        dispatch(showSuccessAlert('Låten lades till i spellista'))
+      },
+      err => {
+        console.log('Something went wrong!', err)
+        dispatch(showErrorAlert('Det gick inte att lägga till låten'))
+      }
+    )
 }
 
 export const removeTrackFromPlaylistCall = async (
   ownerId,
   playlistId,
-  tracks,
+  spotifyURI,
   dispatch
 ) => {
-  await spotifyApi.removeTracksFromPlaylist(ownerId, playlistId, tracks).then(
-    data => {
-      console.log('Track removed from playlist!', data)
-      dispatch(showSuccessAlert('Låten tog borts från spellistan'))
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-      dispatch(
-        showErrorAlert('Det gick inte att ta bort låten från spellistan')
-      )
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+  await axios
+    .delete(BASE_URL + `/users/${ownerId}/playlists/${playlistId}/tracks`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      },
+      data: {
+        tracks: [{ uri: spotifyURI }]
+      }
+    })
+    .then(
+      data => {
+        console.log('Track removed from playlist!', data)
+        dispatch(showSuccessAlert('Låten tog borts från spellistan'))
+      },
+      err => {
+        console.log('Something went wrong!', err)
+        dispatch(
+          showErrorAlert('Det gick inte att ta bort låten från spellistan')
+        )
+      }
+    )
 }
 
 // CATEGORIES
@@ -432,16 +397,21 @@ export const getCategoriesCall = async dispatch => {
 }
 
 export const getActiveCategoryPlaylistsCall = async (category, dispatch) => {
-  return spotifyApi
-    .getPlaylistsForCategory(category, {
-      country: 'SE',
-      locale: 'sv_SE'
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + `/browse/categories/${category}/playlists?country=SE`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
     })
     .then(
       data => {
-        return data.body.playlists.items
+        return data.data.playlists.items
       },
-      function(err) {
+      err => {
         console.log(
           'Something went wrong getting playlists for a category!',
           err
@@ -452,36 +422,66 @@ export const getActiveCategoryPlaylistsCall = async (category, dispatch) => {
 
 // SEARCH
 export const getSearchedTracksCall = async (word, dispatch) => {
-  return spotifyApi.searchTracks(word).then(
-    data => {
-      return data.body.tracks.items
-    },
-    function(err) {
-      console.log('Something went wrong when searching for', word, err)
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + `/search?q=${word}&type=track`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.tracks.items
+      },
+      err => {
+        console.log('Something went wrong when searching for', word, err)
+      }
+    )
 }
 
 export const getSearchedArtistsCall = async (word, dispatch) => {
-  return spotifyApi.searchArtists(word).then(
-    data => {
-      return data.body.artists.items
-    },
-    function(err) {
-      console.log('Something went wrong when searching for', word, err)
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + `/search?q=${word}&type=artist`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.artists.items
+      },
+      err => {
+        console.log('Something went wrong when searching for', word, err)
+      }
+    )
 }
 
 export const getSearchedPlaylistsCall = async (word, dispatch) => {
-  return spotifyApi.searchPlaylists(word).then(
-    data => {
-      return data.body.playlists.items
-    },
-    function(err) {
-      console.log('Something went wrong when searching for', word, err)
-    }
-  )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + `/search?q=${word}&type=playlist`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.playlists.items
+      },
+      err => {
+        console.log('Something went wrong when searching for', word, err)
+      }
+    )
 }
 
 //ALBUM

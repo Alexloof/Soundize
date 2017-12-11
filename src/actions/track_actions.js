@@ -73,7 +73,7 @@ export const removeTrackFromPlaylist = (
   spotifyURI
 ) => async dispatch => {
   const tracks = [{ uri: spotifyURI }]
-  await removeTrackFromPlaylistCall(ownerId, playlistId, tracks, dispatch)
+  await removeTrackFromPlaylistCall(ownerId, playlistId, spotifyURI, dispatch)
 }
 
 export const setActiveTrack = (track, trackIndex) => async dispatch => {

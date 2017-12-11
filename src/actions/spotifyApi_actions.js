@@ -7,10 +7,12 @@ import { showSuccessAlert, showErrorAlert } from './alert_actions'
 const BASE_URL = 'https://api.spotify.com/v1'
 
 // AUTH
-export const setAccessToken = async dispatch => {
-  const token = localStorage.getItem('token')
+export const setAccessToken = async (token, dispatch) => {
+  console.log(token)
+  localStorage.setItem('token', token)
+  const a_token = localStorage.getItem('token')
 
-  if (token) {
+  if (a_token) {
     spotifyApi.setAccessToken(token)
   } else {
     console.log('Missing token - Could not set access token to spotifyApi')

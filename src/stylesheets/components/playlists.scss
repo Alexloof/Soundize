@@ -130,3 +130,10 @@
     }
   }
 }
+
+.burger-menu-playlist {
+  display: none;
+  @media screen and (max-width: $break-mobile) {
+    display: block;
+  }
+}

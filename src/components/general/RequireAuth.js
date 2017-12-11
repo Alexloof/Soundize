@@ -7,7 +7,7 @@ import { getCurrentUser, setupAuthToAPI } from '../../actions/user_actions'
 export default ChildComponent => {
   class RequireAuth extends Component {
     async componentDidMount() {
-      await this.props.setupAuthToAPI()
+      //await this.props.setupAuthToAPI()
       await this.props.getCurrentUser()
       console.log(this.props.user)
     }

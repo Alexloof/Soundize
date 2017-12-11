@@ -42,8 +42,7 @@ class Login extends Component {
   }
   auth = async event => {
     if (event.data.type == 'access_token') {
-      console.log(this.props)
-      await this.props.setupAuthToAPI()
+      await this.props.setupAuthToAPI(event.data.access_token)
       await this.props.getCurrentUser()
       this.props.history.push('/app')
     }

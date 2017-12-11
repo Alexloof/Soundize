@@ -97,11 +97,11 @@ class Home extends Component {
             zIndex: 999,
             color: '#bdbdbd'
           }}
-          className="burge-menu"
+          className="burger-menu-playlist"
         >
           <i
             style={{ fontSize: '1.5rem' }}
-            class="fa fa-tasks"
+            className="fa fa-tasks"
             aria-hidden="true"
           />
         </div>

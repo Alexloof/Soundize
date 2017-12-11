@@ -63,9 +63,9 @@ class Nav extends Component {
         </div>
         <div onClick={() => this.toggleMobileMenu()} className="burge-menu">
           {this.state.mobileMenu === 'mobile-links-menu' ? (
-            <i class="fa fa-bars" aria-hidden="true" />
+            <i className="fa fa-bars" aria-hidden="true" />
           ) : (
-            <i class="fa fa-times" aria-hidden="true" />
+            <i className="fa fa-times" aria-hidden="true" />
           )}
         </div>
         <div className={this.state.mobileMenu}>

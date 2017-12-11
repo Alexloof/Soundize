@@ -26,6 +26,10 @@ $menu-items-loop-offset: $menu-items - 1;
       font-weight: bold;
       letter-spacing: 4px;
       font-size: 19px;
+      @media screen and (max-width: $break-mobile) {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+      }
       img {
         max-height: none;
         @media screen and (max-width: $break-mobile) {
@@ -40,11 +44,43 @@ $menu-items-loop-offset: $menu-items - 1;
   }
   .burge-menu {
     display: none;
+    cursor: pointer;
+    .fa {
+      font-size: 1.5rem;
+      color: #bdbdbd;
+    }
     @media screen and (max-width: $break-mobile) {
       display: block;
       position: absolute;
       right: 25px;
       color: white;
+    }
+  }
+  .mobile-links-menu {
+    background: rgba(0, 27, 35, 0.98);
+    width: 100vw;
+    height: 100vh;
+    top: -100vh;
+    transition: 0.3s opacity ease;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    opacity: 0;
+    a {
+      color: white;
+      font-size: 1.2rem;
+      border-bottom: 1px solid white;
+      width: 80%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    @media screen and (max-width: $break-mobile) {
+      &.active {
+        opacity: 1;
+        top: $nav-height;
+      }
     }
   }
   .navbar-menu {

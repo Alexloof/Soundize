@@ -20,7 +20,8 @@ import Loading from './general/Loading'
 
 class Home extends Component {
   state = {
-    modalClassName: 'modal create-playlist-modal'
+    modalClassName: 'modal create-playlist-modal',
+    playlistClassName: 'column playlists-menu'
   }
   componentDidMount() {
     this.getAllPlaylists(this.props)
@@ -42,6 +43,13 @@ class Home extends Component {
   setStandardPlaylist = playlists => {
     this.props.setActivePlaylist(playlists[0].id)
     this.props.setActiveTracklist(playlists[0].owner.id, playlists[0].id)
+  }
+  togglePlaylist = () => {
+    if (this.state.playlistClassName === 'column playlists-menu') {
+      this.setState({ playlistClassName: 'column playlists-menu active' })
+    } else {
+      this.setState({ playlistClassName: 'column playlists-menu' })
+    }
   }
   closeModal = () => {
     this.setState({ modalClassName: 'modal create-playlist-modal' })
@@ -66,7 +74,7 @@ class Home extends Component {
     return (
       <div>
         <div className="columns">
-          <div className="column playlists-menu">
+          <div className={this.state.playlistClassName}>
             <Playlists onOpenCreatePlaylistModal={this.openModal} />
           </div>
           <div className="column is-6 tracklist">{this.renderTracklist()}</div>
@@ -78,6 +86,23 @@ class Home extends Component {
           <CreateNewPlaylistModal
             createPlaylist={(name, desc) => this.createPlaylist(name, desc)}
             closeModal={this.closeModal}
+          />
+        </div>
+        <div
+          onClick={() => this.togglePlaylist()}
+          style={{
+            position: 'absolute',
+            top: '15px',
+            left: '15px',
+            zIndex: 999,
+            color: '#bdbdbd'
+          }}
+          className="burge-menu"
+        >
+          <i
+            style={{ fontSize: '1.5rem' }}
+            class="fa fa-tasks"
+            aria-hidden="true"
           />
         </div>
       </div>

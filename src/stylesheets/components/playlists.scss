@@ -8,9 +8,14 @@
   padding-top: 1.5%;
   padding-bottom: 0;
   height: 100%;
-  transition: 0.35s all ease;
+  transition: 0.25s all ease;
   @media screen and (max-width: $break-mobile) {
     transform: translateX(-250px);
+    z-index: 10;
+    padding-top: 15px;
+    &.active {
+      transform: translateX(0px);
+    }
   }
   .menu {
     .top-label {

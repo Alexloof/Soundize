@@ -3,6 +3,7 @@
   display: flex;
   cursor: pointer;
   padding: 3px;
+
   i {
     font-size: 5px;
     padding: 0.5px;
@@ -11,6 +12,10 @@
 .track-mini-meny {
   width: 140px;
   min-width: 0px;
+  @media screen and (max-width: $break-mobile) {
+    right: 0;
+    left: auto;
+  }
   .dropdown-content {
     padding: 0px;
     position: relative;
@@ -50,6 +55,10 @@
           0 0 0 1px rgba(10, 10, 10, 0.1);
         max-height: 300px;
         overflow-y: auto;
+        @media screen and (max-width: $break-mobile) {
+          right: 100%;
+          left: auto;
+        }
         .menu-list {
           border-left: 0;
           margin: 0;

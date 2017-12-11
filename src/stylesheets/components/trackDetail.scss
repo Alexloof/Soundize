@@ -23,6 +23,7 @@ $artist-dimension-mobile: 15vh;
     margin-bottom: 5%;
     @media screen and (max-width: $break-mobile) {
       position: relative;
+      height: 45vh;
     }
     .track-art-wrapper {
       display: flex;
@@ -133,6 +134,7 @@ $artist-dimension-mobile: 15vh;
           bottom: 0;
           left: 0;
           width: 100%;
+          overflow-x: hidden;
         }
         div {
           display: flex;

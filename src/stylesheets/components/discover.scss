@@ -8,6 +8,9 @@
   box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
   padding: 20px;
   padding-bottom: 52px;
+  @media screen and (max-width: $break-mobile) {
+    padding: 5px;
+  }
   h1 {
     text-align: center;
     font-size: 2rem;
@@ -19,7 +22,6 @@
     justify-content: space-around;
     width: 100%;
     .discover-item {
-      width: 18%;
       position: relative;
       display: flex;
       justify-content: center;

@@ -11,7 +11,8 @@
   right: 1vw;
   transition: 0.3s all;
   @media screen and (max-width: $break-mobile) {
-    width: 100vw;
+    width: 100%;
+    right: 0;
   }
   .tracklist-banner-info {
     display: flex;

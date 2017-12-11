@@ -7,8 +7,6 @@
   min-height: calc(100vh - #{$nav-height});
   @media screen and (max-width: $break-mobile) {
     margin-left: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
   }
   .tracklist-tracks {
     margin-top: 1.5%;

@@ -1,4 +1,5 @@
-$artist-dimension: 36vh;
+$artist-dimension-desktop: 36vh;
+$artist-dimension-mobile: 15vh;
 .track-detail-component {
   max-width: $container-large;
   background-color: $gray-light;
@@ -9,6 +10,10 @@ $artist-dimension: 36vh;
   box-shadow: 0px 0px 6px 1px rgba(99, 99, 99, 0.12);
   padding: 20px 0px;
   padding-bottom: 52px;
+  @media screen and (max-width: $break-mobile) {
+    font-size: 0.9rem;
+    padding-top: 0px;
+  }
   .track-header {
     width: 100%;
     height: 40vh;
@@ -16,25 +21,43 @@ $artist-dimension: 36vh;
     flex-direction: row;
     background: $brand-primary;
     margin-bottom: 5%;
+    @media screen and (max-width: $break-mobile) {
+      position: relative;
+    }
     .track-art-wrapper {
       display: flex;
       justify-content: center;
       align-self: center;
       margin-left: 2vh;
-      width: $artist-dimension;
-      height: $artist-dimension;
+      width: $artist-dimension-desktop;
+      height: $artist-dimension-desktop;
       box-shadow: $box-shadow-primary;
+      @media screen and (max-width: $break-mobile) {
+        width: $artist-dimension-mobile;
+        height: $artist-dimension-mobile;
+        align-self: flex-start;
+        margin-top: 15px;
+      }
       .track-art {
-        width: $artist-dimension;
-        height: $artist-dimension;
+        width: $artist-dimension-desktop;
+        height: $artist-dimension-desktop;
+        @media screen and (max-width: $break-mobile) {
+          width: $artist-dimension-mobile;
+          height: $artist-dimension-mobile;
+        }
       }
     }
     .track-info-details {
-      width: calc(100% - #{$artist-dimension});
+      width: calc(100% - #{$artist-dimension-desktop});
       padding-left: 30px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      @media screen and (max-width: $break-mobile) {
+        width: calc(100% - #{$artist-dimension-mobile});
+        justify-content: flex-start;
+        padding-left: 15px;
+      }
       .track-names {
         display: flex;
         flex-direction: column;
@@ -42,6 +65,10 @@ $artist-dimension: 36vh;
           font-size: 2.2rem;
           letter-spacing: 1px;
           color: white;
+          @media screen and (max-width: $break-mobile) {
+            font-size: 1.4rem;
+            padding-bottom: 10px;
+          }
         }
         .track-artists {
           margin-top: 10px;
@@ -59,6 +86,9 @@ $artist-dimension: 36vh;
             &:hover {
               text-decoration: underline;
             }
+            @media screen and (max-width: $break-mobile) {
+              font-size: 1rem;
+            }
           }
         }
       }
@@ -67,6 +97,9 @@ $artist-dimension: 36vh;
         p {
           font-size: 1.2rem;
           color: $gray-medium-light;
+          @media screen and (max-width: $break-mobile) {
+            font-size: 1rem;
+          }
           &:first-child {
             margin-bottom: 10px;
           }
@@ -80,6 +113,9 @@ $artist-dimension: 36vh;
             letter-spacing: 1px;
             font-size: 1.1rem;
             white-space: nowrap;
+            @media screen and (max-width: $break-mobile) {
+              font-size: 0.9rem;
+            }
           }
         }
       }
@@ -90,6 +126,14 @@ $artist-dimension: 36vh;
         align-items: center;
         padding-right: 20%;
         margin-bottom: 20px;
+        @media screen and (max-width: $break-mobile) {
+          padding-right: 0;
+          margin-bottom: 5px;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+        }
         div {
           display: flex;
           flex-direction: column;
@@ -100,12 +144,19 @@ $artist-dimension: 36vh;
             font-size: 0.8rem;
             text-transform: uppercase;
             color: $gray-medium-light;
+            @media screen and (max-width: $break-mobile) {
+              font-size: 0.6rem;
+              margin-bottom: 0px;
+            }
           }
           .pieChart {
             .innerText {
               text {
                 font-size: 3.5rem;
               }
+            }
+            @media screen and (max-width: $break-mobile) {
+              width: 50px;
             }
           }
           #graph {
@@ -128,6 +179,9 @@ $artist-dimension: 36vh;
       width: 45%;
       justify-content: space-between;
       margin-bottom: 3%;
+      @media screen and (max-width: $break-mobile) {
+        width: 100%;
+      }
       .button {
         width: 150px;
         height: 40px;

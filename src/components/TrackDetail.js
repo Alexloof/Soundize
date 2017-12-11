@@ -26,7 +26,6 @@ class TrackDetail extends Component {
   }
   async componentWillMount() {
     window.scroll(0, 0)
-    await this.props.setupAuthToAPI()
     this.props.getTrackDetail(this.props.match.params.id)
   }
   componentDidMount() {

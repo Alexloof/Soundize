@@ -12,7 +12,6 @@ import Loading from './general/Loading'
 class PlaylistDetail extends Component {
   async componentDidMount() {
     window.scroll(0, 0)
-    await this.props.setupAuthToAPI()
     this.setActivePlaylist(
       this.props.match.params.user,
       this.props.match.params.id

@@ -11,7 +11,6 @@ import { getAlbum } from '../actions/album_actions'
 class AlbumDetail extends Component {
   async componentDidMount() {
     window.scroll(0, 0)
-    await this.props.setupAuthToAPI()
     await this.props.getAlbum(this.props.match.params.id)
     let tracklist = {
       owner: {},

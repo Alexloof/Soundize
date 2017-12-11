@@ -21,14 +21,32 @@ export const setAccessToken = async (token, dispatch) => {
 
 // USER
 export const fetchUser = async dispatch => {
-  return spotifyApi.getMe().then(
-    data => {
-      return data.body
-    },
-    err => {
-      console.log('Something went wrong getting user details!', err)
-    }
-  )
+  // return spotifyApi.getMe().then(
+  //   data => {
+  //     return data.body
+  //   },
+  //   err => {
+  //     console.log('Something went wrong getting user details!', err)
+  //   }
+  // )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + '/me', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data
+      },
+      err => {
+        console.log('Something went wrong getting user details!', err)
+      }
+    )
 }
 
 export const fetchTopTracks = async dispatch => {
@@ -75,83 +93,213 @@ export const fetchTopArtists = async dispatch => {
 
 // PLAYLISTS
 export const fetchPlaylists = async (userId, dispatch) => {
-  return spotifyApi.getUserPlaylists(userId).then(
-    data => {
-      return data.body.items
-    },
-    function(err) {
-      console.log('Something went wrong getting playlists!', err)
-    }
-  )
-}
+  // return spotifyApi.getUserPlaylists(userId).then(
+  //   data => {
+  //     return data.body.items
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong getting playlists!', err)
+  //   }
+  // )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
 
-export const fetchFeaturedPlaylists = async (timestamp, dispatch) => {
-  return spotifyApi
-    .getFeaturedPlaylists({
-      limit: 5,
-      offset: 0,
-      country: 'SE',
-      locale: 'sv_SE',
-      timestamp: timestamp
+  return await axios
+    .get(BASE_URL + `/users/${userId}/playlists`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
     })
     .then(
       data => {
-        return data.body.playlists.items
+        return data.data.items
       },
-      function(err) {
+      err => {
+        console.log('Something went wrong getting playlists!', err)
+      }
+    )
+}
+
+export const fetchFeaturedPlaylists = async (timestamp, dispatch) => {
+  // return spotifyApi
+  //   .getFeaturedPlaylists({
+  //     limit: 5,
+  //     offset: 0,
+  //     country: 'SE',
+  //     locale: 'sv_SE',
+  //     timestamp: timestamp
+  //   })
+  //   .then(
+  //     data => {
+  //       return data.body.playlists.items
+  //     },
+  //     function(err) {
+  //       console.log('Something went wrong getting featured playlists!', err)
+  //     }
+  //   )
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(
+      BASE_URL + `/browse/featured-playlists?country=SE&locale=sv_SE&limit=5`,
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: authString
+        }
+      }
+    )
+    .then(
+      data => {
+        return data.data.playlists.items
+      },
+      err => {
         console.log('Something went wrong getting featured playlists!', err)
       }
     )
 }
 
 export const fetchNewReleases = async dispatch => {
-  return spotifyApi.getNewReleases({ country: 'SE' }).then(
-    data => {
-      return data.body.albums.items
-    },
-    function(err) {
-      console.log('Something went wrong getting new releases!', err)
-    }
-  )
+  // return spotifyApi.getNewReleases({ country: 'SE' }).then(
+  //   data => {
+  //     return data.body.albums.items
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong getting new releases!', err)
+  //   }
+  // )
+
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  return await axios
+    .get(BASE_URL + `/browse/new-releases?country=SE`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        return data.data.albums.items
+      },
+      err => {
+        console.log('Something went wrong getting new releases!', err)
+      }
+    )
 }
 
 export const createUserPlaylist = async (userId, name, desc, dispatch) => {
-  await spotifyApi.createPlaylist(userId, name, { public: true }).then(
-    data => {
-      console.log('Playlist created', data)
-      dispatch(showSuccessAlert(name + ' har skapats!'))
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-      dispatch(showErrorAlert(name + ' kunde inte skapas...'))
-    }
-  )
+  // await spotifyApi.createPlaylist(userId, name, { public: true }).then(
+  //   data => {
+  //     console.log('Playlist created', data)
+  //     dispatch(showSuccessAlert(name + ' har skapats!'))
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong!', err)
+  //     dispatch(showErrorAlert(name + ' kunde inte skapas...'))
+  //   }
+  // )
+
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .post(
+      BASE_URL + `/users/${userId}/playlists`,
+      {
+        name: name,
+        description: desc
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: authString
+        }
+      }
+    )
+    .then(
+      data => {
+        console.log('Playlist created', data)
+        dispatch(showSuccessAlert(name + ' har skapats!'))
+      },
+      err => {
+        console.log('Something went wrong!', err)
+        dispatch(showErrorAlert(name + ' kunde inte skapas...'))
+      }
+    )
 }
 
 export const unfollowPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  await spotifyApi.unfollowPlaylist(ownerId, playlistId).then(
-    data => {
-      console.log('Unfollowed a playlist', data)
-      dispatch(showSuccessAlert('Du slutade följa en spellista!'))
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-      dispatch(showErrorAlert('Det gick inte att sluta följa denna spellista'))
-    }
-  )
+  // await spotifyApi.unfollowPlaylist(ownerId, playlistId).then(
+  //   data => {
+  //     console.log('Unfollowed a playlist', data)
+  //     dispatch(showSuccessAlert('Du slutade följa en spellista!'))
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong!', err)
+  //     dispatch(showErrorAlert('Det gick inte att sluta följa denna spellista'))
+  //   }
+  // )
+
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .delete(BASE_URL + `/users/${ownerId}/playlists/${playlistId}/followers`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        console.log('Unfollowed a playlist', data)
+        dispatch(showSuccessAlert('Du slutade följa en spellista!'))
+      },
+      err => {
+        console.log('Something went wrong!', err)
+        dispatch(
+          showErrorAlert('Det gick inte att sluta följa denna spellista')
+        )
+      }
+    )
 }
 
 export const followPlaylistCall = async (ownerId, playlistId, dispatch) => {
-  await spotifyApi.followPlaylist(ownerId, playlistId).then(
-    data => {
-      console.log('Followed a playlist', data)
-      dispatch(showSuccessAlert('Du började följa en spellista!'))
-    },
-    function(err) {
-      console.log('Something went wrong!', err)
-      dispatch(showErrorAlert('Det gick inte att följa denna spellista'))
-    }
-  )
+  // await spotifyApi.followPlaylist(ownerId, playlistId).then(
+  //   data => {
+  //     console.log('Followed a playlist', data)
+  //     dispatch(showSuccessAlert('Du började följa en spellista!'))
+  //   },
+  //   function(err) {
+  //     console.log('Something went wrong!', err)
+  //     dispatch(showErrorAlert('Det gick inte att följa denna spellista'))
+  //   }
+  // )
+
+  const token = localStorage.getItem('token')
+  const authString = 'Bearer ' + token
+
+  await axios
+    .put(BASE_URL + `/users/${ownerId}/playlists/${playlistId}/followers`, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: authString
+      }
+    })
+    .then(
+      data => {
+        console.log('Followed a playlist', data)
+        dispatch(showSuccessAlert('Du började följa en spellista!'))
+      },
+      err => {
+        console.log('Something went wrong!', err)
+        dispatch(showErrorAlert('Det gick inte att följa denna spellista'))
+      }
+    )
 }
 
 export const deleteUserPlaylist = async (userId, playlistId, dispatch) => {

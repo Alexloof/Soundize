@@ -11,7 +11,6 @@ import { setActiveTracklistSolo } from '../actions/track_actions'
 class ArtistDetail extends Component {
   async componentWillMount() {
     window.scroll(0, 0)
-    await this.props.setupAuthToAPI()
     this.getArtistDetail(this.props.match.params.id)
     this.unlisten = this.props.history.listen((location, action) => {
       let incID = location.pathname.slice(13)

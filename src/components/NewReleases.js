@@ -7,7 +7,6 @@ import { getNewReleases } from '../actions/playlist_actions'
 
 class NewReleases extends Component {
   async componentDidMount() {
-    await this.props.setupAuthToAPI()
     this.props.getNewReleases()
   }
   navigateToDetailPage = release => {

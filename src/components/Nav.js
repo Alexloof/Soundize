@@ -76,7 +76,7 @@ class Nav extends Component {
             activeStyle={{ color: '#ff6b42' }}
             onClick={() => this.toggleMobileMenu()}
           >
-            <span>Min Musik</span>
+            <span>My Music</span>
           </NavLink>
 
           <NavLink
@@ -85,7 +85,7 @@ class Nav extends Component {
             activeStyle={{ color: '#ff6b42' }}
             onClick={() => this.toggleMobileMenu()}
           >
-            <span>Utforska</span>
+            <span>Discover</span>
           </NavLink>
 
           <NavLink
@@ -94,7 +94,7 @@ class Nav extends Component {
             activeStyle={{ color: '#ff6b42' }}
             onClick={() => this.toggleMobileMenu()}
           >
-            <span>Nytt</span>
+            <span>New releases</span>
           </NavLink>
 
           <NavLink
@@ -103,7 +103,7 @@ class Nav extends Component {
             activeStyle={{ color: '#ff6b42' }}
             onClick={() => this.toggleMobileMenu()}
           >
-            <span>Topplistor</span>
+            <span>Toplists</span>
           </NavLink>
         </div>
         <div id="navMenubd-example" className="navbar-menu">
@@ -122,7 +122,7 @@ class Nav extends Component {
               exact
               activeStyle={{ color: '#ff6b42' }}
             >
-              <span>Min Musik</span>
+              <span>My Music</span>
             </NavLink>
 
             <NavLink
@@ -130,7 +130,7 @@ class Nav extends Component {
               to="/app/discover"
               activeStyle={{ color: '#ff6b42' }}
             >
-              <span>Utforska</span>
+              <span>Discover</span>
             </NavLink>
 
             <NavLink
@@ -138,7 +138,7 @@ class Nav extends Component {
               to="/app/new_releases"
               activeStyle={{ color: '#ff6b42' }}
             >
-              <span>Nytt</span>
+              <span>New releases</span>
             </NavLink>
 
             <NavLink
@@ -146,7 +146,7 @@ class Nav extends Component {
               to="/app/toplists"
               activeStyle={{ color: '#ff6b42' }}
             >
-              <span>Topplistor</span>
+              <span>Toplists</span>
             </NavLink>
           </div>
 
@@ -158,7 +158,7 @@ class Nav extends Component {
                   onChange={this.onInputChange}
                   value={this.state.searchText}
                   type="text"
-                  placeholder="Sök"
+                  placeholder="Search"
                 />
                 <span
                   onClick={this.onSearchSubmit}
@@ -187,12 +187,12 @@ class Nav extends Component {
                       {this.props.user.display_name}
                     </a>
                     <div className="navbar-dropdown">
-                      <a className="navbar-item">Profil</a>
+                      <a className="navbar-item">Profile</a>
                       <a
                         onClick={() => this.onLogout()}
                         className="navbar-item"
                       >
-                        Logga ut
+                        Logout
                       </a>
                     </div>
                   </div>

@@ -80,14 +80,14 @@ class Login extends Component {
                 onClick={() => this.login()}
                 style={{ color: 'white' }}
               >
-                <span>Logga in</span>
+                <span>Login</span>
               </a>
             </div>
 
             <div id="navMenubd-example" className="navbar-menu">
               <div className="navbar-end">
                 <a onClick={() => this.login()} className="login-btn">
-                  <span>Logga in</span>
+                  <span>Login</span>
                 </a>
               </div>
             </div>
@@ -97,10 +97,16 @@ class Login extends Component {
               <h1>Discover a universe of music</h1>
               <h1>Login now!</h1>
               <p>
-                <a className="banner-button">LEARN MORE</a>
+                <a onClick={() => this.login()} className="banner-button">
+                  Login
+                </a>
               </p>
               <p>
-                <a className="scroll-down" id="mini-info">
+                <a
+                  onClick={() => this.login()}
+                  className="scroll-down"
+                  id="mini-info"
+                >
                   Learn about Soundize
                 </a>
               </p>
@@ -117,7 +123,7 @@ class Login extends Component {
               <h1 id="slide-one">What's on Soundize?</h1>
               <h2 id="slide-two">Music</h2>
               <p id="slide-two">
-                There are millions of songs on Maesto. Play your favorites,
+                There are millions of songs on Soundize. Play your favorites,
                 discover new tracks, and build the perfect collection.
               </p>
               <h2 id="slide-three">Playlists</h2>
@@ -140,11 +146,19 @@ class Login extends Component {
             <div className="wrapper">
               <h1>Music for everyone.</h1>
               <p>
-                <a className="banner-button" href="#">
+                <a
+                  onClick={() => this.login()}
+                  className="banner-button"
+                  href="#"
+                >
                   GET SOUNDIZE FREE
                 </a>
-                <a className="banner-button" href="#">
-                  GEAT SOUNDIZE PREMIUM
+                <a
+                  onClick={() => this.login()}
+                  className="banner-button"
+                  href="#"
+                >
+                  GET SOUNDIZE PREMIUM
                 </a>
               </p>
             </div>

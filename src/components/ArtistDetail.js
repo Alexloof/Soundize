@@ -133,23 +133,23 @@ class ArtistDetail extends Component {
               {this.renderGenres(this.props.artist.genres)}
             </p>
             <p className="artist-followers">
-              <span>Följare: </span>
+              <span>Followers: </span>
               {this.props.artist.followers
                 ? this.props.artist.followers.total.toLocaleString()
                 : null}
             </p>
             <p className="artist-popularity">
-              <span>Populäritet:</span> {this.props.artist.popularity}
+              <span>Popularity:</span> {this.props.artist.popularity}
             </p>
           </div>
           <div className="artist-related">
-            <h2>Liknande artister</h2>
+            <h2>Similar artists</h2>
             <ul className="menu-list related-list">
               {this.props.relatedArtists.length > 0 ? (
                 this.renderRelated()
               ) : (
                 <li style={{ textAlign: 'center' }}>
-                  Artisten har liknande artister
+                  Artist has no similar artists
                 </li>
               )}
             </ul>
@@ -161,17 +161,17 @@ class ArtistDetail extends Component {
             {this.props.artistAlbums.length > 0 ? (
               this.renderAlbums()
             ) : (
-              <li style={{ textAlign: 'center' }}>Artisten har inga album</li>
+              <li style={{ textAlign: 'center' }}>Artist has no album</li>
             )}
           </ul>
         </div>
         <div className="artist-top-tracks">
-          <h2>Låtar</h2>
+          <h2>Tracks</h2>
           <ul className="menu-list track-list">
             {this.props.artistTopTracks.length > 0 ? (
               this.renderTracks()
             ) : (
-              <li style={{ textAlign: 'center' }}>Artisten har inga låtar</li>
+              <li style={{ textAlign: 'center' }}>Artist has no tracks</li>
             )}
           </ul>
         </div>

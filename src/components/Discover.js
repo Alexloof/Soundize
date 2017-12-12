@@ -15,7 +15,7 @@ class Discover extends Component {
   render() {
     return (
       <div className="discover-component ">
-        <h1>Utforska</h1>
+        <h1>Discover</h1>
         <ul className="menu-list discover-list">
           {this.props.categories.map((category, index) => {
             return (

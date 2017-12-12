@@ -73,7 +73,7 @@ class AlbumDetail extends Component {
             </div>
             <div className="tracklist-banner-info-lower">
               <div className="small-info">
-                <p>Releas date: {this.props.album.release_date}</p>
+                <p>Release date: {this.props.album.release_date}</p>
               </div>
             </div>
           </div>

@@ -11,23 +11,23 @@ class TracklistBanner extends Component {
             <p className="tracklist-name title">
               {this.props.activeTracklist.name
                 ? this.props.activeTracklist.name
-                : 'Låtar'}
+                : 'Tracks'}
             </p>
           </div>
           <div className="tracklist-banner-info-lower">
             <div className="small-info">
               <p>
-                Följare:{' '}
+                Followers:{' '}
                 {this.props.activeTracklist.followers
                   ? this.props.activeTracklist.followers.total
                   : '0'}
               </p>
               <p>
-                Skapad av:{' '}
+                Made by:{' '}
                 {this.props.activeTracklist.owner
                   ? this.props.activeTracklist.owner.display_name ||
                     this.props.activeTracklist.owner.id
-                  : 'Okänd'}{' '}
+                  : 'Unknown'}{' '}
               </p>
             </div>
             <div className="tracklist-banner-btn-group">
@@ -37,21 +37,21 @@ class TracklistBanner extends Component {
                   onClick={() => this.props.playActiveTracklist()}
                   className="button is-outlined"
                 >
-                  Spela Upp
+                  Play
                 </button>
               ) : this.props.isPlaying === false ? (
                 <button
                   onClick={() => this.props.playActiveTracklist()}
                   className="button is-outlined"
                 >
-                  Spela Upp
+                  Play
                 </button>
               ) : (
                 <button
                   onClick={() => this.props.stopActiveTrack()}
                   className="button is-outlined"
                 >
-                  Pausa
+                  Pause
                 </button>
               )}
 
@@ -60,7 +60,7 @@ class TracklistBanner extends Component {
                   onClick={() => this.props.showDeleteModal()}
                   className="button"
                 >
-                  Radera
+                  Delete
                 </button>
               ) : this.props.checkFollowStatusOnPlaylist(
                 this.props.activeTracklist.id
@@ -69,14 +69,14 @@ class TracklistBanner extends Component {
                   onClick={() => this.props.showUnfollowModal()}
                   className="button"
                 >
-                  Sluta följ
+                  Unfollow
                 </button>
               ) : (
                 <button
                   onClick={() => this.props.followActivePlaylist()}
                   className="button"
                 >
-                  Följ
+                  Follow
                 </button>
               )}
             </div>

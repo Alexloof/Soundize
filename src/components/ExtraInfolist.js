@@ -86,7 +86,7 @@ class ExtraInfolist extends Component {
     return (
       <aside className="menu">
         <p className="menu-label top-label">
-          <span>Senast spelade</span>
+          <span>Latest played</span>
         </p>
         <ul className="menu-list latest-played">
           <FlipMove
@@ -98,12 +98,12 @@ class ExtraInfolist extends Component {
             {this.props.latestPlayedTracks ? (
               this.renderLatestPlayed(this.props.latestPlayedTracks)
             ) : (
-              <li style={{ marginLeft: '30px' }}>Inga spelade låtar...</li>
+              <li style={{ marginLeft: '30px' }}>No recently played tracks</li>
             )}
           </FlipMove>
         </ul>
         <p style={{ marginTop: '30px' }} className="menu-label top-label">
-          <span>Köade låtar</span>
+          <span>Queued Tracks</span>
         </p>
         <ul className="menu-list queued-tracks">
           <FlipMove
@@ -114,7 +114,7 @@ class ExtraInfolist extends Component {
             {this.props.queuedTracks ? (
               this.renderQueuedTracks(this.props.queuedTracks)
             ) : (
-              <li style={{ marginLeft: '30px' }}>Du har inga låtar på kö</li>
+              <li style={{ marginLeft: '30px' }}>No queued tracks</li>
             )}
           </FlipMove>
         </ul>

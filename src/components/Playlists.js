@@ -46,7 +46,7 @@ class Playlists extends Component {
     return (
       <aside className="menu">
         <p className="menu-label top-label">
-          <span>Mina Spellistor</span>
+          <span>My Playlists</span>
           <i
             onClick={() => this.props.onOpenCreatePlaylistModal()}
             className="fa fa-plus"
@@ -62,7 +62,7 @@ class Playlists extends Component {
           className="menu-label"
           style={{ marginTop: '30px', marginBottom: '10px' }}
         >
-          Spellistor för dig
+          Playlists for You
         </p>
         <ul className="menu-list featured-playlists">
           {this.props.featuredPlaylists

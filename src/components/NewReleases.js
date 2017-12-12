@@ -28,7 +28,7 @@ class NewReleases extends Component {
   render() {
     return (
       <div className="new-releases-component">
-        <h1>Nya releaser</h1>
+        <h1>New releases</h1>
         <ul className="new-releases-list">{this.renderNewReleases()}</ul>
       </div>
     )

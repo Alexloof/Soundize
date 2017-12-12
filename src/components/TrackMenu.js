@@ -16,7 +16,8 @@ export default ({
         <li key={index}>
           <a
             onClick={() =>
-              addTrackToPlaylist(playlist.owner.id, playlist.id, track.uri)}
+              addTrackToPlaylist(playlist.owner.id, playlist.id, track.uri)
+            }
           >
             {playlist.name}
           </a>
@@ -51,7 +52,7 @@ export default ({
             aria-haspopup="true"
             aria-controls="dropdown-menu4"
           >
-            Lägg till i spellista<span className="icon is-small">
+            Add to playlist<span className="icon is-small">
               <i className="fa fa-angle-right" aria-hidden="true" />
             </span>
             <div className="mini-meny-playlists">
@@ -63,7 +64,7 @@ export default ({
               onClick={() => addTrackToQueuedList(track)}
               className="dropdown-item"
             >
-              Lägg till i kön
+              Add to queued tracks
             </div>
           ) : null}
           {isMyPlaylist ? (
@@ -71,7 +72,7 @@ export default ({
               onClick={() => removeTrackFromPlaylist(track.uri)}
               className="dropdown-item"
             >
-              Ta bort från spellistan
+              Remove from playlist
             </div>
           ) : null}
         </div>

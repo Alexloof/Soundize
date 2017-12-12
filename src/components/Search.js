@@ -112,37 +112,37 @@ class Search extends Component {
     return (
       <div className="search-component">
         <div className="search-banner">
-          <h1 className="title">Sökresultat för: </h1>
+          <h1 className="title">Result for: </h1>
           <h2 className="subtitle">{this.props.location.search.slice(3)}</h2>
         </div>
         <div className="search-data-wrapper">
           <div className="searched-artists">
-            <h2>Artister</h2>
+            <h2>Artists</h2>
             <ul className="menu-list artist-list">
               {this.props.searchedArtists.length > 0 ? (
                 this.renderArtists()
               ) : (
-                <li>Inga matchande artister</li>
+                <li>No matching artists</li>
               )}
             </ul>
           </div>
           <div className="searched-tracks">
-            <h2>Låtar</h2>
+            <h2>Tracks</h2>
             <ul className="menu-list track-list">
               {this.props.searchedTracks.length > 0 ? (
                 this.renderTracks()
               ) : (
-                <li style={{ textAlign: 'center' }}>Inga matchande låtar</li>
+                <li style={{ textAlign: 'center' }}>No matching tracks</li>
               )}
             </ul>
           </div>
           <div className="searched-playlists">
-            <h2>Spellistor</h2>
+            <h2>Playlists</h2>
             <ul className="menu-list playlist-list">
               {this.props.searchedPlaylists.length > 0 ? (
                 this.renderPlaylists()
               ) : (
-                <li>Inga matchande spellistor</li>
+                <li>No matching playlists</li>
               )}
             </ul>
           </div>

@@ -123,7 +123,7 @@ class Login extends Component {
               <h1 id="slide-one">What's on Soundize?</h1>
               <h2 id="slide-two">Music</h2>
               <p id="slide-two">
-                There are millions of songs on Maesto. Play your favorites,
+                There are millions of songs on Soundize. Play your favorites,
                 discover new tracks, and build the perfect collection.
               </p>
               <h2 id="slide-three">Playlists</h2>
@@ -146,10 +146,18 @@ class Login extends Component {
             <div className="wrapper">
               <h1>Music for everyone.</h1>
               <p>
-                <a className="banner-button" href="#">
+                <a
+                  onClick={() => this.login()}
+                  className="banner-button"
+                  href="#"
+                >
                   GET SOUNDIZE FREE
                 </a>
-                <a className="banner-button" href="#">
+                <a
+                  onClick={() => this.login()}
+                  className="banner-button"
+                  href="#"
+                >
                   GET SOUNDIZE PREMIUM
                 </a>
               </p>
